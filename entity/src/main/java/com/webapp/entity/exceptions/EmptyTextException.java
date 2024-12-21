@@ -1,0 +1,7 @@
+package com.webapp.entity.exceptions;
+
+public class EmptyTextException extends Exception {
+    public EmptyTextException(String message) {
+        super(message);
+    }
+}
