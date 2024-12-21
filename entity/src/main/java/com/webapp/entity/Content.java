@@ -1,11 +1,9 @@
 package com.webapp.entity;
 
-import java.io.Serializable;
-
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 
-public class Content implements Serializable {
+public class Content {
     private String text;
 
     private Content(String text) { 
