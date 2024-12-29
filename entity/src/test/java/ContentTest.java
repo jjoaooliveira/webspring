@@ -1,14 +1,9 @@
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.junit.jupiter.MockitoExtension;
-
 import com.webapp.entity.Content;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 
-@ExtendWith(MockitoExtension.class)
 public class ContentTest {
     @Test
     public void shouldCatchException() {
