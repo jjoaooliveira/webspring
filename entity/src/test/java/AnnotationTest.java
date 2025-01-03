@@ -1,9 +1,8 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
 
+import com.webapp.entity.Title;
 import org.junit.jupiter.api.Test;
 
 import com.webapp.entity.Annotation;
@@ -12,34 +11,42 @@ import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 
 public class AnnotationTest {
-    final ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
 
     @Test
     void shouldCreateAnnotation() throws TextLengthOverLimitException, EmptyTextException {
+        Title title = new Title("");
         Content content = Content.create("Hello, world!");
-        Annotation annotation = new Annotation(content);
+        Annotation annotation = new Annotation(title, content);
 
-        assertEquals(content, annotation.getContent());
+        assertEquals(title.getText(), annotation.getTitle());
+        assertEquals(content.getText(), annotation.getContent());
     }
 
     @Test
-    void shouldCreateAnnotationWithCreationDateAsString() throws TextLengthOverLimitException, EmptyTextException {
+    void shouldCreateAnnotationWithIdAndCreationDateArgument() throws TextLengthOverLimitException, EmptyTextException {
+        Long id = 1L;
+        Title title = new Title("Teste");
         Content content = Content.create("Hello, world!");
-        LocalDateTime expirationLocalDateTime = LocalDateTime.parse("2024-12-25T23:59:59");
-        String stringDate = ZonedDateTime.of(expirationLocalDateTime, zoneId).toString();
-        Annotation annotation = new Annotation(content, stringDate);
+        LocalDateTime creationLocalDateTime = LocalDateTime.parse("2024-12-25T23:59:59");
+        String stringDate = creationLocalDateTime.toString();
+        Annotation annotation = new Annotation(id, title, content, stringDate);
 
-        assertEquals(content, annotation.getContent());
+        assertEquals(id, annotation.getId());
+        assertEquals(title.getText(), annotation.getTitle());
+        assertEquals(content.getText(), annotation.getContent());
+        assertEquals(creationLocalDateTime, annotation.getCreationDate());
         assertEquals(stringDate, annotation.getCreationDate().toString());
     }
 
     @Test
     void shouldSetNewContentAfterCreation() throws TextLengthOverLimitException, EmptyTextException {
+        Title title = new Title("");
         Content content = Content.create("Hello, world!");
-        Annotation annotation = new Annotation(content);
+        Annotation annotation = new Annotation(title, content);
         Content newContent = Content.create("Merry Christmas, world!");
         annotation.setContent(newContent);
 
-        assertEquals(newContent, annotation.getContent());
+        assertEquals(title.getText(), annotation.getTitle());
+        assertEquals(newContent.getText(), annotation.getContent());
     }
 }
