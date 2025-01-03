@@ -7,6 +7,8 @@ import java.time.ZoneId;
 
 public class Task {
     private final ZoneId zoneId = ZoneId.of("America/Sao_Paulo");
+    private Long id;
+    private Title title;
     private Content content;
     private ZonedDateTime creationDate;
     private ZonedDateTime expirationDate;
@@ -14,7 +16,9 @@ public class Task {
     private Boolean expired;
     private String timeLeft;
 
-    public Task(Content content, LocalDateTime expirationDate) {
+    //front-end params task constructor
+    public Task(Title title, Content content, LocalDateTime expirationDate) {
+        this.title = title;
         this.content = content;
         this.creationDate = ZonedDateTime.now(zoneId);
         this.expirationDate = ZonedDateTime.of(expirationDate, zoneId);
@@ -23,7 +27,9 @@ public class Task {
         setTimeLeft();
     }
 
-    public Task(Content content, String creationDate, String expirationDate, boolean completed) {
+    public Task(Long id, Title title, Content content, String creationDate, String expirationDate, boolean completed) {
+        this.id = id;
+        this.title = title;
         this.content = content;
         this.creationDate = ZonedDateTime.parse(creationDate);
         this.expirationDate = ZonedDateTime.parse(expirationDate);
@@ -32,28 +38,41 @@ public class Task {
         setTimeLeft();
     }
 
-    public Content getContent() {
-        return content;
+    public Long getId() {
+        return this.id;
     }
-    
+
+    public String getTitle() {
+        return title.getText();
+    }
+
+    public void setTitle(Title title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content.getText();
+    }
+
     public void setContent(Content content) {
         this.content = content;
     }
-    
+
     public ZonedDateTime getCreationDate() {
         return creationDate;
     }
-    
+
     public ZonedDateTime getExpirationDate() {
         return expirationDate;
     }
-    
+
     public void setExpirationDate(ZonedDateTime expirationDate) {
+        //TODO trocar o tipo de parametro e implementar verificacao
         this.expirationDate = expirationDate;
         setTimeLeft();
         setExpired();
     }
-    
+
     public String getTimeLeft() {
         return timeLeft;
     }
@@ -110,6 +129,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return getContent().getText() + " - " + getTimeLeft();
+        return getContent() + " - " + getTimeLeft();
     }
 }
