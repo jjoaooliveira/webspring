@@ -1,30 +1,45 @@
 package com.webapp.entity;
 
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 public class Annotation {
+    private Long id;
+    private Title title;
     private Content content;
-    private ZonedDateTime creationDate;
+    private LocalDateTime creationDate;
 
-    public Annotation(Content content) {
+    //front-end annotation constructor
+    public Annotation(Title title, Content content) {
+        this.title = title;
         this.content = content;
-        this.creationDate = ZonedDateTime.now();
+        this.creationDate = LocalDateTime.now();
     }
 
-    public Annotation(Content content, String creationDate) {
+    //database annotation constructor
+    public Annotation(Long id, Title title, Content content, String creationDate) {
+        this.id = id;
+        this.title = title;
         this.content = content;
-        this.creationDate = ZonedDateTime.parse(creationDate);
+        this.creationDate = LocalDateTime.parse(creationDate);
     }
 
-    public Content getContent() {
-        return content;
+    public Long getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title.getText();
+    }
+
+    public String getContent() {
+        return content.getText();
     }
 
     public void setContent(Content content) {
         this.content = content;
     }
 
-    public ZonedDateTime getCreationDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 
