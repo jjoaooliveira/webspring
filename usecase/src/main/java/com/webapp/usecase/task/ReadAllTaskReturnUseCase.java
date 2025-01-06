@@ -36,14 +36,14 @@ public class ReadAllTaskReturnUseCase extends SimpleReturnUseCase<List<OutputTas
         List<Task> tasks = dbTasks.stream()
             .map(task -> {
                 try {
-                    return databaseMapper.toEntity(task);
+                    return databaseMapper.createEntity(task);
                 } catch (TextLengthOverLimitException | EmptyTextException e) {
                     throw new RuntimeException(e);
                 }
             }).toList();
 
         return tasks.stream()
-            .map(taskMapper::toDTO).toList();
+            .map(taskMapper::createDTO).toList();
     }
 }
 
