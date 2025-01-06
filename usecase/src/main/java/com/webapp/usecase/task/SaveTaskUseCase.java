@@ -28,11 +28,11 @@ public class SaveTaskUseCase extends UseCase<InputTaskDTO, OutputTaskDTO> {
     @Override
     public OutputTaskDTO execute(InputTaskDTO inputTaskDTO) {
         try {
-            Task task = taskMapper.toEntity(inputTaskDTO);
-            DatabaseTaskDTO databaseTaskDTO = databaseMapper.toDTO(task);
+            Task task = taskMapper.createEntity(inputTaskDTO);
+            DatabaseTaskDTO databaseTaskDTO = databaseMapper.createDTO(task);
             DatabaseTaskDTO returnedDatabaseTask = taskRepository.save(databaseTaskDTO);
-            Task returnedDataBaseTask = databaseMapper.toEntity(returnedDatabaseTask);
-            return taskMapper.toDTO(returnedDataBaseTask);
+            Task returnedDataBaseTask = databaseMapper.createEntity(returnedDatabaseTask);
+            return taskMapper.createDTO(returnedDataBaseTask);
         } catch (TextLengthOverLimitException | EmptyTextException e) {
             throw new RuntimeException(e);
         }
