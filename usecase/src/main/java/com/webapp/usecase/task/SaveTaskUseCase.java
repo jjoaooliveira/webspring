@@ -5,35 +5,32 @@ import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.UseCase;
 import com.webapp.usecase.dataaccess.TaskRepository;
-import com.webapp.usecase.dto.task.DatabaseTaskDTO;
-import com.webapp.usecase.dto.task.InputTaskDTO;
+import com.webapp.usecase.dto.task.NewTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
-import com.webapp.usecase.mapper.DatabaseMapper;
+import com.webapp.usecase.dto.task.TaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class SaveTaskUseCase extends UseCase<InputTaskDTO, OutputTaskDTO> {
+public class SaveTaskUseCase extends UseCase<NewTaskDTO, OutputTaskDTO> {
 
     private final TaskRepository taskRepository;
     private final TaskMapper taskMapper;
-    private final DatabaseMapper databaseMapper;
 
     @Autowired
-    public SaveTaskUseCase(TaskRepository taskRepository, TaskMapper taskMapper, DatabaseMapper databaseMapper) {
+    public SaveTaskUseCase(TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
-        this.databaseMapper = databaseMapper;
     }
 
     @Override
-    public OutputTaskDTO execute(InputTaskDTO inputTaskDTO) {
+    public OutputTaskDTO execute(NewTaskDTO newTaskDTO) {
         try {
-            Task task = taskMapper.createEntity(inputTaskDTO);
-            DatabaseTaskDTO databaseTaskDTO = databaseMapper.createDTO(task);
-            DatabaseTaskDTO returnedDatabaseTask = taskRepository.save(databaseTaskDTO);
-            Task returnedDataBaseTask = databaseMapper.createEntity(returnedDatabaseTask);
-            return taskMapper.createDTO(returnedDataBaseTask);
-        } catch (TextLengthOverLimitException | EmptyTextException e) {
+            Task task = taskMapper.toNewTask(newTaskDTO);
+            TaskDTO taskDTO = taskMapper.toTaskDTO(task);
+            TaskDTO returnedDatabaseTask = taskRepository.save(taskDTO);
+            Task returnedPersistedTask = taskMapper.toTask(returnedDatabaseTask);
+            return taskMapper.toOutputDTO(returnedPersistedTask);
+        } catch (TextLengthOverLimitException | EmptyTextException e) { //TODO implement custom exception
             throw new RuntimeException(e);
         }
     }

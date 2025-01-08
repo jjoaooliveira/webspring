@@ -1,6 +1,5 @@
 package TaskUseCase;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
@@ -8,10 +7,9 @@ import com.webapp.entity.Task;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.dataaccess.TaskRepository;
-import com.webapp.usecase.dto.task.DatabaseTaskDTO;
-import com.webapp.usecase.dto.task.InputTaskDTO;
+import com.webapp.usecase.dto.task.NewTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
-import com.webapp.usecase.mapper.DatabaseMapper;
+import com.webapp.usecase.dto.task.TaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import com.webapp.usecase.task.SaveTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,17 +24,15 @@ public class SaveTaskUseCaseTest {
     @Mock
     TaskMapper mockTaskMapper;
     @Mock
-    DatabaseMapper mockDatabaseMapper;
-    @Mock
-    InputTaskDTO mockTaskDTO;
+    NewTaskDTO mockNewTaskDTO;
     @Mock
     Task mockTask;
     @Mock
-    DatabaseTaskDTO mockInputDatabaseTaskDTO;
+    Task mockReturnedTask;
     @Mock
-    DatabaseTaskDTO mockOutputDatabaseTaskDTO;
+    TaskDTO mockTaskDTO;
     @Mock
-    Task mockResponseTask;
+    TaskDTO mockReturnedTaskDTO;
     @Mock
     OutputTaskDTO mockOutputTaskDTO;
     @InjectMocks
@@ -48,15 +44,15 @@ public class SaveTaskUseCaseTest {
     }
 
     @Test
-    void givenInputObject_whenExecute_thenReturnSavedObject() throws TextLengthOverLimitException, EmptyTextException {
+    void whenExecute_thenReturnNotNullSavedObject() throws TextLengthOverLimitException, EmptyTextException {
 
-        when(mockTaskMapper.createEntity(mockTaskDTO)).thenReturn(mockTask);
-        when(mockDatabaseMapper.createDTO(mockTask)).thenReturn(mockInputDatabaseTaskDTO);
-        when(mockTaskRepository.save(mockInputDatabaseTaskDTO)).thenReturn(mockOutputDatabaseTaskDTO);
-        when(mockDatabaseMapper.createEntity(mockOutputDatabaseTaskDTO)).thenReturn(mockResponseTask);
-        when(mockTaskMapper.createDTO(mockResponseTask)).thenReturn(mockOutputTaskDTO);
+        when(mockTaskMapper.toNewTask(mockNewTaskDTO)).thenReturn(mockTask);
+        when(mockTaskMapper.toTaskDTO(mockTask)).thenReturn(mockTaskDTO);
+        when(mockTaskRepository.save(mockTaskDTO)).thenReturn(mockReturnedTaskDTO);
+        when(mockTaskMapper.toTask(mockReturnedTaskDTO)).thenReturn(mockReturnedTask);
+        when(mockTaskMapper.toOutputDTO(mockReturnedTask)).thenReturn(mockOutputTaskDTO);
 
-        OutputTaskDTO actualReturn = saveTaskUseCase.execute(mockTaskDTO);
-        assertNotNull(actualReturn);
+        OutputTaskDTO actualOutputTaskDTO = saveTaskUseCase.execute(mockNewTaskDTO);
+        assertNotNull(actualOutputTaskDTO);
     }
 }
