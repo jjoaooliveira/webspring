@@ -23,7 +23,7 @@ public class DeleteTaskUseCaseTest {
     }
 
     @Test
-    void whenExecute_thenCallRepositoryMethodDeleteOneTime() {
+    void givenALongValue_whenExecute_thenCallRepositoryMethodDeleteOneTime() {
         long aLong = 1L;
         deleteTaskUseCase.execute(aLong);
         verify(mockTaskRepository, times(1)).delete(aLong);
