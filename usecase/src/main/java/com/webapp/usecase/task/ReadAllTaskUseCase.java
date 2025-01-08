@@ -15,13 +15,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReadAllTaskReturnUseCase extends SimpleReturnUseCase<List<OutputTaskDTO>> {
+public class ReadAllTaskUseCase extends SimpleReturnUseCase<List<OutputTaskDTO>> {
 
     private TaskRepository taskRepository;
     private TaskMapper taskMapper;
 
     @Autowired
-    public ReadAllTaskReturnUseCase(TaskRepository taskRepository, TaskMapper taskMapper) {
+    public ReadAllTaskUseCase(TaskRepository taskRepository, TaskMapper taskMapper) {
         this.taskRepository = taskRepository;
         this.taskMapper = taskMapper;
     }
@@ -29,7 +29,6 @@ public class ReadAllTaskReturnUseCase extends SimpleReturnUseCase<List<OutputTas
     @Override
     public List<OutputTaskDTO> execute() {
         List<TaskDTO> dbTasks = taskRepository.findAll();
-
         List<Task> tasks = dbTasks.stream()
             .map(task -> {
                 try {
