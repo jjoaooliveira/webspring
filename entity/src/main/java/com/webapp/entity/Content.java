@@ -6,25 +6,19 @@ import com.webapp.entity.exceptions.TextLengthOverLimitException;
 public class Content {
     private String text;
 
-    private Content(String text) { 
-        this.text = text;
-    }
-    
     /**
-     * Método que inicializa o conteúdo com o texto fornecido.
-     *
-     * @param text o texto do conteúdo
-     * @throws TextLengthOverLimitException se o texto tiver mais de 100 caracteres
-     * @throws EmptyTextException se o texto estiver vazio
-     */
-    public static Content create(String text) throws TextLengthOverLimitException, EmptyTextException {
+     * @param text the content text
+     * @throws EmptyTextException if the text is empty
+     * @throws TextLengthOverLimitException if the text length is over to 100 characters
+     * */
+    public Content(String text) throws EmptyTextException, TextLengthOverLimitException {
         if (text.isEmpty()) {
-            throw new EmptyTextException("A anotação não pode ser vazia");
+            throw new EmptyTextException("The content cannot be empty");
         }
         if (text.length() > 100) {
-            throw new TextLengthOverLimitException("O conteúdo da anotação deve ter até 100 caracteres");
+            throw new TextLengthOverLimitException("The content length must have up to 100 characters");
         }
-        return new Content(text);
+        this.text = text;
     }
 
     public String getText() {
