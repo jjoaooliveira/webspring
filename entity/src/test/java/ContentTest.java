@@ -6,7 +6,7 @@ import com.webapp.entity.exceptions.TextLengthOverLimitException;
 
 public class ContentTest {
     @Test
-    public void shouldCatchException() {
+    public void givenStringOverToLengthLimit_whenNewContent_thenThrowTextLengthOverLimitException() {
         String texto = "A cidade de Cuiabá, capital do estado de Mato Grosso, é conhecida por seu calor intenso e sua " +
             "rica cultura. Fundada em 1719 durante a corrida do ouro, a cidade tem uma história vibrante que se reflete " +
             "em sua arquitetura colonial e em suas tradições. O centro histórico de Cuiabá é um testemunho vivo dessa " +
@@ -18,14 +18,14 @@ public class ContentTest {
             "combina história, natureza e cultura de forma única.";
 
         Assertions.assertThrows(TextLengthOverLimitException.class, () -> {
-            Content.create(texto);
+            new Content(texto);
         });
     }
 
     @Test
-    public void shouldCatchNullException() {
+    public void givenEmptyString_whenNewContent_thenThrowEmptyTextException() {
         Assertions.assertThrows(EmptyTextException.class, () -> {
-            Content.create("");
+            new Content("");
         });
     }
 
