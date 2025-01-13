@@ -1,30 +1,14 @@
 package com.webapp.entity;
 
-import java.time.LocalDateTime;
-
 public class Annotation {
-    private Long id;
     private Title title;
     private Content content;
-    private LocalDateTime creationDate;
+    private TimeControl timeControl;
 
-    //front-end annotation constructor
-    public Annotation(Title title, Content content) {
+    public Annotation(Title title, Content content, TimeControl timeControl) {
         this.title = title;
         this.content = content;
-        this.creationDate = LocalDateTime.now();
-    }
-
-    //database annotation constructor
-    public Annotation(Long id, Title title, Content content, String creationDate) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.creationDate = LocalDateTime.parse(creationDate);
-    }
-
-    public Long getId() {
-        return id;
+        this.timeControl = timeControl;
     }
 
     public String getTitle() {
@@ -39,12 +23,12 @@ public class Annotation {
         this.content = content;
     }
 
-    public LocalDateTime getCreationDate() {
-        return creationDate;
+    public String getCreationDate() {
+        return timeControl.getCreationDate();
     }
 
     @Override
     public String toString() {
-        return content.getText();
+        return getTitle();
     }
 }
