@@ -33,7 +33,7 @@ public class TimeControlTest {
     }
 
     @Test
-    void givenStringZonedDateTime_whenGetCreation_thenThrownDateTimeException() {
+    void givenStringZonedDateTime_whenGetCreation_thenReturnStringCreation() {
         String expectCreation = "2024-12-25T15:30-03:00[America/Sao_Paulo]";
 
         TimeControl timeControl = new TimeControl("2024-12-25T15:30-03:00[America/Sao_Paulo]");
