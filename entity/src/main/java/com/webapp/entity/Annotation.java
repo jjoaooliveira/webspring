@@ -27,6 +27,14 @@ public class Annotation {
         return timeControl.getCreationDate();
     }
 
+    public String getCreationTime() {
+        return timeControl.getCreationTime();
+    }
+
+    public String getCreation() {
+        return timeControl.getCreation();
+    }
+
     @Override
     public String toString() {
         return getTitle();
