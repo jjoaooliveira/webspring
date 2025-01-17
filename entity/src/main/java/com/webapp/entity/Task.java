@@ -1,6 +1,7 @@
 package com.webapp.entity;
 
 public class Task {
+    private String id;
     private Title title;
     private Content content;
     private Boolean completed;
@@ -15,12 +16,17 @@ public class Task {
         setExpired();
     }
 
-    public Task(Title title, Content content, TimedControl timedControl, boolean completed) {
+    public Task(String id, Title title, Content content, TimedControl timedControl, boolean completed) {
+        this.id = id;
         this.title = title;
         this.content = content;
         this.timedControl = timedControl;
         this.completed = completed;
         setExpired();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getTitle() {
