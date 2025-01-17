@@ -1,7 +1,7 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.webapp.entity.TimeControl;
+import com.webapp.entity.TimeMark;
 import com.webapp.entity.Title;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ public class AnnotationTest {
     Content mockContent;
 
     @Mock
-    TimeControl mockTimeControl;
+    TimeMark mockTimeMark;
 
     @BeforeEach
     void setUp() {
@@ -33,7 +33,7 @@ public class AnnotationTest {
 
         when(mockTitle.getText()).thenReturn("Teste");
 
-        Annotation annotation = new Annotation(mockTitle, mockContent, mockTimeControl);
+        Annotation annotation = new Annotation(mockTitle, mockContent, mockTimeMark);
         var actualAnnotationString = annotation.toString();
 
         assertEquals(expectAnnotationString, actualAnnotationString);
