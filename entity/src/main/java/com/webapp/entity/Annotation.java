@@ -7,19 +7,19 @@ public class Annotation {
     private String id;
     private Title title;
     private Content content;
-    private TimeControl timeControl;
+    private TimeMark timeMark;
 
-    public Annotation(Title title, Content content, TimeControl timeControl) {
+    public Annotation(Title title, Content content, TimeMark timeMark) {
         this.title = title;
         this.content = content;
-        this.timeControl = timeControl;
+        this.timeMark = timeMark;
     }
 
-    public Annotation(String id, Title title, Content content, TimeControl timeControl) {
+    public Annotation(String id, Title title, Content content, TimeMark timeMark) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.timeControl = timeControl;
+        this.timeMark = timeMark;
     }
 
     public String getId() {
@@ -43,15 +43,15 @@ public class Annotation {
     }
 
     public String getCreation() {
-        return timeControl.getCreation();
+        return timeMark.getCreation();
     }
 
     public String getCreationDate() {
-        return timeControl.getCreationDate();
+        return timeMark.getCreationDate();
     }
 
     public String getCreationTime() {
-        return timeControl.getCreationTime();
+        return timeMark.getCreationTime();
     }
 
     @Override
