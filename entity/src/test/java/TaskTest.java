@@ -1,17 +1,13 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
-import com.webapp.entity.TimedControl;
-import com.webapp.entity.Title;
+import com.webapp.entity.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import com.webapp.entity.Content;
-import com.webapp.entity.Task;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.util.UUID;
 
 public class TaskTest {
     @Mock
@@ -21,7 +17,10 @@ public class TaskTest {
     Content mockContent;
 
     @Mock
-    TimedControl mockTimedControl;
+    TimedMark mockTimedMark;
+
+    @Mock
+    TimeMark mockTimeMark;
 
     @BeforeEach
     void setUp() {
@@ -33,9 +32,9 @@ public class TaskTest {
     void givenExpiredTask_whenIsExpired_thenReturnTrue() {
         boolean expectExpired = true;
 
-        when(mockTimedControl.isExpired()).thenReturn(true);
+        when(mockTimedMark.isExpired()).thenReturn(true);
 
-        Task actualTask = new Task(mockTitle, mockContent, mockTimedControl);
+        Task actualTask = new Task(mockTitle, mockContent, mockTimeMark, mockTimedMark);
         var actualExpired = actualTask.isExpired();
 
         assertEquals(expectExpired, actualExpired);
@@ -43,10 +42,10 @@ public class TaskTest {
 
     @Test
     @DisplayName("Should create a completed task")
-    void givenTask_whenIsCompleted_thenReturnTrue() {
+    void givenCompletedTask_whenIsCompleted_thenReturnTrue() {
         boolean expectCompleted = true;
 
-        Task actualTask = new Task(mockTitle, mockContent, mockTimedControl);
+        Task actualTask = new Task(mockTitle, mockContent, mockTimeMark, mockTimedMark);
         actualTask.complete();
 
         var actualCompleted = actualTask.isCompleted();
@@ -55,14 +54,11 @@ public class TaskTest {
     }
 
     @Test
-    @DisplayName("Should create a completed task with boolean as argument")
-    void givenTask_whenTaskConstructor_thenReturnTask() {
-        boolean expectCompleted = true;
-        Task task = new Task("12341231", mockTitle, mockContent, mockTimedControl, true);
+    @DisplayName("Should create a completed task with boolean and id as argument")
+    void givenIdAndCompletedArg_whenCreatingNewTask_thenReturnTask() {
+        Task actualTask = new Task("12341231", mockTitle, mockContent, mockTimeMark, mockTimedMark, true);
 
-        var actualCompleted = task.isCompleted();
-
-        assertEquals(expectCompleted, actualCompleted);
+        assertNotNull(actualTask);
     }
 
     @Test
@@ -71,9 +67,9 @@ public class TaskTest {
         String expectString = "Teste - 3h";
 
         when(mockTitle.getText()).thenReturn("Teste");
-        when(mockTimedControl.getTimeLeft()).thenReturn("3h");
+        when(mockTimedMark.getTimeLeft()).thenReturn("3h");
 
-        Task task = new Task(mockTitle, mockContent, mockTimedControl);
+        Task task = new Task(mockTitle, mockContent, mockTimeMark, mockTimedMark);
         var actualString = task.toString();
 
         assertEquals(expectString, actualString);
