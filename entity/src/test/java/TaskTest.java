@@ -11,6 +11,8 @@ import com.webapp.entity.Task;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.UUID;
+
 public class TaskTest {
     @Mock
     Title mockTitle;
@@ -54,9 +56,9 @@ public class TaskTest {
 
     @Test
     @DisplayName("Should create a completed task with boolean as argument")
-    void givenTask() {
+    void givenTask_whenTaskConstructor_thenReturnTask() {
         boolean expectCompleted = true;
-        Task task = new Task(mockTitle, mockContent, mockTimedControl, true);
+        Task task = new Task("12341231", mockTitle, mockContent, mockTimedControl, true);
 
         var actualCompleted = task.isCompleted();
 
