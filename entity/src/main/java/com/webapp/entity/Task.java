@@ -8,22 +8,25 @@ public class Task {
     private Title title;
     private Content content;
     private Boolean completed;
-    private TimedControl timedControl;
+    private TimeMark creationMark;
+    private TimedMark expirationMark;
     private boolean expired;
 
-    public Task(Title title, Content content, TimedControl timedControl) {
+    public Task(Title title, Content content, TimeMark creationMark, TimedMark expirationMark) {
         this.title = title;
         this.content = content;
-        this.timedControl = timedControl;
+        this.creationMark = creationMark;
+        this.expirationMark = expirationMark;
         this.completed = false;
         setExpired();
     }
 
-    public Task(String id, Title title, Content content, TimedControl timedControl, boolean completed) {
+    public Task(String id, Title title, Content content, TimeMark creationMark, TimedMark expirationMark, boolean completed) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.timedControl = timedControl;
+        this.creationMark = creationMark;
+        this.expirationMark = expirationMark;
         this.completed = completed;
         setExpired();
     }
@@ -48,20 +51,36 @@ public class Task {
         this.content = new Content(content);
     }
 
+    public String getCreation() {
+        return creationMark.getCreation();
+    }
+
     public String getCreationDate() {
-        return timedControl.getCreationDate();
+        return creationMark.getCreationDate();
+    }
+
+    public String getCreationTime() {
+        return creationMark.getCreationTime();
+    }
+
+    public String getExpiration() {
+        return expirationMark.getExpiration();
     }
 
     public String getExpirationDate() {
-        return timedControl.getExpirationDate();
+        return expirationMark.getExpirationDate();
+    }
+
+    public String getExpirationTime() {
+        return expirationMark.getExpirationTime();
     }
 
     public void setExpiration(String newExpiration, String zone) {
-        timedControl.setExpiration(newExpiration, zone);
+        this.expirationMark = new TimedMark(newExpiration, zone);
     }
 
     public String getTimeLeft() {
-        return timedControl.getTimeLeft();
+        return expirationMark.getTimeLeft();
     }
 
     public Boolean isExpired() {
@@ -69,7 +88,7 @@ public class Task {
     }
 
     private void setExpired() {
-        this.expired = timedControl.isExpired();
+        this.expired = expirationMark.isExpired();
     }
 
     public Boolean isCompleted() {
