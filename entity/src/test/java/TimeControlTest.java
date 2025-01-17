@@ -3,25 +3,14 @@ import org.junit.jupiter.api.Test;
 
 import java.time.DateTimeException;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TimeControlTest {
     @Test
-    void givenStringDateTimeAndZoneOfSaoPaulo_whenGetCreation_thenReturnStringCreation() {
+    void givenStringCreation_whenGetCreation_thenReturnStringCreation() {
         String expectCreation = "2024-12-25T15:30-03:00[America/Sao_Paulo]";
 
-        TimeControl timeControl = new TimeControl("2024-12-25T15:30", "America/Sao_Paulo");
-        String actualCreation = timeControl.getCreation();
-
-        assertEquals(expectCreation, actualCreation);
-    }
-
-    @Test
-    void givenStringDateTimeAndZoneOfRioBranco_whenGetCreation_thenReturnConvertedStringCreationOfSaoPauloZone() {
-        String expectCreation = "2024-12-25T17:30-03:00[America/Sao_Paulo]";
-
-        TimeControl timeControl = new TimeControl("2024-12-25T15:30", "America/Rio_Branco");
+        TimeControl timeControl = new TimeControl("2024-12-25T15:30-03:00[America/Sao_Paulo]");
         String actualCreation = timeControl.getCreation();
 
         assertEquals(expectCreation, actualCreation);
@@ -29,16 +18,13 @@ public class TimeControlTest {
 
     @Test
     void givenStringDateTimeWithInvalidZone_whenTimeControlConstructor_thenThrownDateTimeException() {
-        assertThrows(DateTimeException.class, () -> new TimeControl("2024-12-25T15:30", ""));
+        assertThrows(DateTimeException.class, () -> new TimeControl("Lorem"));
     }
 
     @Test
-    void givenStringZonedDateTime_whenGetCreation_thenReturnStringCreation() {
-        String expectCreation = "2024-12-25T15:30-03:00[America/Sao_Paulo]";
+    void givenNoArgs_whenTimeControlConstructor_thenShouldCreateTimeControl() {
+        TimeControl actualTimeControl = new TimeControl();
 
-        TimeControl timeControl = new TimeControl("2024-12-25T15:30-03:00[America/Sao_Paulo]");
-        String actualCreation = timeControl.getCreation();
-
-        assertEquals(expectCreation, actualCreation);
+        assertNotNull(actualTimeControl);
     }
 }
