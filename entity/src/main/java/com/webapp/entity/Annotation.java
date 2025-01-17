@@ -1,5 +1,8 @@
 package com.webapp.entity;
 
+import com.webapp.entity.exceptions.EmptyTextException;
+import com.webapp.entity.exceptions.TextLengthOverLimitException;
+
 public class Annotation {
     private String id;
     private Title title;
@@ -27,12 +30,16 @@ public class Annotation {
         return title.getText();
     }
 
+    public void setTitle(String title) {
+        this.title = new Title(title);
+    }
+
     public String getContent() {
         return content.getText();
     }
 
-    public void setContent(Content content) {
-        this.content = content;
+    public void setContent(String content) throws TextLengthOverLimitException, EmptyTextException {
+        this.content = new Content(content);
     }
 
     public String getCreation() {
