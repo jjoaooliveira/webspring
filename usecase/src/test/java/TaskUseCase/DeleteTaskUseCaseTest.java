@@ -1,6 +1,6 @@
 package TaskUseCase;
 
-import com.webapp.usecase.dataaccess.TaskRepository;
+import com.webapp.usecase.data_access.TaskRepository;
 import com.webapp.usecase.task.DeleteTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,8 +24,8 @@ public class DeleteTaskUseCaseTest {
 
     @Test
     void givenALongValue_whenExecute_thenCallRepositoryMethodDeleteOneTime() {
-        long aLong = 1L;
-        deleteTaskUseCase.execute(aLong);
-        verify(mockTaskRepository, times(1)).delete(aLong);
+        String id = "23242512";
+        deleteTaskUseCase.execute(id);
+        verify(mockTaskRepository, times(1)).delete(id);
     }
 }
