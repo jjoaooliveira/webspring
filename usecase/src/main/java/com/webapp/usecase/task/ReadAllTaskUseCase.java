@@ -2,7 +2,7 @@ package com.webapp.usecase.task;
 
 import com.webapp.entity.Task;
 import com.webapp.usecase.SimpleReturnUseCase;
-import com.webapp.usecase.dataaccess.TaskRepository;
+import com.webapp.usecase.data_access.TaskRepository;
 
 import java.util.List;
 
