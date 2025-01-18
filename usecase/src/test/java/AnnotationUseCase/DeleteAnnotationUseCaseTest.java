@@ -1,7 +1,7 @@
 package AnnotationUseCase;
 
 import com.webapp.usecase.annotation.DeleteAnnotationUseCase;
-import com.webapp.usecase.dataaccess.AnnotationRepository;
+import com.webapp.usecase.data_access.AnnotationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -25,7 +25,7 @@ public class DeleteAnnotationUseCaseTest {
 
     @Test
     void givenAnIdValue_whenExecute_thenCallRepositoryDeleteMethodOneTime() {
-        long id = 1L;
+        String id = "134234134";
         deleteAnnotationUseCase.execute(id);
 
         verify(mockAnnotationRepository, times(1)).delete(id);
