@@ -1,6 +1,7 @@
 package TaskUseCase;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
 import com.webapp.entity.Task;
@@ -9,6 +10,7 @@ import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.data_access.TaskRepository;
 import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
+import com.webapp.usecase.exception.FailToCreateTaskException;
 import com.webapp.usecase.mapper.TaskMapper;
 import com.webapp.usecase.task.SaveTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,5 +49,21 @@ public class SaveTaskUseCaseTest {
 
         OutputTaskDTO actualOutputTaskDTO = saveTaskUseCase.execute(mockInputTaskDTO);
         assertNotNull(actualOutputTaskDTO);
+    }
+
+    @Test
+    void givenSaveTaskUseCase_whenThrowTextLengthOverLimitException_thenThrowFailToCreateTaskException() throws TextLengthOverLimitException, EmptyTextException {
+
+        when(mockTaskMapper.toTask(mockInputTaskDTO)).thenThrow(TextLengthOverLimitException.class);
+
+        assertThrows(FailToCreateTaskException.class, () -> saveTaskUseCase.execute(mockInputTaskDTO));
+    }
+
+    @Test
+    void givenSaveTaskUseCase_whenThrowEmptyTextException_thenThrowFailToCreateTaskException() throws TextLengthOverLimitException, EmptyTextException {
+
+        when(mockTaskMapper.toTask(mockInputTaskDTO)).thenThrow(EmptyTextException.class);
+
+        assertThrows(FailToCreateTaskException.class, () -> saveTaskUseCase.execute(mockInputTaskDTO));
     }
 }
