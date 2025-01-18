@@ -1,8 +1,10 @@
 package com.webapp.usecase.annotation;
 
 import com.webapp.usecase.SimpleInputUseCase;
-import com.webapp.usecase.dataaccess.AnnotationRepository;
+import com.webapp.usecase.data_access.AnnotationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Objects;
 
 public class DeleteAnnotationUseCase extends SimpleInputUseCase<Long> {
     private AnnotationRepository repository;
@@ -14,6 +16,7 @@ public class DeleteAnnotationUseCase extends SimpleInputUseCase<Long> {
 
     @Override
     public void execute(Long id) {
+        Objects.requireNonNull(id);
         repository.delete(id);
     }
 }
