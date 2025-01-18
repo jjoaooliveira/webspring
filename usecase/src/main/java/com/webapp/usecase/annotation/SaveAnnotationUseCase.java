@@ -29,7 +29,7 @@ public class SaveAnnotationUseCase extends UseCase<InputAnnotationDTO, OutputAnn
 
             return mapper.toOutputDTO(savedAnnotation);
         } catch (TextLengthOverLimitException | EmptyTextException e) {
-            throw new RuntimeException(); //TODO implementar exception
+            throw new FailToCreateAnnotationException("It was not possible to create annotation: " + e.getMessage());
         }
     }
 }
