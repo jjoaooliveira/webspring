@@ -6,10 +6,9 @@ import static org.mockito.Mockito.when;
 import com.webapp.entity.Task;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
-import com.webapp.usecase.dataaccess.TaskRepository;
-import com.webapp.usecase.dto.task.NewTaskDTO;
+import com.webapp.usecase.data_access.TaskRepository;
+import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
-import com.webapp.usecase.dto.task.TaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import com.webapp.usecase.task.SaveTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +23,7 @@ public class SaveTaskUseCaseTest {
     @Mock
     TaskMapper mockTaskMapper;
     @Mock
-    NewTaskDTO mockNewTaskDTO;
+    InputTaskDTO mockInputTaskDTO;
     @Mock
     Task mockTask;
     @Mock
@@ -46,13 +45,11 @@ public class SaveTaskUseCaseTest {
     @Test
     void whenExecute_thenReturnNotNullSavedObject() throws TextLengthOverLimitException, EmptyTextException {
 
-        when(mockTaskMapper.toNewTask(mockNewTaskDTO)).thenReturn(mockTask);
-        when(mockTaskMapper.toTaskDTO(mockTask)).thenReturn(mockTaskDTO);
-        when(mockTaskRepository.save(mockTaskDTO)).thenReturn(mockReturnedTaskDTO);
-        when(mockTaskMapper.toTask(mockReturnedTaskDTO)).thenReturn(mockReturnedTask);
+        when(mockTaskMapper.toTask(mockInputTaskDTO)).thenReturn(mockTask);
+        when(mockTaskRepository.save(mockTask)).thenReturn(mockReturnedTask);
         when(mockTaskMapper.toOutputDTO(mockReturnedTask)).thenReturn(mockOutputTaskDTO);
 
-        OutputTaskDTO actualOutputTaskDTO = saveTaskUseCase.execute(mockNewTaskDTO);
+        OutputTaskDTO actualOutputTaskDTO = saveTaskUseCase.execute(mockInputTaskDTO);
         assertNotNull(actualOutputTaskDTO);
     }
 }
