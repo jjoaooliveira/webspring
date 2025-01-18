@@ -7,6 +7,7 @@ import com.webapp.usecase.UseCase;
 import com.webapp.usecase.data_access.TaskRepository;
 import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
+import com.webapp.usecase.exception.FailToCreateTaskException;
 import com.webapp.usecase.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -29,8 +30,7 @@ public class SaveTaskUseCase extends UseCase<InputTaskDTO, OutputTaskDTO> {
 
             return taskMapper.toOutputDTO(persistedTask);
         } catch (TextLengthOverLimitException | EmptyTextException e) {
-            //TODO implement custom runtime exception
-            throw new RuntimeException(e);
+            throw new FailToCreateTaskException("It was not possible to create the Task: " + e.getMessage());
         }
     }
 }
