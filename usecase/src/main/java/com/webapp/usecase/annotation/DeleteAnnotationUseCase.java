@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
 
-public class DeleteAnnotationUseCase extends SimpleInputUseCase<Long> {
+public class DeleteAnnotationUseCase extends SimpleInputUseCase<String> {
     private AnnotationRepository repository;
 
     @Autowired
@@ -15,7 +15,7 @@ public class DeleteAnnotationUseCase extends SimpleInputUseCase<Long> {
     }
 
     @Override
-    public void execute(Long id) {
+    public void execute(String id) {
         Objects.requireNonNull(id);
         repository.delete(id);
     }
