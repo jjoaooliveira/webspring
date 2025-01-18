@@ -1,7 +1,7 @@
 package com.webapp.usecase.task;
 
 import com.webapp.usecase.SimpleInputUseCase;
-import com.webapp.usecase.dataaccess.TaskRepository;
+import com.webapp.usecase.data_access.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class DeleteTaskUseCase extends SimpleInputUseCase<Long> {
