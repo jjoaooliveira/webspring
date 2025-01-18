@@ -1,8 +1,6 @@
 package com.webapp.usecase.task;
 
 import com.webapp.entity.Task;
-import com.webapp.entity.exceptions.EmptyTextException;
-import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.SimpleReturnUseCase;
 import com.webapp.usecase.dataaccess.TaskRepository;
 
