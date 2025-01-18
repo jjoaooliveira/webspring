@@ -29,10 +29,6 @@ public class SaveTaskUseCaseTest {
     @Mock
     Task mockReturnedTask;
     @Mock
-    TaskDTO mockTaskDTO;
-    @Mock
-    TaskDTO mockReturnedTaskDTO;
-    @Mock
     OutputTaskDTO mockOutputTaskDTO;
     @InjectMocks
     SaveTaskUseCase saveTaskUseCase;
