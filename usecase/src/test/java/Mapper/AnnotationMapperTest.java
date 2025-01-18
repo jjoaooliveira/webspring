@@ -3,8 +3,7 @@ package Mapper;
 import com.webapp.entity.Annotation;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
-import com.webapp.usecase.dto.annotation.AnnotationDTO;
-import com.webapp.usecase.dto.annotation.NewAnnotationDTO;
+import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,10 +15,8 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZonedDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class AnnotationMapperTest {
@@ -27,19 +24,7 @@ public class AnnotationMapperTest {
     Annotation mockAnnotation;
 
     @Mock
-    AnnotationDTO mockAnnotationDTO;
-
-    @Mock
-    NewAnnotationDTO mockNewAnnotationDTO;
-
-    @Mock
-    LocalDateTime mockLocalDateTime;
-
-    @Mock
-    LocalDate mockLocalDate;
-
-    @Mock
-    LocalTime mockLocalTime;
+    InputAnnotationDTO mockInputAnnotationDTO;
 
     @InjectMocks
     AnnotationMapper annotationMapper;
@@ -51,20 +36,17 @@ public class AnnotationMapperTest {
 
     @Test
     void givenAnnotation_whenToOutputDTO_thenReturnNotNullOutputAnnotationDTO() {
-        Long expectId = 1L;
+        String expectId = "11231231";
         String expectTitle = "mockTitle";
         String expectContent = "mockContent";
         String expectDate = "2024-12-25";
         String expectTime = "15:00";
 
-        when(mockAnnotation.getId()).thenReturn(1L);
+        when(mockAnnotation.getId()).thenReturn("11231231");
         when(mockAnnotation.getTitle()).thenReturn("mockTitle");
         when(mockAnnotation.getContent()).thenReturn("mockContent");
-        when(mockAnnotation.getCreationDate()).thenReturn(mockLocalDateTime);
-        when(mockLocalDateTime.toLocalDate()).thenReturn(mockLocalDate);
-        when(mockLocalDateTime.toLocalTime()).thenReturn(mockLocalTime);
-        when(mockLocalDate.toString()).thenReturn("2024-12-25");
-        when(mockLocalTime.toString()).thenReturn("15:00");
+        when(mockAnnotation.getCreationDate()).thenReturn("2024-12-25");
+        when(mockAnnotation.getCreationTime()).thenReturn("15:00");
 
         OutputAnnotationDTO actualOutputAnnotationDTO = annotationMapper.toOutputDTO(mockAnnotation);
 
@@ -78,52 +60,15 @@ public class AnnotationMapperTest {
     }
 
     @Test
-    void givenAnnotationDTO_whenToAnnotation_thenReturnNotNullAnnotation() throws TextLengthOverLimitException, EmptyTextException {
-        String expectTitle = "mockTitle";
-        String expectContent = "mockContent";
-        String expectCreationDate = "2024-12-25T15:00";
-
-        when(mockAnnotationDTO.title()).thenReturn("mockTitle");
-        when(mockAnnotationDTO.content()).thenReturn("mockContent");
-        when(mockAnnotationDTO.creationDate()).thenReturn("2024-12-25T15:00");
-
-        var actualAnnotation = annotationMapper.toAnnotation(mockAnnotationDTO);
-
-        assertNotNull(actualAnnotation);
-        assertEquals(expectTitle, actualAnnotation.getTitle());
-        assertEquals(expectContent, actualAnnotation.getContent());
-        assertEquals(expectCreationDate, actualAnnotation.getCreationDate().toString());
-    }
-
-    @Test
-    void givenAnnotation_whenToAnnotationDTO_thenReturnNotNullAnnotationDTO() {
-        String expectTitle = "mockTitle";
-        String expectContent = "mockContent";
-        String expectCreationDate = "2024-12-25T15:00-03:00 [America/Sao_paulo]";
-
-        when(mockAnnotation.getId()).thenReturn(1L);
-        when(mockAnnotation.getTitle()).thenReturn("mockTitle");
-        when(mockAnnotation.getContent()).thenReturn("mockContent");
-        when(mockAnnotation.getCreationDate()).thenReturn(mockLocalDateTime);
-        when(mockLocalDateTime.toString()).thenReturn("2024-12-25T15:00-03:00 [America/Sao_paulo]");
-
-        var actualAnnotation = annotationMapper.toAnnotationDTO(mockAnnotation);
-
-        assertNotNull(actualAnnotation);
-        assertEquals(expectTitle, actualAnnotation.title());
-        assertEquals(expectContent, actualAnnotation.content());
-        assertEquals(expectCreationDate, actualAnnotation.creationDate());
-    }
-
-    @Test
-    void givenNewAnnotationDTO_whenToAnnotation_thenReturnNotNullAnnotation() throws TextLengthOverLimitException, EmptyTextException {
+    void givenInputAnnotationDTO_whenToAnnotation_thenReturnNotNullAnnotation() throws TextLengthOverLimitException, EmptyTextException {
         String expectTitle = "mockTitle";
         String expectContent = "mockContent";
 
-        when(mockNewAnnotationDTO.title()).thenReturn("mockTitle");
-        when(mockNewAnnotationDTO.content()).thenReturn("mockContent");
+        when(mockInputAnnotationDTO.title()).thenReturn("mockTitle");
+        when(mockInputAnnotationDTO.content()).thenReturn("mockContent");
+        when(mockInputAnnotationDTO.zone()).thenReturn("America/Sao_Paulo");
 
-        var actualAnnotation = annotationMapper.toAnnotation(mockNewAnnotationDTO);
+        var actualAnnotation = annotationMapper.toAnnotation(mockInputAnnotationDTO);
 
         assertNotNull(actualAnnotation);
         assertEquals(expectTitle, actualAnnotation.getTitle());
