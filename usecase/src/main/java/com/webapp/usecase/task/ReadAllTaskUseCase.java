@@ -7,7 +7,6 @@ import com.webapp.usecase.dataaccess.TaskRepository;
 import java.util.List;
 
 import com.webapp.usecase.dto.task.OutputTaskDTO;
-import com.webapp.usecase.dto.task.TaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
