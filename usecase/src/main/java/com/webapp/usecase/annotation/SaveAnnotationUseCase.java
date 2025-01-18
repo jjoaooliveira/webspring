@@ -7,6 +7,7 @@ import com.webapp.usecase.UseCase;
 import com.webapp.usecase.data_access.AnnotationRepository;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
+import com.webapp.usecase.exception.FailToCreateAnnotationException;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
