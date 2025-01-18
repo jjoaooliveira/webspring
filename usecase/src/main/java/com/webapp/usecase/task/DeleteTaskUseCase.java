@@ -15,7 +15,8 @@ public class DeleteTaskUseCase extends SimpleInputUseCase<String> {
     }
 
     @Override
-    public void execute(Long aLong) {
-        taskRepository.delete(aLong);
+    public void execute(String id) {
+        Objects.requireNonNull(id);
+        taskRepository.delete(id);
     }
 }
