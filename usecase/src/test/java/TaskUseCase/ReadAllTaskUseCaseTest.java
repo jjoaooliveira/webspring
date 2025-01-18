@@ -6,9 +6,8 @@ import static org.mockito.Mockito.*;
 import com.webapp.entity.Task;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
-import com.webapp.usecase.dataaccess.TaskRepository;
+import com.webapp.usecase.data_access.TaskRepository;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
-import com.webapp.usecase.dto.task.TaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import com.webapp.usecase.task.ReadAllTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,12 +33,6 @@ public class ReadAllTaskUseCaseTest {
     Task mockTask2;
 
     @Mock
-    TaskDTO mockTaskDTO1;
-
-    @Mock
-    TaskDTO mockTaskDTO2;
-
-    @Mock
     OutputTaskDTO mockOutputTaskDTO1;
 
     @Mock
@@ -54,17 +47,16 @@ public class ReadAllTaskUseCaseTest {
     }
 
     @Test
-    void whenExecute_thenReturnListOfOutputDTOWithSizeEquals2() throws TextLengthOverLimitException, EmptyTextException {
-        List<TaskDTO> dbTaskList = List.of(mockTaskDTO1, mockTaskDTO2);
+    void givenReadAllTaskUseCase_whenExecute_thenReturnOutputDTOListWithSizeEquals2() throws TextLengthOverLimitException, EmptyTextException {
+        List<Task> dbTaskList = List.of(mockTask1, mockTask2);
+        Integer expectSize = 2;
 
         when(mockTaskRepository.findAll()).thenReturn(dbTaskList);
-        when(mockTaskMapper.toTask(mockTaskDTO1)).thenReturn(mockTask1);
-        when(mockTaskMapper.toTask(mockTaskDTO2)).thenReturn(mockTask2);
         when(mockTaskMapper.toOutputDTO(mockTask1)).thenReturn(mockOutputTaskDTO1);
         when(mockTaskMapper.toOutputDTO(mockTask2)).thenReturn(mockOutputTaskDTO2);
 
         List<OutputTaskDTO> actualTaskDTOList = readAllTaskUseCase.execute();
 
-        assertEquals(2, actualTaskDTOList.size());
+        assertEquals(expectSize, actualTaskDTOList.size());
     }
 }
