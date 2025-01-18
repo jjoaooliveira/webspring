@@ -4,9 +4,8 @@ import com.webapp.entity.Annotation;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.annotation.SaveAnnotationUseCase;
-import com.webapp.usecase.dataaccess.AnnotationRepository;
-import com.webapp.usecase.dto.annotation.AnnotationDTO;
-import com.webapp.usecase.dto.annotation.NewAnnotationDTO;
+import com.webapp.usecase.data_access.AnnotationRepository;
+import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -33,16 +32,10 @@ public class SaveAnnotationUseCaseTest {
     Annotation mockReturnedDatabaseAnnotation;
 
     @Mock
-    NewAnnotationDTO mockNewAnnotationDTO;
+    InputAnnotationDTO mockInputAnnotationDTO;
 
     @Mock
-    AnnotationDTO mockAnnotationDTO;
-
-    @Mock
-    AnnotationDTO mockReturnedDatabaseAnnotationDTO;
-
-    @Mock
-    OutputAnnotationDTO mockActualOutputAnnotationDTO;
+    OutputAnnotationDTO mockOutputAnnotationDTO;
 
     @InjectMocks
     SaveAnnotationUseCase saveAnnotationUseCase;
@@ -54,13 +47,11 @@ public class SaveAnnotationUseCaseTest {
     @Test
     void whenExecute_thenReturnNotNullOutputAnnotationDTO() throws TextLengthOverLimitException, EmptyTextException {
 
-        when(mockAnnotationMapper.toAnnotation(mockNewAnnotationDTO)).thenReturn(mockAnnotation);
-        when(mockAnnotationMapper.toAnnotationDTO(mockAnnotation)).thenReturn(mockAnnotationDTO);
-        when(mockAnnotationRepository.save(mockAnnotationDTO)).thenReturn(mockReturnedDatabaseAnnotationDTO);
-        when(mockAnnotationMapper.toAnnotation(mockReturnedDatabaseAnnotationDTO)).thenReturn(mockReturnedDatabaseAnnotation);
-        when(mockAnnotationMapper.toOutputDTO(mockReturnedDatabaseAnnotation)).thenReturn(mockActualOutputAnnotationDTO);
+        when(mockAnnotationMapper.toAnnotation(mockInputAnnotationDTO)).thenReturn(mockAnnotation);
+        when(mockAnnotationRepository.save(mockAnnotation)).thenReturn(mockReturnedDatabaseAnnotation);
+        when(mockAnnotationMapper.toOutputDTO(mockReturnedDatabaseAnnotation)).thenReturn(mockOutputAnnotationDTO);
 
-        OutputAnnotationDTO actualOutputAnnotationDTO = saveAnnotationUseCase.execute(mockNewAnnotationDTO);
+        OutputAnnotationDTO actualOutputAnnotationDTO = saveAnnotationUseCase.execute(mockInputAnnotationDTO);
         assertNotNull(actualOutputAnnotationDTO);
     }
 }
