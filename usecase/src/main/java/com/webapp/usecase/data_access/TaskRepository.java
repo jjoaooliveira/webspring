@@ -1,7 +1,6 @@
 package com.webapp.usecase.data_access;
 
 import com.webapp.entity.Task;
-import com.webapp.usecase.dto.task.TaskDTO;
 
 import java.util.List;
 
