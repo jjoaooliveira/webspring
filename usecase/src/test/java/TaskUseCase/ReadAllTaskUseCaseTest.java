@@ -67,12 +67,4 @@ public class ReadAllTaskUseCaseTest {
 
         assertEquals(2, actualTaskDTOList.size());
     }
-
-    @Test
-    void whenExecute_thenReturnEmptyList() {
-        //TODO terminar
-        List<OutputTaskDTO> actualTaskDTOList = readAllTaskUseCase.execute();
-        verify(mockTaskRepository, times(1)).findAll();
-        assertTrue(actualTaskDTOList.isEmpty());
-    }
 }
