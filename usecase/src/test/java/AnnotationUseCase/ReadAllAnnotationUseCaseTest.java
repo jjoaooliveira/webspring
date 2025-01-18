@@ -4,8 +4,7 @@ import com.webapp.entity.Annotation;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.annotation.ReadAllAnnotationUseCase;
-import com.webapp.usecase.dataaccess.AnnotationRepository;
-import com.webapp.usecase.dto.annotation.AnnotationDTO;
+import com.webapp.usecase.data_access.AnnotationRepository;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +24,6 @@ public class ReadAllAnnotationUseCaseTest {
 
     @Mock
     AnnotationMapper mockAnnotationMapper;
-
-    @Mock
-    AnnotationDTO mockAnnotationDTO1;
-
-    @Mock
-    AnnotationDTO mockAnnotationDTO2;
 
     @Mock
     Annotation mockAnnotation1;
@@ -55,11 +48,9 @@ public class ReadAllAnnotationUseCaseTest {
     @Test
     void whenExecute_thenReturnListOfAnnotationWithSizeEquals2() throws TextLengthOverLimitException, EmptyTextException {
         int expectSize = 2;
-        List<AnnotationDTO> annotationDTOS = List.of(mockAnnotationDTO1, mockAnnotationDTO2);
+        List<Annotation> annotationList = List.of(mockAnnotation1, mockAnnotation2);
 
-        when(mockAnnotationRepository.findAll()).thenReturn(annotationDTOS);
-        when(mockAnnotationMapper.toAnnotation(mockAnnotationDTO1)).thenReturn(mockAnnotation1);
-        when(mockAnnotationMapper.toAnnotation(mockAnnotationDTO2)).thenReturn(mockAnnotation2);
+        when(mockAnnotationRepository.findAll()).thenReturn(annotationList);
         when(mockAnnotationMapper.toOutputDTO(mockAnnotation1)).thenReturn(mockOutputAnnotationDTO1);
         when(mockAnnotationMapper.toOutputDTO(mockAnnotation1)).thenReturn(mockOutputAnnotationDTO2);
 
