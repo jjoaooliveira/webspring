@@ -43,7 +43,7 @@ public class SaveTaskUseCaseTest {
     }
 
     @Test
-    void whenExecute_thenReturnNotNullSavedObject() throws TextLengthOverLimitException, EmptyTextException {
+    void givenSaveTaskUseCase_whenExecute_thenReturnNotNullSavedObject() throws TextLengthOverLimitException, EmptyTextException {
 
         when(mockTaskMapper.toTask(mockInputTaskDTO)).thenReturn(mockTask);
         when(mockTaskRepository.save(mockTask)).thenReturn(mockReturnedTask);
