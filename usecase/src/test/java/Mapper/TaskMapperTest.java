@@ -3,8 +3,7 @@ package Mapper;
 import com.webapp.entity.Task;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
-import com.webapp.usecase.dto.task.NewTaskDTO;
-import com.webapp.usecase.dto.task.TaskDTO;
+import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,9 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZonedDateTime;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -24,19 +21,7 @@ public class TaskMapperTest {
     Task mockTask;
 
     @Mock
-    TaskDTO mockTaskDTO;
-
-    @Mock
-    NewTaskDTO mockNewTaskDTO;
-
-    @Mock
-    ZonedDateTime mockZonedDateTime;
-
-    @Mock
-    LocalDate mockLocalDate;
-
-    @Mock
-    LocalTime mockLocalTime;
+    InputTaskDTO mockInputTaskDTO;
 
     @InjectMocks
     TaskMapper taskMapper;
@@ -47,87 +32,45 @@ public class TaskMapperTest {
     }
 
     @Test
-    void givenTaskInput_whenToOutputDTO_thenReturnNotNullOutputTaskDTO() {
+    void givenTask_whenToOutputDTO_thenReturnNotNullOutputTaskDTO() {
         String expectedTitle = "mockTitle";
         String expectedContent = "mockContent";
-        long expectedId = 1L;
-        boolean mockCompleted = true, mockExpired = true;
+        String expectedId = "12314324";
+        Boolean expectCompleted = true, expectExpired = true;
 
-        when(mockTask.getId()).thenReturn(1L);
+        when(mockTask.getId()).thenReturn("12314324");
         when(mockTask.getTitle()).thenReturn("mockTitle");
         when(mockTask.getContent()).thenReturn("mockContent");
-        when(mockTask.getCreationDate()).thenReturn(mockZonedDateTime);
-        when(mockTask.getExpirationDate()).thenReturn(mockZonedDateTime);
-        when(mockZonedDateTime.toLocalDate()).thenReturn(mockLocalDate);
-        when(mockZonedDateTime.toLocalTime()).thenReturn(mockLocalTime);
-        when(mockLocalDate.toString()).thenReturn("mockLocalDate");
-        when(mockLocalTime.toString()).thenReturn("mockLocalTime");
         when(mockTask.getTimeLeft()).thenReturn("mockTimeLeft");
-        when(mockTask.isCompleted()).thenReturn(mockCompleted);
-        when(mockTask.isExpired()).thenReturn(mockExpired);
+        when(mockTask.isCompleted()).thenReturn(true);
+        when(mockTask.isExpired()).thenReturn(true);
 
         var actualOutputTaskDTO = taskMapper.toOutputDTO(mockTask);
         assertNotNull(actualOutputTaskDTO);
         assertEquals(expectedId, actualOutputTaskDTO.id());
         assertEquals(expectedTitle, actualOutputTaskDTO.title());
         assertEquals(expectedContent, actualOutputTaskDTO.content());
+        assertEquals(expectCompleted, actualOutputTaskDTO.completed());
+        assertEquals(expectExpired, actualOutputTaskDTO.expired());
     }
 
     @Test
-    void givenTask_whenToTaskDTO_thenReturnNotNullTaskDTO() {
+    void givenInputTaskDTO_whenToTask_thenReturnNotNullTask() throws TextLengthOverLimitException, EmptyTextException {
         String expectedTitle = "mockTitle";
         String expectedContent = "mockContent";
-        long expectedId = 1L;
-        boolean mockCompleted = true;
+        String expectExpiration = "2024-12-25T15:00-03:00[America/Sao_Paulo]";
 
-        when(mockTask.getId()).thenReturn(1L);
-        when(mockTask.getTitle()).thenReturn("mockTitle");
-        when(mockTask.getContent()).thenReturn("mockContent");
-        when(mockTask.getCreationDate()).thenReturn(mockZonedDateTime);
-        when(mockTask.getExpirationDate()).thenReturn(mockZonedDateTime);
-        when(mockZonedDateTime.toString()).thenReturn("mockdate");
-        when(mockTask.isCompleted()).thenReturn(mockCompleted);
+        when(mockInputTaskDTO.id()).thenReturn(Optional.of(""));
+        when(mockInputTaskDTO.title()).thenReturn("mockTitle");
+        when(mockInputTaskDTO.content()).thenReturn("mockContent");
+        when(mockInputTaskDTO.expirationDate()).thenReturn("2024-12-25T15:00");
+        when(mockInputTaskDTO.zone()).thenReturn("America/Sao_Paulo");
 
-        var actualTaskDTO = taskMapper.toTaskDTO(mockTask);
-        assertNotNull(actualTaskDTO);
-        assertEquals(expectedId, actualTaskDTO.id());
-        assertEquals(expectedTitle, actualTaskDTO.title());
-        assertEquals(expectedContent, actualTaskDTO.content());
-        assertTrue(actualTaskDTO.completed());
-    }
+        var actualTask = taskMapper.toTask(mockInputTaskDTO);
 
-    @Test
-    void givenTaskDTO_whenToTask_thenReturnNotNullTask() throws TextLengthOverLimitException, EmptyTextException {
-        String expectedTitle = "mockTitle";
-        String expectedContent = "mockContent";
-        String expectDateTime = "2024-12-25T15:00";
-
-        when(mockTaskDTO.title()).thenReturn("mockTitle");
-        when(mockTaskDTO.content()).thenReturn("mockContent");
-        when(mockTaskDTO.expirationDate()).thenReturn("2024-12-25T15:00");
-
-        var actualTaskDTO = taskMapper.toTask(mockTaskDTO);
-        assertNotNull(actualTaskDTO);
-        assertEquals(expectedTitle, actualTaskDTO.getTitle());
-        assertEquals(expectedContent, actualTaskDTO.getContent());
-        assertEquals(expectDateTime, actualTaskDTO.getExpirationDate().toLocalDateTime().toString());
-    }
-
-    @Test
-    void givenNewTaskDTO_whenToNewTask_thenReturnNotNullTask() throws TextLengthOverLimitException, EmptyTextException {
-        String expectTitle = "mockTitle";
-        String expectContent = "mockContent";
-        String expectExpirationDateTime = "2024-12-25T15:00";
-
-        when(mockNewTaskDTO.title()).thenReturn("mockTitle");
-        when(mockNewTaskDTO.content()).thenReturn("mockContent");
-        when(mockNewTaskDTO.expirationDate()).thenReturn("2024-12-25T15:00");
-
-        var actualTask = taskMapper.toNewTask(mockNewTaskDTO);
         assertNotNull(actualTask);
-        assertEquals(expectTitle, actualTask.getTitle());
-        assertEquals(expectContent, actualTask.getContent());
-        assertEquals(expectExpirationDateTime, actualTask.getExpirationDate().toLocalDateTime().toString());
+        assertEquals(expectedTitle, actualTask.getTitle());
+        assertEquals(expectedContent, actualTask.getContent());
+        assertEquals(expectExpiration, actualTask.getExpiration());
     }
-
 }
