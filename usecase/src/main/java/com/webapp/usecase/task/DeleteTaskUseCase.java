@@ -4,7 +4,9 @@ import com.webapp.usecase.SimpleInputUseCase;
 import com.webapp.usecase.data_access.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class DeleteTaskUseCase extends SimpleInputUseCase<Long> {
+import java.util.Objects;
+
+public class DeleteTaskUseCase extends SimpleInputUseCase<String> {
     private TaskRepository taskRepository;
 
     @Autowired
