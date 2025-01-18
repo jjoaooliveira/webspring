@@ -25,17 +25,9 @@ public class ReadAllTaskUseCase extends SimpleReturnUseCase<List<OutputTaskDTO>>
 
     @Override
     public List<OutputTaskDTO> execute() {
-        List<TaskDTO> dbTasks = taskRepository.findAll();
-        List<Task> tasks = dbTasks.stream()
-            .map(task -> {
-                try {
-                    return taskMapper.toTask(task);
-                } catch (TextLengthOverLimitException | EmptyTextException e) {
-                    throw new RuntimeException(e);
-                }
-            }).toList();
+        List<Task> persistedTasks = taskRepository.findAll();
 
-        return tasks.stream()
+        return persistedTasks.stream()
             .map(taskMapper::toOutputDTO).toList();
     }
 }
