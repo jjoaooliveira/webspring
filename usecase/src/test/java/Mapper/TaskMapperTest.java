@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.time.OffsetDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -58,19 +59,18 @@ public class TaskMapperTest {
     void givenInputTaskDTO_whenToTask_thenReturnNotNullTask() throws TextLengthOverLimitException, EmptyTextException {
         String expectedTitle = "mockTitle";
         String expectedContent = "mockContent";
-        String expectExpiration = "2024-12-25T15:00-03:00[America/Sao_Paulo]";
+        String expectExpiration = "2024-12-25T15:00-03:00";
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse("2024-12-25T15:00-03:00");
 
-        when(mockInputTaskDTO.id()).thenReturn(Optional.of(""));
         when(mockInputTaskDTO.title()).thenReturn("mockTitle");
         when(mockInputTaskDTO.content()).thenReturn("mockContent");
-        when(mockInputTaskDTO.expirationDate()).thenReturn("2024-12-25T15:00");
-        when(mockInputTaskDTO.zone()).thenReturn("America/Sao_Paulo");
+        when(mockInputTaskDTO.expirationDate()).thenReturn(offsetDateTime);
 
         var actualTask = taskMapper.toTask(mockInputTaskDTO);
 
         assertNotNull(actualTask);
         assertEquals(expectedTitle, actualTask.getTitle());
         assertEquals(expectedContent, actualTask.getContent());
-        assertEquals(expectExpiration, actualTask.getExpiration());
+        assertEquals(expectExpiration, actualTask.getExpiration().toString());
     }
 }

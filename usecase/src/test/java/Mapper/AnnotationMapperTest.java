@@ -15,6 +15,7 @@ import org.mockito.MockitoAnnotations;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.OffsetDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -39,14 +40,13 @@ public class AnnotationMapperTest {
         String expectId = "11231231";
         String expectTitle = "mockTitle";
         String expectContent = "mockContent";
-        String expectDate = "2024-12-25";
-        String expectTime = "15:00";
+        String expectDate = "2024-12-25T15:00-03:00";
+        OffsetDateTime offsetDateTime = OffsetDateTime.parse("2024-12-25T15:00-03:00");
 
         when(mockAnnotation.getId()).thenReturn("11231231");
         when(mockAnnotation.getTitle()).thenReturn("mockTitle");
         when(mockAnnotation.getContent()).thenReturn("mockContent");
-        when(mockAnnotation.getCreationDate()).thenReturn("2024-12-25");
-        when(mockAnnotation.getCreationTime()).thenReturn("15:00");
+        when(mockAnnotation.getCreation()).thenReturn(offsetDateTime);
 
         OutputAnnotationDTO actualOutputAnnotationDTO = annotationMapper.toOutputDTO(mockAnnotation);
 
@@ -54,8 +54,7 @@ public class AnnotationMapperTest {
         assertEquals(expectId, actualOutputAnnotationDTO.id());
         assertEquals(expectTitle, actualOutputAnnotationDTO.title());
         assertEquals(expectContent, actualOutputAnnotationDTO.content());
-        assertEquals(expectDate, actualOutputAnnotationDTO.creationDate());
-        assertEquals(expectTime, actualOutputAnnotationDTO.creationTime());
+        assertEquals(expectDate, actualOutputAnnotationDTO.creation().toString());
 
     }
 
@@ -66,7 +65,6 @@ public class AnnotationMapperTest {
 
         when(mockInputAnnotationDTO.title()).thenReturn("mockTitle");
         when(mockInputAnnotationDTO.content()).thenReturn("mockContent");
-        when(mockInputAnnotationDTO.zone()).thenReturn("America/Sao_Paulo");
 
         var actualAnnotation = annotationMapper.toAnnotation(mockInputAnnotationDTO);
 
