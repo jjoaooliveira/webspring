@@ -1,5 +1,5 @@
 package com.webapp.usecase;
 
-public abstract class UseCase<I, O> {
-    public abstract O execute(I i);
+public abstract class SimpleReturnUseCase<O> {
+    public abstract O execute();
 }
