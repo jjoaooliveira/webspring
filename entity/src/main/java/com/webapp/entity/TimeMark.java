@@ -11,23 +11,21 @@ public class TimeMark {
         this.creation = ZonedDateTime.now(DEFAULT_ZONE_ID);
     }
 
-    public TimeMark(String creation) {
+    public TimeMark(OffsetDateTime creation) {
         Objects.requireNonNull(creation);
-        this.creation = ZonedDateTime.parse(creation);
+        this.creation = creation.toZonedDateTime();
     }
 
-    public String getCreation() {
-        return creation.toString();
+    public OffsetDateTime getCreation() {
+        return creation.toOffsetDateTime();
     }
 
-    public String getCreationDate() {
-        LocalDate creationLocalDate = creation.toLocalDate();
-        return creationLocalDate.toString();
+    public LocalDate getCreationDate() {
+        return creation.toLocalDate();
     }
 
-    public String getCreationTime() {
-        LocalTime creationLocalTime = creation.toLocalTime();
-        return creationLocalTime.toString();
+    public LocalTime getCreationTime() {
+        return creation.toLocalTime();
     }
 
     public LocalDateTime getCreationLocalDateTime() {
