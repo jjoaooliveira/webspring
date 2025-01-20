@@ -3,6 +3,10 @@ package com.webapp.entity;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.OffsetDateTime;
+
 public class Annotation {
     private String id;
     private Title title;
@@ -42,15 +46,15 @@ public class Annotation {
         this.content = new Content(content);
     }
 
-    public String getCreation() {
+    public OffsetDateTime getCreation() {
         return timeMark.getCreation();
     }
 
-    public String getCreationDate() {
+    public LocalDate getCreationDate() {
         return timeMark.getCreationDate();
     }
 
-    public String getCreationTime() {
+    public LocalTime getCreationTime() {
         return timeMark.getCreationTime();
     }
 
