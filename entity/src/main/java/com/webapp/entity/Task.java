@@ -53,15 +53,15 @@ public class Task {
         this.content = new Content(content);
     }
 
-    public String getCreation() {
+    public OffsetDateTime getCreation() {
         return creationMark.getCreation();
     }
 
-    public String getCreationDate() {
+    public LocalDate getCreationDate() {
         return creationMark.getCreationDate();
     }
 
-    public String getCreationTime() {
+    public LocalTime getCreationTime() {
         return creationMark.getCreationTime();
     }
 
