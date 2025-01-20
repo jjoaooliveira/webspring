@@ -17,8 +17,7 @@ public class AnnotationMapper {
                 annotation.getId(),
                 annotation.getTitle(),
                 annotation.getContent(),
-                annotation.getCreationDate(),
-                annotation.getCreationTime()
+                annotation.getCreation()
         );
     }
 
@@ -27,14 +26,6 @@ public class AnnotationMapper {
         Content content = new Content(inputAnnotationDTO.content());
         TimeMark timeMark = new TimeMark();
 
-        if(inputAnnotationDTO.id().isPresent()) {
-            return new Annotation(
-                    inputAnnotationDTO.id().get(),
-                    title,
-                    content,
-                    timeMark
-            );
-        }
         return new Annotation(
                 title,
                 content,
