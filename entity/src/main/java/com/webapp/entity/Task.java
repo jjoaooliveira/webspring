@@ -3,6 +3,8 @@ package com.webapp.entity;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 
+import java.time.*;
+
 public class Task {
     private String id;
     private Title title;
@@ -63,20 +65,20 @@ public class Task {
         return creationMark.getCreationTime();
     }
 
-    public String getExpiration() {
+    public OffsetDateTime getExpiration() {
         return expirationMark.getExpiration();
     }
 
-    public String getExpirationDate() {
+    public LocalDate getExpirationDate() {
         return expirationMark.getExpirationDate();
     }
 
-    public String getExpirationTime() {
+    public LocalTime getExpirationTime() {
         return expirationMark.getExpirationTime();
     }
 
-    public void setExpiration(String newExpiration, String zone) {
-        this.expirationMark = new TimedMark(newExpiration, zone);
+    public void setExpiration(ZonedDateTime zonedDateTime) {
+        this.expirationMark = new TimedMark(zonedDateTime);
     }
 
     public String getTimeLeft() {
