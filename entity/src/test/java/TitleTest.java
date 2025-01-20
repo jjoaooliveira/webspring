@@ -3,16 +3,16 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TitlteTest {
+public class TitleTest {
     @Test
-    void shouldCreateTitleWithDefaultText() {
+    void givenEmptyTitleText_whenNew_thenShouldCreateTitleWithDefaultText() {
         Title title = new Title("");
 
         assertEquals("Insira um titulo...", title.getText());
     }
 
     @Test
-    void shouldCreateTitleWithGivenText() {
+    void givenTitleText_whenNew_shouldCreateTitleWithGivenText() {
         String titleText = "Teste";
         Title title = new Title(titleText);
 
