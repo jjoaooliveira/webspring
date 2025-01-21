@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.UUID;
+
 public class TaskTest {
     @Mock
     Title mockTitle;
@@ -56,7 +58,8 @@ public class TaskTest {
     @Test
     @DisplayName("Should create a completed task with boolean and id as argument")
     void givenIdAndCompletedArg_whenCreatingNewTask_thenReturnTask() {
-        Task actualTask = new Task("12341231", mockTitle, mockContent, mockTimeMark, mockTimedMark, true);
+        UUID uuid = UUID.randomUUID();
+        Task actualTask = new Task(uuid, mockTitle, mockContent, mockTimeMark, mockTimedMark, true);
 
         assertNotNull(actualTask);
     }
