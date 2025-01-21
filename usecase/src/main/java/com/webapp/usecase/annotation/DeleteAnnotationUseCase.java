@@ -1,21 +1,22 @@
 package com.webapp.usecase.annotation;
 
 import com.webapp.usecase.SimpleInputUseCase;
-import com.webapp.usecase.data_access.AnnotationRepository;
+import com.webapp.usecase.data_access.AnnotationDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Objects;
+import java.util.UUID;
 
-public class DeleteAnnotationUseCase extends SimpleInputUseCase<String> {
-    private AnnotationRepository repository;
+public class DeleteAnnotationUseCase extends SimpleInputUseCase<UUID> {
+    private AnnotationDataAccess repository;
 
     @Autowired
-    public DeleteAnnotationUseCase(AnnotationRepository repository) {
+    public DeleteAnnotationUseCase(AnnotationDataAccess repository) {
         this.repository = repository;
     }
 
     @Override
-    public void execute(String id) {
+    public void execute(UUID id) {
         Objects.requireNonNull(id);
         repository.delete(id);
     }

@@ -4,7 +4,7 @@ import com.webapp.entity.Task;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.UseCase;
-import com.webapp.usecase.data_access.TaskRepository;
+import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import com.webapp.usecase.exception.FailToCreateTaskException;
@@ -13,24 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class SaveTaskUseCase extends UseCase<InputTaskDTO, OutputTaskDTO> {
 
-    private final TaskRepository taskRepository;
+    private final TaskDataAccess taskDataAccess;
     private final TaskMapper taskMapper;
 
     @Autowired
-    public SaveTaskUseCase(TaskRepository taskRepository, TaskMapper taskMapper) {
-        this.taskRepository = taskRepository;
+    public SaveTaskUseCase(TaskDataAccess taskDataAccess, TaskMapper taskMapper) {
+        this.taskDataAccess = taskDataAccess;
         this.taskMapper = taskMapper;
     }
 
     @Override
     public OutputTaskDTO execute(InputTaskDTO inputTaskDTO) {
-        try {
-            Task task = taskMapper.toTask(inputTaskDTO);
-            Task persistedTask = taskRepository.save(task);
+        Task task = taskMapper.toTask(inputTaskDTO);
+        Task persistedTask = taskDataAccess.save(task);
 
-            return taskMapper.toOutputDTO(persistedTask);
-        } catch (TextLengthOverLimitException | EmptyTextException e) {
-            throw new FailToCreateTaskException("It was not possible to create the Task: " + e.getMessage());
-        }
+        return taskMapper.toOutputDTO(persistedTask);
     }
 }

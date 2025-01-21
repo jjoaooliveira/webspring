@@ -2,7 +2,7 @@ package com.webapp.usecase.task;
 
 import com.webapp.entity.Task;
 import com.webapp.usecase.SimpleReturnUseCase;
-import com.webapp.usecase.data_access.TaskRepository;
+import com.webapp.usecase.data_access.TaskDataAccess;
 
 import java.util.List;
 
@@ -14,18 +14,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class ReadAllTaskUseCase extends SimpleReturnUseCase<List<OutputTaskDTO>> {
 
-    private TaskRepository taskRepository;
+    private TaskDataAccess taskDataAccess;
     private TaskMapper taskMapper;
 
     @Autowired
-    public ReadAllTaskUseCase(TaskRepository taskRepository, TaskMapper taskMapper) {
-        this.taskRepository = taskRepository;
+    public ReadAllTaskUseCase(TaskDataAccess taskDataAccess, TaskMapper taskMapper) {
+        this.taskDataAccess = taskDataAccess;
         this.taskMapper = taskMapper;
     }
 
     @Override
     public List<OutputTaskDTO> execute() {
-        List<Task> persistedTasks = taskRepository.findAll();
+        List<Task> persistedTasks = taskDataAccess.findAll();
 
         return persistedTasks.stream()
             .map(taskMapper::toOutputDTO).toList();
