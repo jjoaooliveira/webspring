@@ -4,8 +4,6 @@ import com.webapp.entity.Annotation;
 import com.webapp.entity.Content;
 import com.webapp.entity.TimeMark;
 import com.webapp.entity.Title;
-import com.webapp.entity.exceptions.EmptyTextException;
-import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import org.springframework.stereotype.Component;
@@ -21,7 +19,7 @@ public class AnnotationMapper {
         );
     }
 
-    public Annotation toAnnotation(InputAnnotationDTO inputAnnotationDTO) throws TextLengthOverLimitException, EmptyTextException {
+    public Annotation toAnnotation(InputAnnotationDTO inputAnnotationDTO) {
         Title title = new Title(inputAnnotationDTO.title());
         Content content = new Content(inputAnnotationDTO.content());
         TimeMark timeMark = new TimeMark();

@@ -25,7 +25,7 @@ public class TaskMapper {
         );
     }
 
-    public Task toTask(InputTaskDTO inputTaskDTO) throws TextLengthOverLimitException, EmptyTextException {
+    public Task toTask(InputTaskDTO inputTaskDTO) {
         Title title = new Title(inputTaskDTO.title());
         Content content = new Content(inputTaskDTO.content());
         TimeMark timeMark = new TimeMark();
