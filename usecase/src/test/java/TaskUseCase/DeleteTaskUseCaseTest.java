@@ -1,6 +1,6 @@
 package TaskUseCase;
 
-import com.webapp.usecase.data_access.TaskRepository;
+import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.task.DeleteTaskUseCase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +13,7 @@ import static org.mockito.Mockito.verify;
 
 public class DeleteTaskUseCaseTest {
     @Mock
-    TaskRepository mockTaskRepository;
+    TaskDataAccess mockTaskDataAccess;
     @InjectMocks
     DeleteTaskUseCase deleteTaskUseCase;
 
@@ -26,6 +26,6 @@ public class DeleteTaskUseCaseTest {
     void givenALongValue_whenExecute_thenCallRepositoryMethodDeleteOneTime() {
         String id = "23242512";
         deleteTaskUseCase.execute(id);
-        verify(mockTaskRepository, times(1)).delete(id);
+        verify(mockTaskDataAccess, times(1)).delete(id);
     }
 }

@@ -4,7 +4,7 @@ import com.webapp.entity.Annotation;
 
 import java.util.List;
 
-public interface AnnotationRepository {
+public interface AnnotationDataAccess {
     List<Annotation> findAll();
     Annotation save(Annotation annotation);
     void delete(String id);

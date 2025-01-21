@@ -6,7 +6,7 @@ import static org.mockito.Mockito.*;
 import com.webapp.entity.Task;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
-import com.webapp.usecase.data_access.TaskRepository;
+import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import com.webapp.usecase.task.ReadAllTaskUseCase;
@@ -21,7 +21,7 @@ import java.util.List;
 public class ReadAllTaskUseCaseTest {
 
     @Mock
-    TaskRepository mockTaskRepository;
+    TaskDataAccess mockTaskDataAccess;
 
     @Mock
     TaskMapper mockTaskMapper;
@@ -51,7 +51,7 @@ public class ReadAllTaskUseCaseTest {
         List<Task> dbTaskList = List.of(mockTask1, mockTask2);
         Integer expectSize = 2;
 
-        when(mockTaskRepository.findAll()).thenReturn(dbTaskList);
+        when(mockTaskDataAccess.findAll()).thenReturn(dbTaskList);
         when(mockTaskMapper.toOutputDTO(mockTask1)).thenReturn(mockOutputTaskDTO1);
         when(mockTaskMapper.toOutputDTO(mockTask2)).thenReturn(mockOutputTaskDTO2);
 

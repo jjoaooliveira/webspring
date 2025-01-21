@@ -4,7 +4,7 @@ import com.webapp.entity.Annotation;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.annotation.SaveAnnotationUseCase;
-import com.webapp.usecase.data_access.AnnotationRepository;
+import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.exception.FailToCreateAnnotationException;
@@ -22,7 +22,7 @@ import static org.mockito.Mockito.when;
 public class SaveAnnotationUseCaseTest {
 
     @Mock
-    AnnotationRepository mockAnnotationRepository;
+    AnnotationDataAccess mockAnnotationDataAccess;
 
     @Mock
     AnnotationMapper mockAnnotationMapper;
@@ -50,7 +50,7 @@ public class SaveAnnotationUseCaseTest {
     void givenAnnotationUseCase_whenExecute_thenReturnNotNullOutputAnnotationDTO() throws TextLengthOverLimitException, EmptyTextException {
 
         when(mockAnnotationMapper.toAnnotation(mockInputAnnotationDTO)).thenReturn(mockAnnotation);
-        when(mockAnnotationRepository.save(mockAnnotation)).thenReturn(mockReturnedDatabaseAnnotation);
+        when(mockAnnotationDataAccess.save(mockAnnotation)).thenReturn(mockReturnedDatabaseAnnotation);
         when(mockAnnotationMapper.toOutputDTO(mockReturnedDatabaseAnnotation)).thenReturn(mockOutputAnnotationDTO);
 
         OutputAnnotationDTO actualOutputAnnotationDTO = saveAnnotationUseCase.execute(mockInputAnnotationDTO);

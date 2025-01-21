@@ -4,7 +4,7 @@ import com.webapp.entity.Annotation;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.annotation.ReadAllAnnotationUseCase;
-import com.webapp.usecase.data_access.AnnotationRepository;
+import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 public class ReadAllAnnotationUseCaseTest {
     @Mock
-    AnnotationRepository mockAnnotationRepository;
+    AnnotationDataAccess mockAnnotationDataAccess;
 
     @Mock
     AnnotationMapper mockAnnotationMapper;
@@ -50,7 +50,7 @@ public class ReadAllAnnotationUseCaseTest {
         int expectSize = 2;
         List<Annotation> annotationList = List.of(mockAnnotation1, mockAnnotation2);
 
-        when(mockAnnotationRepository.findAll()).thenReturn(annotationList);
+        when(mockAnnotationDataAccess.findAll()).thenReturn(annotationList);
         when(mockAnnotationMapper.toOutputDTO(mockAnnotation1)).thenReturn(mockOutputAnnotationDTO1);
         when(mockAnnotationMapper.toOutputDTO(mockAnnotation1)).thenReturn(mockOutputAnnotationDTO2);
 

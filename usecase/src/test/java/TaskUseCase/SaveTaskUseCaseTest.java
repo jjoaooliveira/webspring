@@ -7,7 +7,7 @@ import static org.mockito.Mockito.when;
 import com.webapp.entity.Task;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
-import com.webapp.usecase.data_access.TaskRepository;
+import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import com.webapp.usecase.exception.FailToCreateTaskException;
@@ -21,7 +21,7 @@ import org.mockito.MockitoAnnotations;
 
 public class SaveTaskUseCaseTest {
     @Mock
-    TaskRepository mockTaskRepository;
+    TaskDataAccess mockTaskDataAccess;
     @Mock
     TaskMapper mockTaskMapper;
     @Mock
@@ -44,7 +44,7 @@ public class SaveTaskUseCaseTest {
     void givenSaveTaskUseCase_whenExecute_thenReturnNotNullSavedObject() throws TextLengthOverLimitException, EmptyTextException {
 
         when(mockTaskMapper.toTask(mockInputTaskDTO)).thenReturn(mockTask);
-        when(mockTaskRepository.save(mockTask)).thenReturn(mockReturnedTask);
+        when(mockTaskDataAccess.save(mockTask)).thenReturn(mockReturnedTask);
         when(mockTaskMapper.toOutputDTO(mockReturnedTask)).thenReturn(mockOutputTaskDTO);
 
         OutputTaskDTO actualOutputTaskDTO = saveTaskUseCase.execute(mockInputTaskDTO);
