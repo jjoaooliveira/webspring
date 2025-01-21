@@ -1,12 +1,10 @@
 package com.webapp.entity;
 
-import com.webapp.entity.exceptions.EmptyTextException;
-import com.webapp.entity.exceptions.TextLengthOverLimitException;
-
 import java.time.*;
+import java.util.UUID;
 
 public class Task {
-    private String id;
+    private UUID id;
     private Title title;
     private Content content;
     private Boolean completed;
@@ -23,7 +21,7 @@ public class Task {
         setExpired();
     }
 
-    public Task(String id, Title title, Content content, TimeMark creationMark, TimedMark expirationMark, boolean completed) {
+    public Task(UUID id, Title title, Content content, TimeMark creationMark, TimedMark expirationMark, boolean completed) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -33,7 +31,7 @@ public class Task {
         setExpired();
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -49,7 +47,7 @@ public class Task {
         return content.getText();
     }
 
-    public void setContent(String content) throws TextLengthOverLimitException, EmptyTextException {
+    public void setContent(String content) {
         this.content = new Content(content);
     }
 

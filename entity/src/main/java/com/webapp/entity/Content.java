@@ -11,7 +11,7 @@ public class Content {
      * @throws EmptyTextException if the text is empty
      * @throws TextLengthOverLimitException if the text length is over to 100 characters
      * */
-    public Content(String text) throws EmptyTextException, TextLengthOverLimitException {
+    public Content(String text) {
         if (text.isEmpty()) {
             throw new EmptyTextException("The content cannot be empty");
         }

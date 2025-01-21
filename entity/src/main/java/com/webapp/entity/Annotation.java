@@ -1,14 +1,12 @@
 package com.webapp.entity;
 
-import com.webapp.entity.exceptions.EmptyTextException;
-import com.webapp.entity.exceptions.TextLengthOverLimitException;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 public class Annotation {
-    private String id;
+    private UUID id;
     private Title title;
     private Content content;
     private TimeMark timeMark;
@@ -19,14 +17,14 @@ public class Annotation {
         this.timeMark = timeMark;
     }
 
-    public Annotation(String id, Title title, Content content, TimeMark timeMark) {
+    public Annotation(UUID id, Title title, Content content, TimeMark timeMark) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.timeMark = timeMark;
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
@@ -42,7 +40,7 @@ public class Annotation {
         return content.getText();
     }
 
-    public void setContent(String content) throws TextLengthOverLimitException, EmptyTextException {
+    public void setContent(String content) {
         this.content = new Content(content);
     }
 
