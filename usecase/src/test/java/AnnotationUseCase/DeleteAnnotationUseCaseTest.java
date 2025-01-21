@@ -8,6 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.UUID;
+
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -15,17 +17,19 @@ public class DeleteAnnotationUseCaseTest {
     @Mock
     AnnotationDataAccess mockAnnotationDataAccess;
 
+    UUID id;
+
     @InjectMocks
     DeleteAnnotationUseCase deleteAnnotationUseCase;
 
     @BeforeEach
     void setUp() {
+        id = UUID.randomUUID();
         MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void givenAnIdValue_whenExecute_thenCallRepositoryDeleteMethodOneTime() {
-        String id = "134234134";
         deleteAnnotationUseCase.execute(id);
 
         verify(mockAnnotationDataAccess, times(1)).delete(id);

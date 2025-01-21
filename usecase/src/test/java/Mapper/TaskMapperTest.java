@@ -13,6 +13,7 @@ import org.mockito.MockitoAnnotations;
 
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -36,10 +37,10 @@ public class TaskMapperTest {
     void givenTask_whenToOutputDTO_thenReturnNotNullOutputTaskDTO() {
         String expectedTitle = "mockTitle";
         String expectedContent = "mockContent";
-        String expectedId = "12314324";
+        UUID expectId = UUID.randomUUID();
         Boolean expectCompleted = true, expectExpired = true;
 
-        when(mockTask.getId()).thenReturn("12314324");
+        when(mockTask.getId()).thenReturn(expectId);
         when(mockTask.getTitle()).thenReturn("mockTitle");
         when(mockTask.getContent()).thenReturn("mockContent");
         when(mockTask.getTimeLeft()).thenReturn("mockTimeLeft");
@@ -48,7 +49,7 @@ public class TaskMapperTest {
 
         var actualOutputTaskDTO = taskMapper.toOutputDTO(mockTask);
         assertNotNull(actualOutputTaskDTO);
-        assertEquals(expectedId, actualOutputTaskDTO.id());
+        assertEquals(expectId, actualOutputTaskDTO.id());
         assertEquals(expectedTitle, actualOutputTaskDTO.title());
         assertEquals(expectedContent, actualOutputTaskDTO.content());
         assertEquals(expectCompleted, actualOutputTaskDTO.completed());
@@ -56,7 +57,7 @@ public class TaskMapperTest {
     }
 
     @Test
-    void givenInputTaskDTO_whenToTask_thenReturnNotNullTask() throws TextLengthOverLimitException, EmptyTextException {
+    void givenInputTaskDTO_whenToTask_thenReturnNotNullTask() {
         String expectedTitle = "mockTitle";
         String expectedContent = "mockContent";
         String expectExpiration = "2024-12-25T15:00-03:00";

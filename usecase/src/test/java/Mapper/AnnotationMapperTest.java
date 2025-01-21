@@ -16,6 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.OffsetDateTime;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
@@ -37,13 +38,13 @@ public class AnnotationMapperTest {
 
     @Test
     void givenAnnotation_whenToOutputDTO_thenReturnNotNullOutputAnnotationDTO() {
-        String expectId = "11231231";
+        UUID expectId = UUID.randomUUID();
         String expectTitle = "mockTitle";
         String expectContent = "mockContent";
         String expectDate = "2024-12-25T15:00-03:00";
         OffsetDateTime offsetDateTime = OffsetDateTime.parse("2024-12-25T15:00-03:00");
 
-        when(mockAnnotation.getId()).thenReturn("11231231");
+        when(mockAnnotation.getId()).thenReturn(expectId);
         when(mockAnnotation.getTitle()).thenReturn("mockTitle");
         when(mockAnnotation.getContent()).thenReturn("mockContent");
         when(mockAnnotation.getCreation()).thenReturn(offsetDateTime);
@@ -59,7 +60,7 @@ public class AnnotationMapperTest {
     }
 
     @Test
-    void givenInputAnnotationDTO_whenToAnnotation_thenReturnNotNullAnnotation() throws TextLengthOverLimitException, EmptyTextException {
+    void givenInputAnnotationDTO_whenToAnnotation_thenReturnNotNullAnnotation() {
         String expectTitle = "mockTitle";
         String expectContent = "mockContent";
 
