@@ -7,7 +7,7 @@ import java.time.OffsetDateTime;
 
 @Entity
 @Table
-public class PersistenceTask {
+public class TaskEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -28,9 +28,9 @@ public class PersistenceTask {
     @Column(name = "completed")
     private Boolean completed;
 
-    public PersistenceTask(){}
+    public TaskEntity(){}
 
-    public PersistenceTask(UUID UUID, String title, String content, OffsetDateTime creation, OffsetDateTime expiration, Boolean completed) {
+    public TaskEntity(UUID UUID, String title, String content, OffsetDateTime creation, OffsetDateTime expiration, Boolean completed) {
         this.UUID = UUID;
         this.title = title;
         this.content = content;
