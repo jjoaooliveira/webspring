@@ -1,7 +1,9 @@
 package com.webapp.repository;
 
-import com.webapp.repository.entity.PersistenceAnnotation;
+import com.webapp.repository.entity.AnnotationEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface AnnotationRepository extends JpaRepository<PersistenceAnnotation, String> {
+import java.util.UUID;
+
+public interface AnnotationRepository extends JpaRepository<AnnotationEntity, UUID> {
 }
