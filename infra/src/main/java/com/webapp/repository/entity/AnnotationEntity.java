@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Entity
 @Table
-public class PersistenceAnnotation {
+public class AnnotationEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
@@ -22,9 +22,9 @@ public class PersistenceAnnotation {
     @Column(name = "creation_datetime", columnDefinition = "TIMESTAMP WITH TIME ZONE")
     private OffsetDateTime creation;
 
-    public PersistenceAnnotation() {}
+    public AnnotationEntity() {}
 
-    public PersistenceAnnotation(UUID uuid, String title, String content, OffsetDateTime creation) {
+    public AnnotationEntity(UUID uuid, String title, String content, OffsetDateTime creation) {
         this.UUID = uuid;
         this.title = title;
         this.content = content;
@@ -33,6 +33,10 @@ public class PersistenceAnnotation {
 
     public UUID getUUID() {
         return UUID;
+    }
+
+    public void setUUID(UUID UUID) {
+        this.UUID = UUID;
     }
 
     public void setTitle(String title) {
