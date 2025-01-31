@@ -12,16 +12,16 @@ public class Task {
     private TimedMark expirationMark;
     private boolean expired;
 
-    public Task(Title title, Content content, TimeMark creationMark, TimedMark expirationMark) {
+    public Task(Title title, Content content, TimeMark creationMark, TimedMark expirationMark, Boolean completed) {
         this.title = title;
         this.content = content;
         this.creationMark = creationMark;
         this.expirationMark = expirationMark;
-        this.completed = false;
+        this.completed = completed;
         setExpired();
     }
 
-    public Task(UUID id, Title title, Content content, TimeMark creationMark, TimedMark expirationMark, boolean completed) {
+    public Task(UUID id, Title title, Content content, TimeMark creationMark, TimedMark expirationMark, Boolean completed) {
         this.id = id;
         this.title = title;
         this.content = content;
