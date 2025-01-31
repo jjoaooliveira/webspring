@@ -3,8 +3,14 @@ import org.junit.jupiter.api.Test;
 import com.webapp.entity.Content;
 import com.webapp.entity.exceptions.EmptyTextException;
 import com.webapp.entity.exceptions.TextLengthOverLimitException;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 
+@ExtendWith(MockitoExtension.class)
 public class ContentTest {
+
+    EntityAPI entityAPI;
+
     @Test
     public void givenStringOverToLengthLimit_whenNewContent_thenThrowTextLengthOverLimitException() {
         String texto = "A cidade de Cuiabá, capital do estado de Mato Grosso, é conhecida por seu calor intenso e sua " +
@@ -17,9 +23,7 @@ public class ContentTest {
             "como o Festival de Cururu e Siriri, que celebra a música e a dança locais. Em suma, Cuiabá é um destino que " +
             "combina história, natureza e cultura de forma única.";
 
-        Assertions.assertThrows(TextLengthOverLimitException.class, () -> {
-            new Content(texto);
-        });
+        Assertions.assertThrows(TextLengthOverLimitException.class, () -> entityAPI.createContent(texto));
     }
 
     @Test
