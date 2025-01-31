@@ -1,41 +1,52 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+package com.webapp.entity;
 
-import com.webapp.entity.TimeMark;
-import com.webapp.entity.Title;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import com.webapp.entity.api.AnnotationAPI;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.webapp.entity.Annotation;
-import com.webapp.entity.Content;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import java.time.OffsetDateTime;
 
 public class AnnotationTest {
-    @Mock
-    Title mockTitle;
-
-    @Mock
-    Content mockContent;
-
-    @Mock
-    TimeMark mockTimeMark;
+    String title;
+    String content;
+    OffsetDateTime offsetDateTime;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks(this);
+        title = "Title 1";
+        content = "Content 1";
+        offsetDateTime = OffsetDateTime.now();
     }
 
+    @Test
+    @DisplayName("When Creating Annotation With Success Should Contains Valid Fields")
+    void givenAnnotation_whenNewAnnotation_theShouldCreateAnnotation() {
+        //arrange
+
+        //act
+        var actual = new AnnotationAPI(title, content, offsetDateTime);
+
+        //assert
+        assertNotNull(actual, "The annotation should not be null");
+        assertEquals(title, actual.getTitle());
+        assertEquals(content, actual.getContent());
+        assertEquals(offsetDateTime, actual.getCreation());
+    }
 
     @Test
+    @DisplayName("When Call To String Method Should Return Valid String")
     void givenAnnotation_whenToString_thenReturnAnnotationString() {
-        String expectAnnotationString = "Teste";
+        //arrange
+        String expectedString = "Title 1";
 
-        when(mockTitle.getText()).thenReturn("Teste");
+        //act
+        var actual = new AnnotationAPI(title, content, offsetDateTime);
 
-        Annotation annotation = new Annotation(mockTitle, mockContent, mockTimeMark);
-        var actualAnnotationString = annotation.toString();
-
-        assertEquals(expectAnnotationString, actualAnnotationString);
+        //assert
+        assertEquals(expectedString, actual.annotationToString(), "The string is incorrect");
     }
 }
