@@ -1,18 +1,13 @@
 package com.webapp.usecase.mapper;
 
 import com.webapp.entity.*;
-import com.webapp.entity.exceptions.EmptyTextException;
-import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import org.springframework.stereotype.Component;
 
-import java.time.ZonedDateTime;
-
 @Component
 public class TaskMapper {
     public OutputTaskDTO toOutputDTO(Task task) {
-
         return new OutputTaskDTO(
                 task.getId(),
                 task.getTitle(),
@@ -26,20 +21,24 @@ public class TaskMapper {
     }
 
     public Task toTask(InputTaskDTO inputTaskDTO) {
-        Title title = new Title(inputTaskDTO.title());
-        Content content = new Content(inputTaskDTO.content());
-        TimeMark timeMark = new TimeMark();
-
-        ZonedDateTime zonedDateTime = inputTaskDTO.expirationDate().toZonedDateTime();
-
-        TimedMark timedMark = new TimedMark(zonedDateTime);
-
-        return new Task(
-                title,
-                content,
-                timeMark,
-                timedMark
-        );
+        return inputTaskDTO.id()
+                .map(uuid ->
+                    new Task(
+                        uuid,
+                        new Title(inputTaskDTO.title()),
+                        new Content(inputTaskDTO.content()),
+                        new TimeMark(),
+                        new TimedMark(inputTaskDTO.expirationDate()),
+                        inputTaskDTO.completed()
+                    )
+                ).orElseGet(() ->
+                    new Task(
+                        new Title(inputTaskDTO.title()),
+                        new Content(inputTaskDTO.content()),
+                        new TimeMark(),
+                        new TimedMark(inputTaskDTO.expirationDate())
+                    )
+                );
     }
 
 
