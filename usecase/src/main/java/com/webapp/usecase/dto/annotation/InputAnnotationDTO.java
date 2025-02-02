@@ -1,10 +1,11 @@
 package com.webapp.usecase.dto.annotation;
 
-import java.util.Optional;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 public record InputAnnotationDTO(
-        Optional<UUID> id,
+        UUID id,
         String title,
-        String content) {
+        String content,
+        OffsetDateTime creation) {
 }
