@@ -7,13 +7,10 @@ public class TimeMark {
     protected final ZoneId DEFAULT_ZONE_ID = ZoneId.of("America/Sao_Paulo");
     private ZonedDateTime creation;
 
-    public TimeMark() {
-        this.creation = ZonedDateTime.now(DEFAULT_ZONE_ID);
-    }
-
     public TimeMark(OffsetDateTime creation) {
-        Objects.requireNonNull(creation);
-        this.creation = creation.toZonedDateTime();
+        this.creation = creation != null
+                ? creation.toZonedDateTime()
+                : ZonedDateTime.now(DEFAULT_ZONE_ID);
     }
 
     public OffsetDateTime getCreation() {
