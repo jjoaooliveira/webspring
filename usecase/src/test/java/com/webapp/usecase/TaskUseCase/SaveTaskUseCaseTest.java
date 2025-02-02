@@ -44,7 +44,7 @@ public class SaveTaskUseCaseTest {
         OffsetDateTime expiration = OffsetDateTime.now();
 
         inputTaskDTO = new InputTaskDTO(
-                Optional.of(UUID.randomUUID()),
+                null,
                 "Title 1",
                 "Content 1",
                 expiration,

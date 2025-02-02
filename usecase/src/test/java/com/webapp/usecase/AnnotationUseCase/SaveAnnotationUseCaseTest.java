@@ -46,7 +46,7 @@ public class SaveAnnotationUseCaseTest {
         OffsetDateTime offsetDateTime = OffsetDateTime.now();
 
         inputAnnotationDTO = new InputAnnotationDTO(
-                Optional.of(uuid),
+                uuid,
                 "Title 1",
                 "Content 1"
         );

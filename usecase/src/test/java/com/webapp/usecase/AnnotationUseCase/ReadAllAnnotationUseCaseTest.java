@@ -37,7 +37,7 @@ public class ReadAllAnnotationUseCaseTest {
         annotation1 = new Annotation(
                 UUID.randomUUID(),
                 new Title(""),
-                new Content("Content"),
+                new Content("Content 1"),
                 new TimeMark()
         );
         annotation2 = new Annotation(

@@ -66,7 +66,7 @@ public class TaskMapperTest {
         OffsetDateTime expectedExpiration = OffsetDateTime.parse("2024-12-25T15:00-03:00");
 
         InputTaskDTO inputTaskDTO = new InputTaskDTO(
-                Optional.of(expectId),
+                null,
                 "Title",
                 "Content",
                 expectedExpiration,
@@ -78,7 +78,6 @@ public class TaskMapperTest {
 
         //assert
         assertNotNull(actual);
-        assertEquals(expectId, actual.getId());
         assertEquals(expectedTitle, actual.getTitle());
         assertEquals(expectedContent, actual.getContent());
         assertEquals(expectedExpiration, actual.getExpiration());

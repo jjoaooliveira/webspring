@@ -47,7 +47,7 @@ public class AnnotationMapperTest {
     @Test
     void givenInputAnnotationDTOWithEmptyId_whenToAnnotation_thenReturnNotNullAnnotation() {
         InputAnnotationDTO inputAnnotationDTO1 = new InputAnnotationDTO(
-                Optional.empty(),
+                null,
                 "Title 1",
                 "Content 1"
         );
@@ -62,7 +62,7 @@ public class AnnotationMapperTest {
     @Test
     void givenInputAnnotationDTOWithId_whenToAnnotation_thenReturnNotNullAnnotation() {
         InputAnnotationDTO inputAnnotationDTO1 = new InputAnnotationDTO(
-                Optional.of(UUID.randomUUID()),
+                UUID.randomUUID(),
                 "Title 1",
                 "Content 1"
         );
@@ -70,7 +70,7 @@ public class AnnotationMapperTest {
         var actualAnnotation = annotationMapper.toAnnotation(inputAnnotationDTO1);
 
         assertNotNull(actualAnnotation);
-        assertEquals(inputAnnotationDTO1.id().get(), actualAnnotation.getId());
+        assertEquals(inputAnnotationDTO1.id(), actualAnnotation.getId());
         assertEquals(inputAnnotationDTO1.title(), actualAnnotation.getTitle());
         assertEquals(inputAnnotationDTO1.content(), actualAnnotation.getContent());
     }
