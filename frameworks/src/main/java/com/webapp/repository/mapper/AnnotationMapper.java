@@ -5,16 +5,17 @@ import com.webapp.entity.Content;
 import com.webapp.entity.TimeMark;
 import com.webapp.entity.Title;
 import com.webapp.repository.entity.AnnotationEntity;
+import org.springframework.stereotype.Component;
 
+@Component
 public class AnnotationMapper {
     public AnnotationEntity toEntity(Annotation annotation) {
-        AnnotationEntity entity = new AnnotationEntity();
-        if(annotation.getId() != null) entity.setUUID(annotation.getId());
-        entity.setTitle(annotation.getTitle());
-        entity.setContent(annotation.getContent());
-        entity.setCreation(annotation.getCreation());
-
-        return entity;
+        return new AnnotationEntity(
+                annotation.getId(),
+                annotation.getTitle(),
+                annotation.getContent(),
+                annotation.getCreation()
+        );
     }
 
     public Annotation toAnnotation(AnnotationEntity entity) {
