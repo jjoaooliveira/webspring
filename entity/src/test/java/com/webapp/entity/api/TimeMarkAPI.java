@@ -7,10 +7,6 @@ import java.time.OffsetDateTime;
 public class TimeMarkAPI {
     private TimeMark timeMark;
 
-    public TimeMarkAPI() {
-        this.timeMark = new TimeMark();
-    }
-
     public TimeMarkAPI(OffsetDateTime offsetDateTime) {
         this.timeMark = new TimeMark(offsetDateTime);
     }

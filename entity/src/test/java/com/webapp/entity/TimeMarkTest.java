@@ -28,7 +28,7 @@ public class TimeMarkTest {
         //arrange
 
         //act
-        var actualTimeMark = new TimeMarkAPI();
+        var actualTimeMark = new TimeMarkAPI(OffsetDateTime.now());
 
         //assert
         assertNotNull(actualTimeMark);
