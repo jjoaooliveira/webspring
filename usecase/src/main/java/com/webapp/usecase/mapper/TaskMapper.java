@@ -21,25 +21,13 @@ public class TaskMapper {
     }
 
     public Task toTask(InputTaskDTO inputTaskDTO) {
-        return inputTaskDTO.id()
-                .map(uuid ->
-                    new Task(
-                        uuid,
-                        new Title(inputTaskDTO.title()),
-                        new Content(inputTaskDTO.content()),
-                        new TimeMark(),
-                        new TimedMark(inputTaskDTO.expirationDate()),
-                        inputTaskDTO.completed()
-                    )
-                ).orElseGet(() ->
-                    new Task(
-                        new Title(inputTaskDTO.title()),
-                        new Content(inputTaskDTO.content()),
-                        new TimeMark(),
-                        new TimedMark(inputTaskDTO.expirationDate())
-                    )
-                );
+        return new Task(
+                inputTaskDTO.id(),
+                new Title(inputTaskDTO.title()),
+                new Content(inputTaskDTO.content()),
+                new TimeMark(inputTaskDTO.creationDate()),
+                new TimedMark(inputTaskDTO.expirationDate()),
+                inputTaskDTO.completed()
+        );
     }
-
-
 }

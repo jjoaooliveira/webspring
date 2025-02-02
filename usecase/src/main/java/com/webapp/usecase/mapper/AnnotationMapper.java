@@ -20,21 +20,11 @@ public class AnnotationMapper {
     }
 
     public Annotation toAnnotation(InputAnnotationDTO inputAnnotationDTO) {
-        return inputAnnotationDTO.id()
-            .map(uuid ->
-                new Annotation(
-                    uuid,
-                    new Title(inputAnnotationDTO.title()),
-                    new Content(inputAnnotationDTO.content()),
-                    new TimeMark()
-                )
-            )
-            .orElseGet(() ->
-                new Annotation(
-                    new Title(inputAnnotationDTO.title()),
-                    new Content(inputAnnotationDTO.content()),
-                    new TimeMark()
-                )
+        return new Annotation(
+                inputAnnotationDTO.id(),
+                new Title(inputAnnotationDTO.title()),
+                new Content(inputAnnotationDTO.content()),
+                new TimeMark(inputAnnotationDTO.creation())
             );
     }
 }
