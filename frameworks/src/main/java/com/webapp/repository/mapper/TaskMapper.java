@@ -7,16 +7,14 @@ import org.springframework.stereotype.Component;
 @Component
 public class TaskPersistenceMapper {
     public TaskEntity toPersistence(Task task) {
-        TaskEntity taskEntity = new TaskEntity();
-
-        if(task.getId() != null) taskEntity.setUUID(task.getId());
-        taskEntity.setTitle(task.getTitle());
-        taskEntity.setContent(task.getContent());
-        taskEntity.setCreation(task.getCreation());
-        taskEntity.setExpiration(task.getExpiration());
-        taskEntity.setCompleted(task.isCompleted());
-
-        return taskEntity;
+        return new TaskEntity(
+                task.getId(),
+                task.getTitle(),
+                task.getContent(),
+                task.getCreation(),
+                task.getExpiration(),
+                task.isCompleted()
+        );
     }
 
     public Task toTask(TaskEntity entity) {
