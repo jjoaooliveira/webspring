@@ -5,7 +5,7 @@ import com.webapp.repository.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TaskPersistenceMapper {
+public class TaskMapper {
     public TaskEntity toPersistence(Task task) {
         return new TaskEntity(
                 task.getId(),

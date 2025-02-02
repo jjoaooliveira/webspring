@@ -2,7 +2,7 @@ package com.webapp.repository;
 
 import com.webapp.entity.Task;
 import com.webapp.repository.entity.TaskEntity;
-import com.webapp.repository.mapper.TaskPersistenceMapper;
+import com.webapp.repository.mapper.TaskMapper;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,10 +13,10 @@ import java.util.UUID;
 @Component
 public class TaskDataAccessImpl implements TaskDataAccess {
     private TaskRepository taskRepository;
-    private TaskPersistenceMapper persistenceMapper;
+    private TaskMapper persistenceMapper;
 
     @Autowired
-    public TaskDataAccessImpl(TaskRepository taskRepository, TaskPersistenceMapper persistenceMapper) {
+    public TaskDataAccessImpl(TaskRepository taskRepository, TaskMapper persistenceMapper) {
         this.taskRepository = taskRepository;
         this.persistenceMapper = persistenceMapper;
     }
