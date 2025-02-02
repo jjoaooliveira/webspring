@@ -47,6 +47,7 @@ public class SaveTaskUseCaseTest {
                 null,
                 "Title 1",
                 "Content 1",
+                null,
                 expiration,
                 true
         );

@@ -13,6 +13,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,13 +39,13 @@ public class ReadAllAnnotationUseCaseTest {
                 UUID.randomUUID(),
                 new Title(""),
                 new Content("Content 1"),
-                new TimeMark()
+                new TimeMark(OffsetDateTime.now())
         );
         annotation2 = new Annotation(
                 UUID.randomUUID(),
                 new Title(""),
                 new Content("Content 2"),
-                new TimeMark()
+                new TimeMark(OffsetDateTime.now())
         );
         annotationMapper = new AnnotationMapper();
     }

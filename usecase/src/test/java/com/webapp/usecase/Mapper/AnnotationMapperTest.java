@@ -31,7 +31,7 @@ public class AnnotationMapperTest {
                 UUID.randomUUID(),
                 new Title("Title 1"),
                 new Content("Content 1"),
-                new TimeMark()
+                new TimeMark(null)
         );
 
         OutputAnnotationDTO actualOutputAnnotationDTO = annotationMapper.toOutputDTO(annotation);
@@ -49,7 +49,8 @@ public class AnnotationMapperTest {
         InputAnnotationDTO inputAnnotationDTO1 = new InputAnnotationDTO(
                 null,
                 "Title 1",
-                "Content 1"
+                "Content 1",
+                null
         );
 
         var actualAnnotation = annotationMapper.toAnnotation(inputAnnotationDTO1);
@@ -64,7 +65,8 @@ public class AnnotationMapperTest {
         InputAnnotationDTO inputAnnotationDTO1 = new InputAnnotationDTO(
                 UUID.randomUUID(),
                 "Title 1",
-                "Content 1"
+                "Content 1",
+                null
         );
 
         var actualAnnotation = annotationMapper.toAnnotation(inputAnnotationDTO1);

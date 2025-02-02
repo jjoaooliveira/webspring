@@ -69,6 +69,7 @@ public class TaskMapperTest {
                 null,
                 "Title",
                 "Content",
+                null,
                 expectedExpiration,
                 true
         );

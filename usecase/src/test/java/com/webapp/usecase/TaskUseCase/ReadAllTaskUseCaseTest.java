@@ -39,7 +39,7 @@ public class ReadAllTaskUseCaseTest {
                 UUID.randomUUID(),
                 new Title("Title 1"),
                 new Content("Content 1"),
-                new TimeMark(),
+                new TimeMark(null),
                 new TimedMark(OffsetDateTime.now()),
                 true
         );
@@ -47,7 +47,7 @@ public class ReadAllTaskUseCaseTest {
                 UUID.randomUUID(),
                 new Title("Title 2"),
                 new Content("Content 2"),
-                new TimeMark(),
+                new TimeMark(null),
                 new TimedMark(OffsetDateTime.now()),
                 false
         );
