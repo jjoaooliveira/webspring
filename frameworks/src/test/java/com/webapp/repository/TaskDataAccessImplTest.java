@@ -3,65 +3,66 @@ package com.webapp.repository;
 import com.webapp.entity.*;
 import com.webapp.repository.api.TaskRepositoryAPI;
 import com.webapp.repository.entity.TaskEntity;
-import com.webapp.repository.mapper.TaskPersistenceMapper;
+import com.webapp.repository.mapper.TaskMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.UUID;
 
 import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
-@ExtendWith(MockitoExtension.class)
+@EnableAutoConfiguration
+@ContextConfiguration(classes = {
+        TaskRepository.class,
+        TaskEntity.class,
+        TaskMapper.class
+})
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
 public class TaskDataAccessImplTest {
-    @Mock
-    TaskRepository mockTaskRepository;
+    @Autowired
+    TaskRepository taskRepository;
 
-    @Mock
-    TaskPersistenceMapper mockTaskPersistenceMapper;
+    @Autowired
+    TaskMapper taskMapper;
 
-    @Mock
-    TaskEntity mockTestTaskEntity;
-
-    @InjectMocks
     TaskRepositoryAPI taskRepositoryAPI;
-
-    Task task;
 
     @BeforeEach
     void setUp() {
-        task = new Task(
-                UUID.randomUUID(),
-                new Title("Title"),
-                new Content("Content1"),
-                new TimeMark(),
-                new TimedMark(ZonedDateTime.now()),
-                true
-        );
+        taskRepositoryAPI = new TaskRepositoryAPI(taskRepository, taskMapper);
     }
 
     @Test
     @DisplayName("When Save Task Should Return Task With Valid Fields")
     void givenTask_whenSave_thenReturnTask() {
         //arrange
-        when(mockTaskPersistenceMapper.toPersistence(task)).thenReturn(mockTestTaskEntity);
-        when(mockTaskRepository.save(mockTestTaskEntity)).thenReturn(mockTestTaskEntity);
-        when(mockTaskPersistenceMapper.toTask(mockTestTaskEntity)).thenReturn(task);
+        Task task = new Task(
+                null,
+                new Title("Title"),
+                new Content("Content1"),
+                new TimeMark(null),
+                new TimedMark(ZonedDateTime.now()),
+                true
+        );
 
         //act
         var actual = taskRepositoryAPI.taskDataAccessSave(task);
 
         //assert
         assertNotNull("The actual Task should not be null", actual);
-        assertEquals("The actual Task UUID is incorrect", task.getId(), actual.getId());
         assertEquals("The actual Task Title is incorrect", task.getTitle(), actual.getTitle());
         assertEquals("The actual Task Content is incorrect", task.getContent(), actual.getContent());
         assertEquals("The actual Task Creation is incorrect", task.getCreation(), actual.getCreation());
@@ -73,13 +74,19 @@ public class TaskDataAccessImplTest {
     @DisplayName("When Delete Task Should Call Delete Method One Time")
     void givenTaskDataAccess_whenDelete_thenShouldCallRepositoryDelete() {
         //arrange
-        UUID id = UUID.randomUUID();
+        TaskEntity entity = new TaskEntity();
+        entity.setTitle("Title 1");
+        entity.setContent("Content 1");
+        entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        taskRepository.save(entity);
+        UUID uuid = entity.getUUID();
 
         //act
-        taskRepositoryAPI.taskDataAccessDelete(id);
+        taskRepositoryAPI.taskDataAccessDelete(uuid);
+        var actual = taskRepositoryAPI.taskDataAccessFindAll();
 
         //assert
-        verify(mockTaskRepository, times(1)).deleteById(id);
+        assertEquals("Actual list size should be zero", 0, actual.size());
     }
 
     @Test
@@ -87,10 +94,13 @@ public class TaskDataAccessImplTest {
     void givenTaskDataAccess_whenFindAll_thenShouldReturnTaskList() {
         //arrange
         Integer expectedSize = 1;
-        List<TaskEntity> taskEntityList = List.of(mockTestTaskEntity);
-
-        when(mockTaskRepository.findAll()).thenReturn(taskEntityList);
-        when(mockTaskPersistenceMapper.toTask(mockTestTaskEntity)).thenReturn(task);
+        TaskEntity entity = new TaskEntity();
+        entity.setTitle("Title 1");
+        entity.setContent("Content 1");
+        entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        entity.setExpiration(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        entity.setCompleted(true);
+        taskRepository.save(entity);
 
         //act
         var actual = taskRepositoryAPI.taskDataAccessFindAll();

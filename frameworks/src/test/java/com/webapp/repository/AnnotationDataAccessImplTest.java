@@ -9,9 +9,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,46 +24,44 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 
-@ExtendWith(MockitoExtension.class)
+@EnableAutoConfiguration
+@ContextConfiguration(classes = {
+        AnnotationRepository.class,
+        AnnotationEntity.class,
+        AnnotationMapper.class
+})
+@ExtendWith(SpringExtension.class)
+@DataJpaTest
 public class AnnotationDataAccessImplTest {
-    @Mock
-    AnnotationRepository mockAnnotationRepository;
+    @Autowired
+    AnnotationRepository annotationRepository;
 
-    @Mock
-    AnnotationMapper mockAnnotationMapper;
+    @Autowired
+    AnnotationMapper annotationMapper;
 
-    @Mock
-    AnnotationEntity mockAnnotationEntity;
-
-    @InjectMocks
     AnnotationRepositoryAPI annotationRepositoryAPI;
-
-    Annotation annotation;
 
     @BeforeEach
     void setUp() {
-        annotation = new Annotation(
-            UUID.randomUUID(),
-            new Title("Title"),
-            new Content("Content"),
-            new TimeMark()
-        );
+        annotationRepositoryAPI = new AnnotationRepositoryAPI(annotationRepository, annotationMapper);
+
     }
 
     @Test
     @DisplayName("When Save Annotation With Success Should Return Valid Annotation")
     void givenAnnotation_whenSave_thenShouldReturnAnnotation() {
         //arrange
-        when(mockAnnotationMapper.toEntity(annotation)).thenReturn(mockAnnotationEntity);
-        when(mockAnnotationRepository.save(mockAnnotationEntity)).thenReturn(mockAnnotationEntity);
-        when(mockAnnotationMapper.toAnnotation(mockAnnotationEntity)).thenReturn(annotation);
+        Annotation annotation = new Annotation(
+            new Title("Title"),
+            new Content("Content"),
+            new TimeMark(null)
+        );
 
         //act
         var actual = annotationRepositoryAPI.annotationDataAccessSave(annotation);
 
         //assert
         assertNotNull("The actual Annotation should not be null", actual);
-        assertEquals("The actual Annotation UUID is incorrect", annotation.getId(), actual.getId());
         assertEquals("The actual Annotation Title is incorrect", annotation.getTitle(), actual.getTitle());
         assertEquals("The actual Annotation Content is incorrect", annotation.getContent(), actual.getContent());
         assertEquals("The actual Annotation Creation is incorrect", annotation.getCreation(), actual.getCreation());
@@ -69,10 +72,11 @@ public class AnnotationDataAccessImplTest {
     void givenAnnotationDataAccess_whenFindAll_thenShouldReturnAnnotationList() {
         //arrange
         Integer expectedSize = 1;
-        List<AnnotationEntity> annotationEntityList = List.of(mockAnnotationEntity);
-
-        when(mockAnnotationRepository.findAll()).thenReturn(annotationEntityList);
-        when(mockAnnotationMapper.toAnnotation(mockAnnotationEntity)).thenReturn(annotation);
+        AnnotationEntity entity1 = new AnnotationEntity();
+        entity1.setTitle("Title 1");
+        entity1.setContent("Content 1");
+        entity1.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        annotationRepository.save(entity1);
 
         //act
         var actual = annotationRepositoryAPI.annotationDataAccessFindAll();
@@ -86,12 +90,18 @@ public class AnnotationDataAccessImplTest {
     @DisplayName("When Delete Task Should Call Delete Method One Time")
     void givenAnnotationDataAccess_whenDelete_thenShouldCallRepositoryDelete() {
         //arrange
-        UUID id = UUID.randomUUID();
+        AnnotationEntity entity1 = new AnnotationEntity();
+        entity1.setTitle("Title 1");
+        entity1.setContent("Content 1");
+        entity1.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        annotationRepository.save(entity1);
+        UUID uuid = entity1.getUUID();
 
         //act
-        annotationRepositoryAPI.annotationDataAccessDelete(id);
+        annotationRepositoryAPI.annotationDataAccessDelete(uuid);
+        var actual = annotationRepositoryAPI.annotationDataAccessFindAll();
 
         //assert
-        verify(mockAnnotationRepository, times(1)).deleteById(id);
+        assertEquals("Actual list size should be zero", 0, actual.size());
     }
 }
