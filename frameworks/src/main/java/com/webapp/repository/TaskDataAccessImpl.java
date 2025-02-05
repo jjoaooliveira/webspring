@@ -4,10 +4,12 @@ import com.webapp.entity.Task;
 import com.webapp.repository.entity.TaskEntity;
 import com.webapp.repository.mapper.TaskMapper;
 import com.webapp.usecase.data_access.TaskDataAccess;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Component
@@ -19,6 +21,20 @@ public class TaskDataAccessImpl implements TaskDataAccess {
     public TaskDataAccessImpl(TaskRepository taskRepository, TaskMapper persistenceMapper) {
         this.taskRepository = taskRepository;
         this.persistenceMapper = persistenceMapper;
+    }
+
+    @Override
+    public List<Task> findByTitle(String title) {
+        List<TaskEntity> taskEntityList = taskRepository.findByTitle(title);
+        return taskEntityList.stream().map(persistenceMapper::toTask).toList();
+    }
+
+    @Override
+    public Task findById(UUID uuid) {
+        Optional<TaskEntity> taskEntity = taskRepository.findById(uuid);
+        return persistenceMapper.toTask(taskEntity
+                .orElseThrow(() -> new EntityNotFoundException("Task does not exist with given id"))
+        );
     }
 
     @Override
