@@ -49,7 +49,7 @@ public class AnnotationControllerTest {
     UseCase<UUID, OutputAnnotationDTO> mockFindAnnotationByIdUseCase;
 
     @MockBean
-    UseCase<String, OutputAnnotationDTO> mockFindAnnotationByTitleUseCase;
+    UseCase<String, List<OutputAnnotationDTO>> mockFindAnnotationByTitleUseCase;
 
     @Autowired
     AnnotationPresenter annotationPresenter;

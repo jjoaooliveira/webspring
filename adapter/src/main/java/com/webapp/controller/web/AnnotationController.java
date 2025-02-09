@@ -19,7 +19,7 @@ import java.util.UUID;
 public class AnnotationController {
     private SimpleReturnUseCase<List<OutputAnnotationDTO>> findAllUseCase;
     private UseCase<UUID, OutputAnnotationDTO> findByIdUseCase;
-    private UseCase<String, OutputAnnotationDTO> findByTitleUseCase;
+    private UseCase<String, List<OutputAnnotationDTO>> findByTitleUseCase;
     private UseCase<InputAnnotationDTO, OutputAnnotationDTO> saveUsecase;
     private SimpleInputUseCase<UUID> deleteUseCase;
     private AnnotationPresenter presenter;
@@ -28,7 +28,7 @@ public class AnnotationController {
     public AnnotationController(
             SimpleReturnUseCase<List<OutputAnnotationDTO>> findAllUseCase,
             UseCase<UUID, OutputAnnotationDTO> findByIdUseCase,
-            UseCase<String, OutputAnnotationDTO> findByTitleUseCase,
+            UseCase<String, List<OutputAnnotationDTO>> findByTitleUseCase,
             UseCase<InputAnnotationDTO, OutputAnnotationDTO> saveUsecase,
             SimpleInputUseCase<UUID> deleteUseCase,
             AnnotationPresenter presenter
@@ -57,9 +57,12 @@ public class AnnotationController {
     }
 
     @GetMapping("/{title}")
-    public EntityModel<OutputAnnotationDTO> getAnnotationByTitle(@PathVariable("title") String title) {
-        OutputAnnotationDTO annotationDTOs = findByTitleUseCase.execute(title);
-        return presenter.toEntityModel(annotationDTOs);
+    public CollectionModel<EntityModel<OutputAnnotationDTO>> getAnnotationByTitle(@PathVariable("title") String title) {
+        List<OutputAnnotationDTO> annotationDTOs = findByTitleUseCase.execute(title);
+        List<EntityModel<OutputAnnotationDTO>> annotationModelList = annotationDTOs.stream()
+                .map(presenter::toEntityModel)
+                .toList();
+        return presenter.toCollectionModel(annotationModelList);
     }
 
     @PostMapping
