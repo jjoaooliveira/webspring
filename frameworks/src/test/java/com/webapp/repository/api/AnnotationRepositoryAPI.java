@@ -9,26 +9,29 @@ import java.util.List;
 import java.util.UUID;
 
 public class AnnotationRepositoryAPI {
-    private AnnotationRepository repository;
-    private AnnotationMapper mapper;
+    private AnnotationDataAccessImpl annotationDataAccess;
 
     public AnnotationRepositoryAPI(AnnotationRepository repository, AnnotationMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+        annotationDataAccess = new AnnotationDataAccessImpl(repository, mapper);
     }
 
     public Annotation annotationDataAccessSave(Annotation annotation) {
-        AnnotationDataAccessImpl annotationDataAccess = new AnnotationDataAccessImpl(repository, mapper);
         return annotationDataAccess.save(annotation);
     }
 
     public List<Annotation> annotationDataAccessFindAll() {
-        AnnotationDataAccessImpl annotationDataAccess = new AnnotationDataAccessImpl(repository, mapper);
         return annotationDataAccess.findAll();
     }
 
+    public List<Annotation> annotationDataAccessFindByTitle(String title) {
+        return annotationDataAccess.findByTitle(title);
+    }
+
+    public Annotation annotationDataAccessFindById(UUID uuid) {
+        return annotationDataAccess.findById(uuid);
+    }
+
     public void annotationDataAccessDelete(UUID uuid) {
-        AnnotationDataAccessImpl annotationDataAccess = new AnnotationDataAccessImpl(repository, mapper);
         annotationDataAccess.delete(uuid);
     }
 }

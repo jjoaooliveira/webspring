@@ -10,26 +10,29 @@ import java.util.UUID;
 
 public class TaskRepositoryAPI {
 
-    private TaskRepository repository;
-    private TaskMapper mapper;
+    private TaskDataAccessImpl taskDataAccess;
 
     public TaskRepositoryAPI(TaskRepository repository, TaskMapper mapper) {
-        this.repository = repository;
-        this.mapper = mapper;
+        this.taskDataAccess = new TaskDataAccessImpl(repository, mapper);
     }
 
     public Task taskDataAccessSave(Task task) {
-        TaskDataAccessImpl taskDataAccess = new TaskDataAccessImpl(repository, mapper);
         return taskDataAccess.save(task);
     }
 
-    public void taskDataAccessDelete(UUID uuid) {
-        TaskDataAccessImpl taskDataAccess = new TaskDataAccessImpl(repository, mapper);
-        taskDataAccess.delete(uuid);
+    public List<Task> taskDataAccessFindByTitle(String title) {
+        return taskDataAccess.findByTitle(title);
+    }
+
+    public Task taskDataAccessFindById(UUID uuid) {
+        return taskDataAccess.findById(uuid);
     }
 
     public List<Task> taskDataAccessFindAll() {
-        TaskDataAccessImpl taskDataAccess = new TaskDataAccessImpl(repository, mapper);
         return taskDataAccess.findAll();
+    }
+
+    public void taskDataAccessDelete(UUID uuid) {
+        taskDataAccess.delete(uuid);
     }
 }
