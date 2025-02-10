@@ -4,8 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import com.webapp.entity.*;
-import com.webapp.entity.exceptions.EmptyTextException;
-import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.api.UseCaseAPI;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.mapper.TaskMapper;

@@ -41,7 +41,6 @@ public class AnnotationDataAccessImplTest {
     @BeforeEach
     void setUp() {
         annotationRepositoryAPI = new AnnotationRepositoryAPI(annotationRepository, annotationMapper);
-
     }
 
     @Test
@@ -65,15 +64,15 @@ public class AnnotationDataAccessImplTest {
     }
 
     @Test
-    @DisplayName("When FindAll Method Success Should Return Annotation List")
-    void givenAnnotationDataAccess_whenFindAll_thenShouldReturnAnnotationList() {
+    @DisplayName("When Find All Annotation With Success Should Return Annotation List")
+    void givenAnnotationEntity_whenFindAll_thenShouldReturnAnnotationList() {
         //arrange
         Integer expectedSize = 1;
-        AnnotationEntity entity1 = new AnnotationEntity();
-        entity1.setTitle("Title 1");
-        entity1.setContent("Content 1");
-        entity1.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
-        annotationRepository.save(entity1);
+        AnnotationEntity entity = new AnnotationEntity();
+        entity.setTitle("Title 1");
+        entity.setContent("Content 1");
+        entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        annotationRepository.save(entity);
 
         //act
         var actual = annotationRepositoryAPI.annotationDataAccessFindAll();
@@ -84,15 +83,14 @@ public class AnnotationDataAccessImplTest {
     }
 
     @Test
-    @DisplayName("When Delete Task Should Call Delete Method One Time")
-    void givenAnnotationDataAccess_whenDelete_thenShouldCallRepositoryDelete() {
+    @DisplayName("When Delete Task With Success Should Delete Annotation")
+    void givenAnnotationId_whenDelete_thenShouldDeleteAnnotation() {
         //arrange
-        AnnotationEntity entity1 = new AnnotationEntity();
-        entity1.setTitle("Title 1");
-        entity1.setContent("Content 1");
-        entity1.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
-        annotationRepository.save(entity1);
-        UUID uuid = entity1.getUUID();
+        AnnotationEntity entity = new AnnotationEntity();
+        entity.setTitle("Title 1");
+        entity.setContent("Content 1");
+        entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
+        UUID uuid = entity.getUUID();
 
         //act
         annotationRepositoryAPI.annotationDataAccessDelete(uuid);
@@ -100,5 +98,60 @@ public class AnnotationDataAccessImplTest {
 
         //assert
         assertEquals("Actual list size should be zero", 0, actual.size());
+    }
+
+    @Test
+    @DisplayName("When Find Annotation By Title With Success Should Return List Of Annotation")
+    void givenTitle_whenFindByTitle_thenReturnListOfAnnotation() {
+        //arrange
+        String expectedTitle = "Simple Title";
+        AnnotationEntity annotationEntity1 = new AnnotationEntity(
+                UUID.randomUUID(),
+                "Simple Title",
+                "Content",
+                OffsetDateTime.now()
+        );
+
+        AnnotationEntity annotationEntity2 = new AnnotationEntity(
+                UUID.randomUUID(),
+                "Simple Title",
+                "Content",
+                OffsetDateTime.now()
+        );
+        annotationRepository.save(annotationEntity1);
+        annotationRepository.save(annotationEntity2);
+
+        //act
+        var actual = annotationRepositoryAPI.annotationDataAccessFindByTitle("Simple Title");
+
+        //assert
+        assertEquals("The Title is incorrect", expectedTitle, actual.getFirst().getTitle());
+        assertEquals("The Title is incorrect", expectedTitle, actual.getLast().getTitle());
+    }
+
+    @Test
+    @DisplayName("When Find Annotation By Id With Success Should Return Correct Annotation")
+    void givenAnnotationId_whenFindById_thenShouldReturnAnnotation() {
+        //arrange
+        String expectedTitle = "Title";
+        String expectedContent = "Content";
+        OffsetDateTime expectedCreation = OffsetDateTime.parse("2025-01-01T00:00:00-03:00");
+
+        AnnotationEntity annotationEntity = new AnnotationEntity();
+        annotationEntity.setTitle("Title");
+        annotationEntity.setContent("Content");
+        annotationEntity.setCreation(OffsetDateTime.parse("2025-01-01T00:00:00-03:00"));
+        annotationEntity = annotationRepository.save(annotationEntity);
+        UUID uuid = annotationEntity.getUUID();
+
+        //act
+        var actual = annotationRepositoryAPI.annotationDataAccessFindById(uuid);
+
+        //assert
+        assertNotNull("The actual Entity should not be null", actual);
+        assertEquals("The Id is incorrect", uuid, actual.getId());
+        assertEquals("The Title is incorrect", expectedTitle, actual.getTitle());
+        assertEquals("The Content is incorrect", expectedContent, actual.getContent());
+        assertEquals("The Creation is incorrect", expectedCreation, actual.getCreation());
     }
 }

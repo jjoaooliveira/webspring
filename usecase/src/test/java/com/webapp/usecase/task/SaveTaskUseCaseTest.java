@@ -1,18 +1,13 @@
 package com.webapp.usecase.TaskUseCase;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import com.webapp.entity.*;
-import com.webapp.entity.exceptions.EmptyTextException;
-import com.webapp.entity.exceptions.TextLengthOverLimitException;
 import com.webapp.usecase.api.UseCaseAPI;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.dto.task.InputTaskDTO;
-import com.webapp.usecase.dto.task.OutputTaskDTO;
-import com.webapp.usecase.exception.FailToCreateTaskException;
 import com.webapp.usecase.mapper.TaskMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.OffsetDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
