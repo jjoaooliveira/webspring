@@ -4,9 +4,22 @@ import com.webapp.entity.*;
 import com.webapp.repository.entity.TaskEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class TaskMapper {
     public TaskEntity toPersistence(Task task) {
+        if(task.getId() == null) {
+            return new TaskEntity(
+                    UUID.randomUUID(),
+                    task.getTitle(),
+                    task.getContent(),
+                    task.getCreation(),
+                    task.getExpiration(),
+                    task.isCompleted()
+            );
+        }
+
         return new TaskEntity(
                 task.getId(),
                 task.getTitle(),
