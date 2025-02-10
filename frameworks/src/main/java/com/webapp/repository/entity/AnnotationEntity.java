@@ -9,7 +9,6 @@ import java.util.UUID;
 @Table
 public class AnnotationEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID UUID;
 

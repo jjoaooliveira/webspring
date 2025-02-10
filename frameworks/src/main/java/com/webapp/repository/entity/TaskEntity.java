@@ -9,7 +9,6 @@ import java.time.OffsetDateTime;
 @Table
 public class TaskEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID UUID;
 
