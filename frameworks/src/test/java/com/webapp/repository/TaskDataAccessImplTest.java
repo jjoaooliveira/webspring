@@ -45,7 +45,7 @@ public class TaskDataAccessImplTest {
     }
 
     @Test
-    @DisplayName("When Save Task Should Return Task With Valid Fields")
+    @DisplayName("When Save Task With Success Should Return Valid Task")
     void givenTask_whenSave_thenReturnTask() {
         //arrange
         Task task = new Task(
@@ -70,8 +70,8 @@ public class TaskDataAccessImplTest {
     }
 
     @Test
-    @DisplayName("When Delete Task Should Call Delete Method One Time")
-    void givenTaskDataAccess_whenDelete_thenShouldCallRepositoryDelete() {
+    @DisplayName("When Delete Task With Success Should Delete Task")
+    void givenTaskId_whenDelete_thenShouldDeleteTask() {
         //arrange
         TaskEntity entity = new TaskEntity();
         entity.setTitle("Title 1");
@@ -90,7 +90,7 @@ public class TaskDataAccessImplTest {
 
     @Test
     @DisplayName("When FindAll Method Should Return a List of Task")
-    void givenTaskDataAccess_whenFindAll_thenShouldReturnTaskList() {
+    void givenTaskEntity_whenFindAll_thenShouldReturnTaskList() {
         //arrange
         Integer expectedSize = 1;
         TaskEntity entity = new TaskEntity();
@@ -110,4 +110,71 @@ public class TaskDataAccessImplTest {
 
     }
 
+    @Test
+    @DisplayName("When Find Task By Title With Success Should Return Task List")
+    void givenTitle_whenFindByTitle_thenShouldReturnTaskList() {
+        //arrange
+        String expectedTitle = "Simple Title";
+        Integer expectedSize = 2;
+        TaskEntity taskEntity1 = new TaskEntity(
+                null,
+                "Simple Title",
+                "Content",
+                OffsetDateTime.now(),
+                OffsetDateTime.now(),
+                true
+        );
+
+        TaskEntity taskEntity2 = new TaskEntity(
+                null,
+                "Simple Title",
+                "Content",
+                OffsetDateTime.now(),
+                OffsetDateTime.now(),
+                false
+        );
+        taskRepository.save(taskEntity1);
+        taskRepository.save(taskEntity2);
+
+        //act
+        var actual = taskRepositoryAPI.taskDataAccessFindByTitle("Simple Title");
+
+        //assert
+        assertNotNull("The actual list should not be null", actual);
+        assertEquals("The actual list size should be 2", expectedSize, actual.size());
+        assertEquals("The Title is incorrect", expectedTitle, actual.getFirst().getTitle());
+        assertEquals("The Title is incorrect", expectedTitle, actual.getLast().getTitle());
+    }
+
+    @Test
+    @DisplayName("When Find Task By Id With Success Should Return Correct Task")
+    void givenTaskId_whenFindById_thenShouldReturnTask() {
+        //arrange
+        String expectedTitle = "Title";
+        String expectedContent = "Content";
+        OffsetDateTime expectedCreation = OffsetDateTime.parse("2025-01-01T00:00:00-03:00");
+        OffsetDateTime expectedExpiration = OffsetDateTime.parse("2025-01-01T01:00:00-03:00");
+        Boolean expectedCompleted = false;
+
+        TaskEntity taskEntity = new TaskEntity();
+        taskEntity.setTitle("Title");
+        taskEntity.setContent("Content");
+        taskEntity.setCreation(OffsetDateTime.parse("2025-01-01T00:00:00-03:00"));
+        taskEntity.setExpiration(OffsetDateTime.parse("2025-01-01T01:00:00-03:00"));
+        taskEntity.setCompleted(false);
+        taskEntity = taskRepository.save(taskEntity);
+        UUID uuid = taskEntity.getUUID();
+
+        //act
+        var actual = taskRepositoryAPI.taskDataAccessFindById(uuid);
+
+        //assert
+        assertNotNull("The actual task should not be null", actual);
+        assertEquals("The Title is incorrect", expectedTitle, actual.getTitle());
+        assertEquals("The Content is incorrect", expectedContent, actual.getContent());
+        assertEquals("The Creation is incorrect", expectedCreation, actual.getCreation());
+        assertEquals("The Expiration is incorrect", expectedExpiration, actual.getExpiration());
+        assertEquals("The Completed is incorrect", expectedCompleted, actual.isCompleted());
+
+    }
 }
