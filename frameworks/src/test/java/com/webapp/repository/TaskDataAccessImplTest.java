@@ -74,6 +74,7 @@ public class TaskDataAccessImplTest {
     void givenTaskId_whenDelete_thenShouldDeleteTask() {
         //arrange
         TaskEntity entity = new TaskEntity();
+        entity.setUUID(UUID.randomUUID());
         entity.setTitle("Title 1");
         entity.setContent("Content 1");
         entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
@@ -94,6 +95,7 @@ public class TaskDataAccessImplTest {
         //arrange
         Integer expectedSize = 1;
         TaskEntity entity = new TaskEntity();
+        entity.setUUID(UUID.randomUUID());
         entity.setTitle("Title 1");
         entity.setContent("Content 1");
         entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
@@ -117,7 +119,7 @@ public class TaskDataAccessImplTest {
         String expectedTitle = "Simple Title";
         Integer expectedSize = 2;
         TaskEntity taskEntity1 = new TaskEntity(
-                null,
+                UUID.randomUUID(),
                 "Simple Title",
                 "Content",
                 OffsetDateTime.now(),
@@ -126,7 +128,7 @@ public class TaskDataAccessImplTest {
         );
 
         TaskEntity taskEntity2 = new TaskEntity(
-                null,
+                UUID.randomUUID(),
                 "Simple Title",
                 "Content",
                 OffsetDateTime.now(),
@@ -155,15 +157,16 @@ public class TaskDataAccessImplTest {
         OffsetDateTime expectedCreation = OffsetDateTime.parse("2025-01-01T00:00:00-03:00");
         OffsetDateTime expectedExpiration = OffsetDateTime.parse("2025-01-01T01:00:00-03:00");
         Boolean expectedCompleted = false;
+        UUID uuid = UUID.randomUUID();
 
         TaskEntity taskEntity = new TaskEntity();
+        taskEntity.setUUID(uuid);
         taskEntity.setTitle("Title");
         taskEntity.setContent("Content");
         taskEntity.setCreation(OffsetDateTime.parse("2025-01-01T00:00:00-03:00"));
         taskEntity.setExpiration(OffsetDateTime.parse("2025-01-01T01:00:00-03:00"));
         taskEntity.setCompleted(false);
-        taskEntity = taskRepository.save(taskEntity);
-        UUID uuid = taskEntity.getUUID();
+        taskRepository.save(taskEntity);
 
         //act
         var actual = taskRepositoryAPI.taskDataAccessFindById(uuid);

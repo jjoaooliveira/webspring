@@ -69,6 +69,7 @@ public class AnnotationDataAccessImplTest {
         //arrange
         Integer expectedSize = 1;
         AnnotationEntity entity = new AnnotationEntity();
+        entity.setUUID(UUID.randomUUID());
         entity.setTitle("Title 1");
         entity.setContent("Content 1");
         entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
@@ -86,11 +87,13 @@ public class AnnotationDataAccessImplTest {
     @DisplayName("When Delete Task With Success Should Delete Annotation")
     void givenAnnotationId_whenDelete_thenShouldDeleteAnnotation() {
         //arrange
+        UUID uuid = UUID.randomUUID();
         AnnotationEntity entity = new AnnotationEntity();
+        entity.setUUID(uuid);
         entity.setTitle("Title 1");
         entity.setContent("Content 1");
         entity.setCreation(OffsetDateTime.now(ZoneId.of("America/Sao_Paulo")));
-        UUID uuid = entity.getUUID();
+        annotationRepository.save(entity);
 
         //act
         annotationRepositoryAPI.annotationDataAccessDelete(uuid);
@@ -133,16 +136,17 @@ public class AnnotationDataAccessImplTest {
     @DisplayName("When Find Annotation By Id With Success Should Return Correct Annotation")
     void givenAnnotationId_whenFindById_thenShouldReturnAnnotation() {
         //arrange
+        UUID uuid = UUID.randomUUID();
         String expectedTitle = "Title";
         String expectedContent = "Content";
         OffsetDateTime expectedCreation = OffsetDateTime.parse("2025-01-01T00:00:00-03:00");
 
         AnnotationEntity annotationEntity = new AnnotationEntity();
+        annotationEntity.setUUID(uuid);
         annotationEntity.setTitle("Title");
         annotationEntity.setContent("Content");
         annotationEntity.setCreation(OffsetDateTime.parse("2025-01-01T00:00:00-03:00"));
-        annotationEntity = annotationRepository.save(annotationEntity);
-        UUID uuid = annotationEntity.getUUID();
+        annotationRepository.save(annotationEntity);
 
         //act
         var actual = annotationRepositoryAPI.annotationDataAccessFindById(uuid);
