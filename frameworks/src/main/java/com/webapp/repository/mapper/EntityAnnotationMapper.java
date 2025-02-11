@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 @Component
-public class AnnotationMapper {
+public class EntityAnnotationMapper {
     public AnnotationEntity toEntity(Annotation annotation) {
         if(annotation.getId() == null) {
             return new AnnotationEntity(

@@ -6,9 +6,11 @@ import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@Service
 public class ReadAnnotationByIdUseCase extends UseCase<UUID, OutputAnnotationDTO> {
     private AnnotationDataAccess annotationDataAccess;
     private AnnotationMapper annotationMapper;

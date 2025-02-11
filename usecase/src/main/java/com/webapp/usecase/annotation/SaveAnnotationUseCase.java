@@ -7,7 +7,9 @@ import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class SaveAnnotationUseCase extends UseCase<InputAnnotationDTO, OutputAnnotationDTO> {
 
     private AnnotationDataAccess repository;

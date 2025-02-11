@@ -6,9 +6,11 @@ import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReadTaskByTitleUseCase extends UseCase<String, List<OutputTaskDTO>> {
     private TaskDataAccess taskDataAccess;
     private TaskMapper taskMapper;
