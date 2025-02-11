@@ -1,8 +1,9 @@
-package com.webapp.usecase.AnnotationUseCase;
+package com.webapp.usecase.annotation;
 
 import com.webapp.usecase.api.UseCaseAPI;
 import com.webapp.usecase.data_access.AnnotationDataAccess;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,22 +21,23 @@ public class DeleteAnnotationUseCaseTest {
 
     UseCaseAPI useCaseAPI;
 
-    UUID id;
-
     @BeforeEach
     void setUp() {
         useCaseAPI = new UseCaseAPI();
-        id = UUID.randomUUID();
     }
 
     @Test
-    void givenAnIdValue_whenExecute_thenCallRepositoryDeleteMethodOneTime() {
+    @DisplayName("When Execute With Success Should Call Delete Method")
+    void givenIdValue_whenExecute_thenCallDeleteMethodOneTime() {
         //arrange
+        UUID id = UUID.randomUUID();
 
         //act
         useCaseAPI.deleteAnnotation(id, mockAnnotationDataAccess);
 
         //assert
-        verify(mockAnnotationDataAccess, times(1)).delete(id);
+        verify(mockAnnotationDataAccess, times(1)
+                .description("Should call delete method only one time"))
+                .delete(id);
     }
 }

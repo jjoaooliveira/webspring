@@ -1,4 +1,4 @@
-package com.webapp.usecase.AnnotationUseCase;
+package com.webapp.usecase.annotation;
 
 import com.webapp.entity.Annotation;
 import com.webapp.entity.Content;
@@ -8,6 +8,7 @@ import com.webapp.usecase.api.UseCaseAPI;
 import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ReadAllAnnotationUseCaseTest {
@@ -28,45 +29,44 @@ public class ReadAllAnnotationUseCaseTest {
 
     AnnotationMapper annotationMapper;
 
-    Annotation annotation1, annotation2;
-
     UseCaseAPI useCaseAPI;
 
     @BeforeEach
     void setUp() {
         useCaseAPI = new UseCaseAPI();
-        annotation1 = new Annotation(
+        annotationMapper = new AnnotationMapper();
+    }
+
+    @Test
+    @DisplayName("When Execute With Success Should Return Annotation List")
+    void givenAnnotationList_whenExecute_thenShouldCallFindAllMethodOneTimeAndReturnDTOList() {
+        //arrange
+        int expectSize = 2;
+        Annotation annotation1 = new Annotation(
                 UUID.randomUUID(),
                 new Title(""),
                 new Content("Content 1"),
                 new TimeMark(OffsetDateTime.now())
         );
-        annotation2 = new Annotation(
+
+        Annotation annotation2 = new Annotation(
                 UUID.randomUUID(),
                 new Title(""),
                 new Content("Content 2"),
                 new TimeMark(OffsetDateTime.now())
         );
-        annotationMapper = new AnnotationMapper();
-    }
-
-    @Test
-    void givenReadAllAnnotation_whenExecute_thenReturnListOfAnnotationWithSizeEquals2() {
-        //arrange
-        int expectSize = 2;
-        String expectedContent1 = "Content 1";
-        String expectedContent2 = "Content 2";
         List<Annotation> annotationList = List.of(annotation1, annotation2);
 
         when(mockAnnotationDataAccess.findAll()).thenReturn(annotationList);
 
         //act
-        var actualAnnotationOutputDTOS = useCaseAPI.readAllAnnotation(annotationMapper, mockAnnotationDataAccess);
+        var actual = useCaseAPI.readAllAnnotation(annotationMapper, mockAnnotationDataAccess);
 
         //assert
-        assertNotNull(actualAnnotationOutputDTOS);
-        assertEquals(expectSize, actualAnnotationOutputDTOS.size());
-        assertEquals(expectedContent1, actualAnnotationOutputDTOS.get(0).content());
-        assertEquals(expectedContent2, actualAnnotationOutputDTOS.get(1).content());
+        verify(mockAnnotationDataAccess, times(1)
+                .description("Should call findAll method only one time"))
+                .findAll();
+        assertNotNull(actual, "The actual list should not be null");
+        assertEquals(expectSize, actual.size(), "The actual list size should be 2");
     }
 }

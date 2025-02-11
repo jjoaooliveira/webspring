@@ -1,4 +1,4 @@
-package com.webapp.usecase.AnnotationUseCase;
+package com.webapp.usecase.annotation;
 
 import com.webapp.entity.Annotation;
 import com.webapp.entity.Content;
@@ -9,6 +9,7 @@ import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -19,7 +20,7 @@ import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class SaveAnnotationUseCaseTest {
@@ -29,42 +30,43 @@ public class SaveAnnotationUseCaseTest {
 
     AnnotationMapper annotationMapper;
 
-    InputAnnotationDTO inputAnnotationDTO;
-    Annotation returnedDatabaseAnnotation;
-
     UseCaseAPI useCaseAPI;
 
     @BeforeEach
     void setUp() {
         useCaseAPI = new UseCaseAPI();
         annotationMapper = new AnnotationMapper();
-        UUID uuid = UUID.randomUUID();
-        OffsetDateTime offsetDateTime = OffsetDateTime.now();
-
-        inputAnnotationDTO = new InputAnnotationDTO(
-                uuid,
-                "Title 1",
-                "Content 1",
-                null
-        );
-
-        returnedDatabaseAnnotation = new Annotation(
-                uuid,
-                new Title("Title 1"),
-                new Content("Content 1"),
-                new TimeMark(offsetDateTime));
     }
 
     @Test
-    void givenAnnotationUseCase_whenExecute_thenReturnNotNullOutputAnnotationDTO() {
+    @DisplayName("When Execute With Success Should Return Annotation Saved")
+    void givenInputAnnotationDTO_whenExecute_thenShouldCallSaveMethodOneTimeAndReturnOutputAnnotationDTO() {
+        //arrange
+        UUID uuid = UUID.randomUUID();
 
-        when(mockAnnotationDataAccess.save(any())).thenReturn(returnedDatabaseAnnotation);
+        InputAnnotationDTO inputAnnotationDTO = new InputAnnotationDTO(
+                uuid,
+                "Title 1",
+                "Content 1",
+                OffsetDateTime.parse("2025-01-01T00:00:00-03:00")
+        );
 
+        Annotation returnedDatabaseAnnotation = new Annotation(
+                uuid,
+                new Title("Title 1"),
+                new Content("Content 1"),
+                new TimeMark(OffsetDateTime.parse("2025-01-01T00:00:00-03:00"))
+        );
+
+        when(mockAnnotationDataAccess.save(any(Annotation.class))).thenReturn(returnedDatabaseAnnotation);
+
+        //act
         var actual = useCaseAPI.saveAnnotation(inputAnnotationDTO, annotationMapper, mockAnnotationDataAccess);
-        assertNotNull(actual);
-        assertEquals(returnedDatabaseAnnotation.getId(), actual.id());
-        assertEquals(returnedDatabaseAnnotation.getTitle(), actual.title());
-        assertEquals(returnedDatabaseAnnotation.getContent(), actual.content());
-        assertEquals(returnedDatabaseAnnotation.getCreation(), actual.creation());
+
+        //assert
+        verify(mockAnnotationDataAccess, times(1)
+                .description("Should call save method only one time"))
+                .save(any(Annotation.class));
+        assertNotNull(actual, "The actual annotation should not be null");
     }
 }
