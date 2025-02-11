@@ -1,4 +1,4 @@
-package com.webapp.usecase.Mapper;
+package com.webapp.usecase.mapper;
 
 import com.webapp.entity.Annotation;
 import com.webapp.entity.Content;
@@ -6,12 +6,9 @@ import com.webapp.entity.TimeMark;
 import com.webapp.entity.Title;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
-import com.webapp.usecase.mapper.AnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.MockitoAnnotations;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;

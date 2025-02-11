@@ -1,15 +1,13 @@
-package com.webapp.usecase.Mapper;
+package com.webapp.usecase.mapper;
 
 import com.webapp.entity.*;
 import com.webapp.usecase.dto.task.InputTaskDTO;
-import com.webapp.usecase.mapper.TaskMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.OffsetDateTime;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
