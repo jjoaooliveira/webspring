@@ -1,8 +1,9 @@
-package com.webapp.usecase.TaskUseCase;
+package com.webapp.usecase.task;
 
 import com.webapp.usecase.api.UseCaseAPI;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -20,18 +21,24 @@ public class DeleteTaskUseCaseTest {
 
     UseCaseAPI useCaseAPI;
 
-    UUID id;
-
     @BeforeEach
     void setUp() {
-        id = UUID.randomUUID();
         useCaseAPI = new UseCaseAPI();
     }
 
     @Test
-    void givenALongValue_whenExecute_thenCallRepositoryMethodDeleteOneTime() {
+    @DisplayName("When Execute With Success Should Call Delete Method")
+    void givenId_whenExecute_thenCallRepositoryMethodDeleteOneTime() {
+        //arrange
+        UUID id = UUID.randomUUID();
+
+        //act
         useCaseAPI.deleteTask(id, mockTaskDataAccess);
 
-        verify(mockTaskDataAccess, times(1)).delete(id);
+        //assert
+        verify(mockTaskDataAccess, times(1)
+                .description("Should call delete method only one time"))
+                .delete(id);
+
     }
 }

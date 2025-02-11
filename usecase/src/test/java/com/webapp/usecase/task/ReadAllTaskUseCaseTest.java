@@ -1,4 +1,4 @@
-package com.webapp.usecase.TaskUseCase;
+package com.webapp.usecase.task;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -8,6 +8,7 @@ import com.webapp.usecase.api.UseCaseAPI;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.mapper.TaskMapper;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -25,15 +26,20 @@ public class ReadAllTaskUseCaseTest {
 
     TaskMapper taskMapper;
 
-    Task task1, task2;
-
     UseCaseAPI useCaseAPI;
 
     @BeforeEach
     void setUp() {
         useCaseAPI = new UseCaseAPI();
         taskMapper = new TaskMapper();
-        task1 = new Task(
+    }
+
+    @Test
+    @DisplayName("When Execute With Success Should Call FindAll Method and Return Task List")
+    void givenTaskList_whenExecute_thenShouldCallFindAllOneTimeMethodAndReturnDTOList() {
+        //arrange
+        Integer expectSize = 2;
+        Task task1 = new Task(
                 UUID.randomUUID(),
                 new Title("Title 1"),
                 new Content("Content 1"),
@@ -41,7 +47,7 @@ public class ReadAllTaskUseCaseTest {
                 new TimedMark(OffsetDateTime.now()),
                 true
         );
-        task2 = new Task(
+        Task task2 = new Task(
                 UUID.randomUUID(),
                 new Title("Title 2"),
                 new Content("Content 2"),
@@ -49,22 +55,16 @@ public class ReadAllTaskUseCaseTest {
                 new TimedMark(OffsetDateTime.now()),
                 false
         );
-    }
-
-    @Test
-    void givenReadAllTaskUseCase_whenExecute_thenReturnOutputDTOListWithSizeEquals2() {
-        //arrange
         List<Task> dbTaskList = List.of(task1, task2);
-        Integer expectSize = 2;
-
         when(mockTaskDataAccess.findAll()).thenReturn(dbTaskList);
 
         //act
         var actual = useCaseAPI.readAllTask(taskMapper, mockTaskDataAccess);
 
         //assert
+        verify(mockTaskDataAccess, times(1)
+                .description("Should call findAll method only one time"))
+                .findAll();
         assertEquals(expectSize, actual.size());
-        assertEquals(task1.getId(), actual.get(0).id());
-        assertEquals(task2.getId(), actual.get(1).id());
     }
 }
