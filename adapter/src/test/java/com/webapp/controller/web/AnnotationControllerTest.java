@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -43,6 +44,7 @@ public class AnnotationControllerTest {
     SimpleReturnUseCase<List<OutputAnnotationDTO>> mockReadAllAnnotationUseCase;
 
     @MockBean
+    @Qualifier("annotation")
     SimpleInputUseCase<UUID> mockDeleteAnnotationUseCase;
 
     @MockBean

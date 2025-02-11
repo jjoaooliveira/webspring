@@ -10,6 +10,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -48,6 +49,7 @@ public class TaskControllerTest {
     SimpleReturnUseCase<List<OutputTaskDTO>> mockFindAllTaskUseCase;
 
     @MockBean
+    @Qualifier("task")
     SimpleInputUseCase<UUID> mockDeleteTaskByIdUseCase;
 
     @MockBean
