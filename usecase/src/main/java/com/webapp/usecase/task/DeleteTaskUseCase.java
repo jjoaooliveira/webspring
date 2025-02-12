@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-@Qualifier(value = "task")
+@Qualifier("task")
 public class DeleteTaskUseCase extends SimpleInputUseCase<UUID> {
     private TaskDataAccess taskDataAccess;
 

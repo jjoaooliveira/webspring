@@ -10,7 +10,7 @@ import java.util.Objects;
 import java.util.UUID;
 
 @Service
-@Qualifier(value = "annotation")
+@Qualifier("annotation")
 public class DeleteAnnotationUseCase extends SimpleInputUseCase<UUID> {
     private AnnotationDataAccess repository;
 
