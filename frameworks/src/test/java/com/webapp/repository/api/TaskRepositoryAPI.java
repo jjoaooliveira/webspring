@@ -3,7 +3,7 @@ package com.webapp.repository.api;
 import com.webapp.entity.Task;
 import com.webapp.repository.TaskDataAccessImpl;
 import com.webapp.repository.TaskRepository;
-import com.webapp.repository.mapper.TaskMapper;
+import com.webapp.repository.mapper.EntityTaskMapper;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +12,7 @@ public class TaskRepositoryAPI {
 
     private TaskDataAccessImpl taskDataAccess;
 
-    public TaskRepositoryAPI(TaskRepository repository, TaskMapper mapper) {
+    public TaskRepositoryAPI(TaskRepository repository, EntityTaskMapper mapper) {
         this.taskDataAccess = new TaskDataAccessImpl(repository, mapper);
     }
 

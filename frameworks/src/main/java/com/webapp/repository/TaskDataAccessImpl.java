@@ -2,7 +2,7 @@ package com.webapp.repository;
 
 import com.webapp.entity.Task;
 import com.webapp.repository.entity.TaskEntity;
-import com.webapp.repository.mapper.TaskMapper;
+import com.webapp.repository.mapper.EntityTaskMapper;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +15,10 @@ import java.util.UUID;
 @Component
 public class TaskDataAccessImpl implements TaskDataAccess {
     private TaskRepository taskRepository;
-    private TaskMapper persistenceMapper;
+    private EntityTaskMapper persistenceMapper;
 
     @Autowired
-    public TaskDataAccessImpl(TaskRepository taskRepository, TaskMapper persistenceMapper) {
+    public TaskDataAccessImpl(TaskRepository taskRepository, EntityTaskMapper persistenceMapper) {
         this.taskRepository = taskRepository;
         this.persistenceMapper = persistenceMapper;
     }

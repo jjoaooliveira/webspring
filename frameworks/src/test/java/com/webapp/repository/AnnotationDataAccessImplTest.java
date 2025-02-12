@@ -3,7 +3,7 @@ package com.webapp.repository;
 import com.webapp.entity.*;
 import com.webapp.repository.api.AnnotationRepositoryAPI;
 import com.webapp.repository.entity.AnnotationEntity;
-import com.webapp.repository.mapper.AnnotationMapper;
+import com.webapp.repository.mapper.EntityAnnotationMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.springframework.test.util.AssertionErrors.assertNotNull;
 @ContextConfiguration(classes = {
         AnnotationRepository.class,
         AnnotationEntity.class,
-        AnnotationMapper.class
+        EntityAnnotationMapper.class
 })
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -34,13 +34,13 @@ public class AnnotationDataAccessImplTest {
     AnnotationRepository annotationRepository;
 
     @Autowired
-    AnnotationMapper annotationMapper;
+    EntityAnnotationMapper entityAnnotationMapper;
 
     AnnotationRepositoryAPI annotationRepositoryAPI;
 
     @BeforeEach
     void setUp() {
-        annotationRepositoryAPI = new AnnotationRepositoryAPI(annotationRepository, annotationMapper);
+        annotationRepositoryAPI = new AnnotationRepositoryAPI(annotationRepository, entityAnnotationMapper);
     }
 
     @Test

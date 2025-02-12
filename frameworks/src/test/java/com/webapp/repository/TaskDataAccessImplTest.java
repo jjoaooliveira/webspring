@@ -3,7 +3,7 @@ package com.webapp.repository;
 import com.webapp.entity.*;
 import com.webapp.repository.api.TaskRepositoryAPI;
 import com.webapp.repository.entity.TaskEntity;
-import com.webapp.repository.mapper.TaskMapper;
+import com.webapp.repository.mapper.EntityTaskMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ import static org.springframework.test.util.AssertionErrors.assertNotNull;
 @ContextConfiguration(classes = {
         TaskRepository.class,
         TaskEntity.class,
-        TaskMapper.class
+        EntityTaskMapper.class
 })
 @ExtendWith(SpringExtension.class)
 @DataJpaTest
@@ -35,13 +35,13 @@ public class TaskDataAccessImplTest {
     TaskRepository taskRepository;
 
     @Autowired
-    TaskMapper taskMapper;
+    EntityTaskMapper entityTaskMapper;
 
     TaskRepositoryAPI taskRepositoryAPI;
 
     @BeforeEach
     void setUp() {
-        taskRepositoryAPI = new TaskRepositoryAPI(taskRepository, taskMapper);
+        taskRepositoryAPI = new TaskRepositoryAPI(taskRepository, entityTaskMapper);
     }
 
     @Test

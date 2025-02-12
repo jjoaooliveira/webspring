@@ -3,7 +3,7 @@ package com.webapp.repository.api;
 import com.webapp.entity.Annotation;
 import com.webapp.repository.AnnotationDataAccessImpl;
 import com.webapp.repository.AnnotationRepository;
-import com.webapp.repository.mapper.AnnotationMapper;
+import com.webapp.repository.mapper.EntityAnnotationMapper;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +11,7 @@ import java.util.UUID;
 public class AnnotationRepositoryAPI {
     private AnnotationDataAccessImpl annotationDataAccess;
 
-    public AnnotationRepositoryAPI(AnnotationRepository repository, AnnotationMapper mapper) {
+    public AnnotationRepositoryAPI(AnnotationRepository repository, EntityAnnotationMapper mapper) {
         annotationDataAccess = new AnnotationDataAccessImpl(repository, mapper);
     }
 
