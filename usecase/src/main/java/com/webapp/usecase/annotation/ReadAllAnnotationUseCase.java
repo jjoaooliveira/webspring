@@ -1,7 +1,7 @@
 package com.webapp.usecase.annotation;
 
 import com.webapp.entity.Annotation;
-import com.webapp.usecase.SimpleReturnUseCase;
+import com.webapp.usecase.ReadAllUseCase;
 import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ReadAllAnnotationUseCase extends SimpleReturnUseCase<List<OutputAnnotationDTO>> {
+public class ReadAllAnnotationUseCase extends ReadAllUseCase<List<OutputAnnotationDTO>> {
     private AnnotationDataAccess annotationDataAccess;
     private AnnotationMapper annotationMapper;
 

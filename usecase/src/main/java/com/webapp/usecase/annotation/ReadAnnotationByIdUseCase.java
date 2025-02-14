@@ -1,7 +1,7 @@
 package com.webapp.usecase.annotation;
 
 import com.webapp.entity.Annotation;
-import com.webapp.usecase.UseCase;
+import com.webapp.usecase.ReadByUseCase;
 import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import com.webapp.usecase.mapper.AnnotationMapper;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class ReadAnnotationByIdUseCase extends UseCase<UUID, OutputAnnotationDTO> {
+public class ReadAnnotationByIdUseCase extends ReadByUseCase<UUID, OutputAnnotationDTO> {
     private AnnotationDataAccess annotationDataAccess;
     private AnnotationMapper annotationMapper;
 

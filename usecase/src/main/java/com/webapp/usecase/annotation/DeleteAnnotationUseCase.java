@@ -1,6 +1,6 @@
 package com.webapp.usecase.annotation;
 
-import com.webapp.usecase.SimpleInputUseCase;
+import com.webapp.usecase.DeleteUseCase;
 import com.webapp.usecase.data_access.AnnotationDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @Qualifier("annotation")
-public class DeleteAnnotationUseCase extends SimpleInputUseCase<UUID> {
+public class DeleteAnnotationUseCase extends DeleteUseCase {
     private AnnotationDataAccess repository;
 
     @Autowired

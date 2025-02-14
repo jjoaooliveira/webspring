@@ -1,7 +1,7 @@
 package com.webapp.usecase.annotation;
 
 import com.webapp.entity.Annotation;
-import com.webapp.usecase.UseCase;
+import com.webapp.usecase.UpdateUseCase;
 import com.webapp.usecase.data_access.AnnotationDataAccess;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UpdateAnnotationUseCase extends UseCase<InputAnnotationDTO, OutputAnnotationDTO> {
+public class UpdateAnnotationUseCase extends UpdateUseCase<InputAnnotationDTO, OutputAnnotationDTO> {
     private AnnotationDataAccess dataAccess;
     private AnnotationMapper mapper;
 

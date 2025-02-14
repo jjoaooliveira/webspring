@@ -1,7 +1,7 @@
 package com.webapp.usecase.task;
 
 import com.webapp.entity.Task;
-import com.webapp.usecase.SimpleReturnUseCase;
+import com.webapp.usecase.ReadAllUseCase;
 import com.webapp.usecase.data_access.TaskDataAccess;
 
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReadAllTaskUseCase extends SimpleReturnUseCase<List<OutputTaskDTO>> {
+public class ReadAllTaskUseCase extends ReadAllUseCase<List<OutputTaskDTO>> {
 
     private TaskDataAccess taskDataAccess;
     private TaskMapper taskMapper;

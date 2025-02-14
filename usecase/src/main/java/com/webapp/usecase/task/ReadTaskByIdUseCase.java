@@ -1,7 +1,7 @@
 package com.webapp.usecase.task;
 
 import com.webapp.entity.Task;
-import com.webapp.usecase.UseCase;
+import com.webapp.usecase.ReadByUseCase;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import com.webapp.usecase.mapper.TaskMapper;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.UUID;
 
 @Service
-public class ReadTaskByIdUseCase extends UseCase<UUID, OutputTaskDTO> {
+public class ReadTaskByIdUseCase extends ReadByUseCase<UUID, OutputTaskDTO> {
     private TaskDataAccess taskDataAccess;
     private TaskMapper taskMapper;
 

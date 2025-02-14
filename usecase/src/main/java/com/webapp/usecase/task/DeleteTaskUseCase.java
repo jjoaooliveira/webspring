@@ -1,6 +1,6 @@
 package com.webapp.usecase.task;
 
-import com.webapp.usecase.SimpleInputUseCase;
+import com.webapp.usecase.DeleteUseCase;
 import com.webapp.usecase.data_access.TaskDataAccess;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Service
 @Qualifier("task")
-public class DeleteTaskUseCase extends SimpleInputUseCase<UUID> {
+public class DeleteTaskUseCase extends DeleteUseCase {
     private TaskDataAccess taskDataAccess;
 
     @Autowired
