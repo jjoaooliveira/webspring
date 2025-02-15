@@ -1,9 +1,7 @@
 package com.webapp.controller.web;
 
 import com.webapp.presenter.AnnotationPresenter;
-import com.webapp.usecase.SimpleInputUseCase;
-import com.webapp.usecase.SimpleReturnUseCase;
-import com.webapp.usecase.UseCase;
+import com.webapp.usecase.*;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -38,20 +36,23 @@ public class AnnotationControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    UseCase<InputAnnotationDTO, OutputAnnotationDTO> mockSaveAnnotationUseCase;
+    SaveUseCase<InputAnnotationDTO, OutputAnnotationDTO> mockSaveAnnotationUseCase;
 
     @MockBean
-    SimpleReturnUseCase<List<OutputAnnotationDTO>> mockReadAllAnnotationUseCase;
+    ReadAllUseCase<List<OutputAnnotationDTO>> mockReadAllAnnotationUseCase;
 
     @MockBean
     @Qualifier("annotation")
-    SimpleInputUseCase<UUID> mockDeleteAnnotationUseCase;
+    DeleteUseCase mockDeleteAnnotationUseCase;
 
     @MockBean
-    UseCase<UUID, OutputAnnotationDTO> mockFindAnnotationByIdUseCase;
+    ReadByUseCase<UUID, OutputAnnotationDTO> mockFindAnnotationByIdUseCase;
 
     @MockBean
-    UseCase<String, List<OutputAnnotationDTO>> mockFindAnnotationByTitleUseCase;
+    UpdateUseCase<InputAnnotationDTO, OutputAnnotationDTO> updateUseCase;
+
+    @MockBean
+    ReadByUseCase<String, List<OutputAnnotationDTO>> mockFindAnnotationByTitleUseCase;
 
     @Autowired
     AnnotationPresenter annotationPresenter;

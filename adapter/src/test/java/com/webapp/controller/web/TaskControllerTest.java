@@ -1,9 +1,7 @@
 package com.webapp.controller.web;
 
 import com.webapp.presenter.TaskPresenter;
-import com.webapp.usecase.SimpleInputUseCase;
-import com.webapp.usecase.SimpleReturnUseCase;
-import com.webapp.usecase.UseCase;
+import com.webapp.usecase.*;
 import com.webapp.usecase.dto.task.InputTaskDTO;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -40,20 +38,23 @@ public class TaskControllerTest {
     TaskPresenter taskPresenter;
 
     @MockBean
-    UseCase<InputTaskDTO, OutputTaskDTO> mockSaveTaskUseCase;
+    SaveUseCase<InputTaskDTO, OutputTaskDTO> mockSaveTaskUseCase;
 
     @MockBean
-    UseCase<UUID, OutputTaskDTO> mockFindTaskByIdUseCase;
+    ReadByUseCase<UUID, OutputTaskDTO> mockFindTaskByIdUseCase;
 
     @MockBean
-    SimpleReturnUseCase<List<OutputTaskDTO>> mockFindAllTaskUseCase;
+    ReadAllUseCase<List<OutputTaskDTO>> mockFindAllTaskUseCase;
 
     @MockBean
     @Qualifier("task")
-    SimpleInputUseCase<UUID> mockDeleteTaskByIdUseCase;
+    DeleteUseCase mockDeleteTaskByIdUseCase;
 
     @MockBean
-    UseCase<String, List<OutputTaskDTO>> mockFindTaskByTitleUseCase;
+    UpdateUseCase<InputTaskDTO, OutputTaskDTO> mockUpdateUseCase;
+
+    @MockBean
+    ReadByUseCase<String, List<OutputTaskDTO>> mockFindTaskByTitleUseCase;
 
     @Test
     @DisplayName("When Get Request to Task Resource Should Return Task DTO List")

@@ -1,12 +1,11 @@
 package com.webapp.controller.web;
 
 import com.webapp.presenter.AnnotationPresenter;
-import com.webapp.usecase.SimpleInputUseCase;
-import com.webapp.usecase.SimpleReturnUseCase;
-import com.webapp.usecase.UseCase;
+import com.webapp.usecase.*;
 import com.webapp.usecase.dto.annotation.InputAnnotationDTO;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.web.bind.annotation.*;
@@ -17,20 +16,22 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/annotation")
 public class AnnotationController {
-    private SimpleReturnUseCase<List<OutputAnnotationDTO>> findAllUseCase;
-    private UseCase<UUID, OutputAnnotationDTO> findByIdUseCase;
-    private UseCase<String, List<OutputAnnotationDTO>> findByTitleUseCase;
-    private UseCase<InputAnnotationDTO, OutputAnnotationDTO> saveUsecase;
-    private SimpleInputUseCase<UUID> deleteUseCase;
+    private ReadAllUseCase<List<OutputAnnotationDTO>> findAllUseCase;
+    private ReadByUseCase<UUID, OutputAnnotationDTO> findByIdUseCase;
+    private ReadByUseCase<String, List<OutputAnnotationDTO>> findByTitleUseCase;
+    private SaveUseCase<InputAnnotationDTO, OutputAnnotationDTO> saveUsecase;
+    private DeleteUseCase deleteUseCase;
+    private UpdateUseCase<InputAnnotationDTO, OutputAnnotationDTO> updateUseCase;
     private AnnotationPresenter presenter;
 
     @Autowired
     public AnnotationController(
-            SimpleReturnUseCase<List<OutputAnnotationDTO>> findAllUseCase,
-            UseCase<UUID, OutputAnnotationDTO> findByIdUseCase,
-            UseCase<String, List<OutputAnnotationDTO>> findByTitleUseCase,
-            UseCase<InputAnnotationDTO, OutputAnnotationDTO> saveUsecase,
-            SimpleInputUseCase<UUID> deleteUseCase,
+            ReadAllUseCase<List<OutputAnnotationDTO>> findAllUseCase,
+            ReadByUseCase<UUID, OutputAnnotationDTO> findByIdUseCase,
+            ReadByUseCase<String, List<OutputAnnotationDTO>> findByTitleUseCase,
+            SaveUseCase<InputAnnotationDTO, OutputAnnotationDTO> saveUsecase,
+            @Qualifier("annotation") DeleteUseCase deleteUseCase,
+            UpdateUseCase<InputAnnotationDTO, OutputAnnotationDTO> updateUseCase,
             AnnotationPresenter presenter
     ) {
         this.findAllUseCase = findAllUseCase;
@@ -38,6 +39,7 @@ public class AnnotationController {
         this.findByTitleUseCase = findByTitleUseCase;
         this.saveUsecase = saveUsecase;
         this.deleteUseCase = deleteUseCase;
+        this.updateUseCase = updateUseCase;
         this.presenter = presenter;
     }
 
@@ -56,8 +58,8 @@ public class AnnotationController {
         return presenter.toEntityModel(annotationDTOs);
     }
 
-    @GetMapping("/{title}")
-    public CollectionModel<EntityModel<OutputAnnotationDTO>> getAnnotationByTitle(@PathVariable("title") String title) {
+    @GetMapping("/title")
+    public CollectionModel<EntityModel<OutputAnnotationDTO>> getAnnotationByTitle(@RequestParam("title") String title) {
         List<OutputAnnotationDTO> annotationDTOs = findByTitleUseCase.execute(title);
         List<EntityModel<OutputAnnotationDTO>> annotationModelList = annotationDTOs.stream()
                 .map(presenter::toEntityModel)
@@ -66,14 +68,14 @@ public class AnnotationController {
     }
 
     @PostMapping
-    public EntityModel<OutputAnnotationDTO> postAnnotation(InputAnnotationDTO inputAnnotationDTO) {
+    public EntityModel<OutputAnnotationDTO> postAnnotation(@RequestBody InputAnnotationDTO inputAnnotationDTO) {
         OutputAnnotationDTO annotationDTO = saveUsecase.execute(inputAnnotationDTO);
         return presenter.toEntityModel(annotationDTO);
     }
 
     @PutMapping
-    public EntityModel<OutputAnnotationDTO> putAnnotation(InputAnnotationDTO inputAnnotationDTO) {
-        OutputAnnotationDTO annotationDTO = saveUsecase.execute(inputAnnotationDTO);
+    public EntityModel<OutputAnnotationDTO> putAnnotation(@RequestBody InputAnnotationDTO inputAnnotationDTO) {
+        OutputAnnotationDTO annotationDTO = updateUseCase.execute(inputAnnotationDTO);
         return presenter.toEntityModel(annotationDTO);
     }
 
