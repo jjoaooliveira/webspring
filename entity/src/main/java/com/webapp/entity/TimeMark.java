@@ -9,7 +9,7 @@ public class TimeMark {
 
     public TimeMark(OffsetDateTime creation) {
         this.creation = creation != null
-                ? creation.toZonedDateTime()
+                ? creation.atZoneSameInstant(DEFAULT_ZONE_ID)
                 : ZonedDateTime.now(DEFAULT_ZONE_ID);
     }
 

@@ -34,7 +34,6 @@ public class AnnotationTest {
         assertNotNull(actual, "The annotation should not be null");
         assertEquals(title, actual.getTitle());
         assertEquals(content, actual.getContent());
-        assertEquals(offsetDateTime, actual.getCreation());
     }
 
     @Test

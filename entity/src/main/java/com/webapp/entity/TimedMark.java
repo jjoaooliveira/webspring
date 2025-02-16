@@ -14,7 +14,7 @@ public class TimedMark {
 
     public TimedMark(OffsetDateTime offsetDateTime) {
         Objects.requireNonNull(offsetDateTime);
-        this.expiration = offsetDateTime.toZonedDateTime();
+        this.expiration = offsetDateTime.atZoneSameInstant(DEFAULT_ZONE_ID);
     }
 
     private ZonedDateTime convertToDefaultUTC(ZonedDateTime zonedDateTime) {
