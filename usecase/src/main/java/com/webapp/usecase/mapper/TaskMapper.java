@@ -25,8 +25,8 @@ public class TaskMapper {
                 inputTaskDTO.id(),
                 new Title(inputTaskDTO.title()),
                 new Content(inputTaskDTO.content()),
-                new TimeMark(inputTaskDTO.creationDate()),
-                new TimedMark(inputTaskDTO.expirationDate()),
+                new TimeMark(inputTaskDTO.creation()),
+                new TimedMark(inputTaskDTO.expiration()),
                 inputTaskDTO.completed()
         );
     }

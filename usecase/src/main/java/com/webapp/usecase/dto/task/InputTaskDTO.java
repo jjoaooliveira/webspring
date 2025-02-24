@@ -7,7 +7,7 @@ public record InputTaskDTO(
         UUID id,
         String title,
         String content,
-        OffsetDateTime creationDate,
-        OffsetDateTime expirationDate,
+        OffsetDateTime creation,
+        OffsetDateTime expiration,
         Boolean completed
 ) {}
