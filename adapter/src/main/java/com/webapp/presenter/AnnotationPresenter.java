@@ -4,12 +4,14 @@ import com.webapp.controller.web.AnnotationController;
 import com.webapp.usecase.dto.annotation.OutputAnnotationDTO;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Service
 public class AnnotationPresenter {
     public EntityModel<OutputAnnotationDTO> toEntityModel(OutputAnnotationDTO outputAnnotationDTO) {
         return EntityModel.of(

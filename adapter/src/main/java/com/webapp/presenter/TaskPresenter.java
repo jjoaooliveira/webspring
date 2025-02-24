@@ -4,12 +4,14 @@ import com.webapp.controller.web.TaskController;
 import com.webapp.usecase.dto.task.OutputTaskDTO;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
+@Service
 public class TaskPresenter {
     public EntityModel<OutputTaskDTO> toEntityModel(OutputTaskDTO taskDTO) {
         return EntityModel.of(taskDTO,
