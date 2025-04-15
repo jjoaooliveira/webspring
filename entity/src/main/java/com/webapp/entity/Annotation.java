@@ -1,27 +1,25 @@
 package com.webapp.entity;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
 public class Annotation {
     private UUID id;
     private Title title;
     private Content content;
-    private TimeMark timeMark;
+    private final Instant creationDate;
 
-    public Annotation(Title title, Content content, TimeMark timeMark) {
+    public Annotation(Title title, Content content, Instant creationDate) {
         this.title = title;
         this.content = content;
-        this.timeMark = timeMark;
+        this.creationDate = creationDate;
     }
 
-    public Annotation(UUID id, Title title, Content content, TimeMark timeMark) {
+    public Annotation(UUID id, Title title, Content content, Instant creationDate) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.timeMark = timeMark;
+        this.creationDate = creationDate;
     }
 
     public UUID getId() {
@@ -44,16 +42,8 @@ public class Annotation {
         this.content = new Content(content);
     }
 
-    public OffsetDateTime getCreation() {
-        return timeMark.getCreation();
-    }
-
-    public LocalDate getCreationDate() {
-        return timeMark.getCreationDate();
-    }
-
-    public LocalTime getCreationTime() {
-        return timeMark.getCreationTime();
+    public Instant getCreation() {
+        return creationDate;
     }
 
     @Override

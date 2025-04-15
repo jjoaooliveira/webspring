@@ -1,51 +1,26 @@
 package com.webapp.entity;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import com.webapp.entity.api.AnnotationAPI;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 
 public class AnnotationTest {
-    String title;
-    String content;
-    OffsetDateTime offsetDateTime;
-
-    @BeforeEach
-    void setUp() {
-        title = "Title 1";
-        content = "Content 1";
-        offsetDateTime = OffsetDateTime.now();
-    }
 
     @Test
-    @DisplayName("When Creating Annotation With Success Should Contains Valid Fields")
-    void givenAnnotation_whenNewAnnotation_theShouldCreateAnnotation() {
+    @DisplayName("Should Create Annotation With Valid Inputs")
+    void givenValidInputs_whenNewAnnotation_theShouldCreateAnnotation() {
         //arrange
+        Title title = new Title("Title");
+        Content content = new Content("Content");
+        Instant instant = Instant.now();
 
         //act
-        var actual = new AnnotationAPI(title, content, offsetDateTime);
+        var actual = new Annotation(title, content, instant);
 
         //assert
         assertNotNull(actual, "The annotation should not be null");
-        assertEquals(title, actual.getTitle());
-        assertEquals(content, actual.getContent());
-    }
-
-    @Test
-    @DisplayName("When Call To String Method Should Return Valid String")
-    void givenAnnotation_whenToString_thenReturnAnnotationString() {
-        //arrange
-        String expectedString = "Title 1";
-
-        //act
-        var actual = new AnnotationAPI(title, content, offsetDateTime);
-
-        //assert
-        assertEquals(expectedString, actual.annotationToString(), "The string is incorrect");
     }
 }

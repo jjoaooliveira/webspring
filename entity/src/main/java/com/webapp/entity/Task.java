@@ -1,6 +1,6 @@
 package com.webapp.entity;
 
-import java.time.*;
+import java.time.Instant;
 import java.util.UUID;
 
 public class Task {
@@ -8,25 +8,25 @@ public class Task {
     private Title title;
     private Content content;
     private Boolean completed;
-    private TimeMark creationMark;
-    private TimedMark expirationMark;
+    private Instant creationDate;
+    private Instant expirationDate;
     private boolean expired;
 
-    public Task(Title title, Content content, TimeMark creationMark, TimedMark expirationMark, Boolean completed) {
+    public Task(Title title, Content content, Instant creationDate, Instant expirationDate, Boolean completed) {
         this.title = title;
         this.content = content;
-        this.creationMark = creationMark;
-        this.expirationMark = expirationMark;
+        this.creationDate = creationDate;
+        this.expirationDate = expirationDate;
         this.completed = completed;
         setExpired();
     }
 
-    public Task(UUID id, Title title, Content content, TimeMark creationMark, TimedMark expirationMark, Boolean completed) {
+    public Task(UUID id, Title title, Content content, Instant creationDate, Instant expirationDate, Boolean completed) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.creationMark = creationMark;
-        this.expirationMark = expirationMark;
+        this.creationDate = creationDate;
+        this.expirationDate = expirationDate;
         this.completed = completed;
         setExpired();
     }
@@ -51,36 +51,16 @@ public class Task {
         this.content = new Content(content);
     }
 
-    public OffsetDateTime getCreation() {
-        return creationMark.getCreation();
+    public Instant getCreation() {
+        return creationDate;
     }
 
-    public LocalDate getCreationDate() {
-        return creationMark.getCreationDate();
+    public Instant getExpiration() {
+        return expirationDate;
     }
 
-    public LocalTime getCreationTime() {
-        return creationMark.getCreationTime();
-    }
-
-    public OffsetDateTime getExpiration() {
-        return expirationMark.getExpiration();
-    }
-
-    public LocalDate getExpirationDate() {
-        return expirationMark.getExpirationDate();
-    }
-
-    public LocalTime getExpirationTime() {
-        return expirationMark.getExpirationTime();
-    }
-
-    public void setExpiration(ZonedDateTime zonedDateTime) {
-        this.expirationMark = new TimedMark(zonedDateTime);
-    }
-
-    public String getTimeLeft() {
-        return expirationMark.getTimeLeft();
+    public void setExpiration(Instant newExpiration) {
+        this.expirationDate = newExpiration;
     }
 
     public Boolean isExpired() {
@@ -88,7 +68,7 @@ public class Task {
     }
 
     private void setExpired() {
-        this.expired = expirationMark.isExpired();
+        this.expired = Instant.now().isAfter(expirationDate);
     }
 
     public Boolean isCompleted() {
@@ -101,6 +81,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return getTitle() + " - " + getTimeLeft();
+        return getTitle();
     }
 }

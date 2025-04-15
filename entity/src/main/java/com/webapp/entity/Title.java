@@ -12,9 +12,4 @@ public class Title {
     public String getText() {
         return title;
     }
-
-    @Override
-    public String toString() {
-        return title;
-    }
 }
