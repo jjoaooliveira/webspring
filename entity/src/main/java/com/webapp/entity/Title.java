@@ -1,10 +1,10 @@
 package com.webapp.entity;
 
 public class Title {
-    private String title;
+    private final String title;
 
     public Title(String text) {
-        this.title = text.isEmpty()
+        this.title = text == null || text.isBlank()
             ? "Insira um titulo..."
             : text;
     }

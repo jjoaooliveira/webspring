@@ -10,15 +10,12 @@ public class Task {
     private Boolean completed;
     private Instant creationDate;
     private Instant expirationDate;
-    private boolean expired;
 
-    public Task(Title title, Content content, Instant creationDate, Instant expirationDate, Boolean completed) {
+    public Task(Title title, Content content, Instant expirationDate, Boolean completed) {
         this.title = title;
         this.content = content;
-        this.creationDate = creationDate;
         this.expirationDate = expirationDate;
         this.completed = completed;
-        setExpired();
     }
 
     public Task(UUID id, Title title, Content content, Instant creationDate, Instant expirationDate, Boolean completed) {
@@ -28,7 +25,6 @@ public class Task {
         this.creationDate = creationDate;
         this.expirationDate = expirationDate;
         this.completed = completed;
-        setExpired();
     }
 
     public UUID getId() {
@@ -61,14 +57,6 @@ public class Task {
 
     public void setExpiration(Instant newExpiration) {
         this.expirationDate = newExpiration;
-    }
-
-    public Boolean isExpired() {
-        return expired;
-    }
-
-    private void setExpired() {
-        this.expired = Instant.now().isAfter(expirationDate);
     }
 
     public Boolean isCompleted() {
