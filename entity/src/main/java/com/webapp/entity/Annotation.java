@@ -7,12 +7,11 @@ public class Annotation {
     private UUID id;
     private Title title;
     private Content content;
-    private final Instant creationDate;
+    private Instant creationDate;
 
-    public Annotation(Title title, Content content, Instant creationDate) {
+    public Annotation(Title title, Content content) {
         this.title = title;
         this.content = content;
-        this.creationDate = creationDate;
     }
 
     public Annotation(UUID id, Title title, Content content, Instant creationDate) {
@@ -44,10 +43,5 @@ public class Annotation {
 
     public Instant getCreation() {
         return creationDate;
-    }
-
-    @Override
-    public String toString() {
-        return getTitle();
     }
 }
