@@ -1,17 +1,22 @@
-package com.webapp.usecase.task;
+package com.webapp.usecase.task.implementation;
 
-import java.util.Objects;
+import com.webapp.usecase.task.IDeleteTaskUseCase;
+import com.webapp.usecase.task.TaskDataGateway;
 
-public class DeleteTaskUseCase implements IDeleteTaskUseCase {
-    private final TaskDataAccess dataGateway;
+import java.util.UUID;
 
-    public DeleteTaskUseCase(TaskDataAccess dataGateway) {
+class DeleteTaskUseCase implements IDeleteTaskUseCase {
+    private final TaskDataGateway dataGateway;
+
+    public DeleteTaskUseCase(TaskDataGateway dataGateway) {
         this.dataGateway = dataGateway;
     }
 
     @Override
-    public void execute(InputTaskDTO request) {
-        Objects.requireNonNull(request);
-        dataGateway.delete(request.id());
+    public void execute(UUID uuid) {
+        if (dataGateway.findById(uuid) == null) {
+            throw new IllegalArgumentException("Task not found");
+        }
+        dataGateway.delete(uuid);
     }
 }

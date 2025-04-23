@@ -1,13 +1,12 @@
 package com.webapp.usecase.task;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.UUID;
 
-public record TaskDTO(
+public record TaskInputData(
         UUID id,
         String title,
         String content,
-        OffsetDateTime creationTime,
-        OffsetDateTime expirationTime,
+        Instant expirationDate,
         Boolean completed
 ) {}

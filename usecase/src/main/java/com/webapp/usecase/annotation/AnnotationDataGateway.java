@@ -5,10 +5,10 @@ import com.webapp.entity.Annotation;
 import java.util.List;
 import java.util.UUID;
 
-public interface AnnotationDataAccess {
+public interface AnnotationDataGateway {
     List<Annotation> findByTitle(String title);
     Annotation findById(UUID uuid);
     List<Annotation> findAll();
     Annotation save(Annotation annotation);
-    Annotation delete(UUID id);
+    void delete(UUID id);
 }

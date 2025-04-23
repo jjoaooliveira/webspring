@@ -1,25 +1,26 @@
-package com.webapp.usecase.task;
+package com.webapp.usecase.task.implementation;
 
 import com.webapp.entity.Task;
+import com.webapp.usecase.task.IReadAllTaskUseCase;
+import com.webapp.usecase.task.TaskDataGateway;
+import com.webapp.usecase.task.TaskOutputData;
 
 import java.util.List;
 
 class ReadAllTaskUseCase implements IReadAllTaskUseCase {
 
-    private final TaskDataAccess taskDataAccess;
-    private final TaskMapper taskMapper;
+    private final TaskDataGateway taskDataGateway;
 
-    public ReadAllTaskUseCase(TaskDataAccess taskDataAccess) {
-        this.taskDataAccess = taskDataAccess;
-        this.taskMapper = new TaskMapper();
+    public ReadAllTaskUseCase(TaskDataGateway taskDataGateway) {
+        this.taskDataGateway = taskDataGateway;
     }
 
     @Override
-    public List<OutputTaskDTO> execute() {
-        List<Task> persistedTasks = taskDataAccess.findAll();
-
+    public List<TaskOutputData> execute() {
+        TaskMapper taskMapper = new TaskMapper();
+        List<Task> persistedTasks = taskDataGateway.findAll();
         return persistedTasks.stream()
-            .map(taskMapper::toOutputDTO).toList();
+            .map(taskMapper::toOutput).toList();
     }
 }
 

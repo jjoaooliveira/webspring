@@ -5,7 +5,7 @@ import com.webapp.entity.Task;
 import java.util.List;
 import java.util.UUID;
 
-public interface TaskDataAccess {
+public interface TaskDataGateway {
     List<Task> findByTitle(String title);
     Task findById(UUID uuid);
     Task save(Task task);

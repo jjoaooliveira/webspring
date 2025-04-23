@@ -4,13 +4,11 @@ import com.webapp.entity.Annotation;
 import com.webapp.entity.Content;
 import com.webapp.entity.Title;
 import com.webapp.usecase.annotation.AnnotationInputData;
-import com.webapp.usecase.annotation.AnnotationOutpuData;
-
-import java.time.Instant;
+import com.webapp.usecase.annotation.AnnotationOutputData;
 
 class AnnotationMapper {
-    public AnnotationOutpuData toOutput(Annotation annotation) {
-        return new AnnotationOutpuData(
+    public AnnotationOutputData toOutput(Annotation annotation) {
+        return new AnnotationOutputData(
                 annotation.getId(),
                 annotation.getTitle(),
                 annotation.getContent(),
@@ -18,12 +16,12 @@ class AnnotationMapper {
         );
     }
 
-    public Annotation toAnnotation(AnnotationInputData annotationInputData) {
+    public Annotation toEntity(AnnotationInputData annotationInputData) {
         return new Annotation(
-                annotationInputData.id(),
-                new Title(annotationInputData.title()),
-                new Content(annotationInputData.content()),
-                Instant.now()
-            );
+            annotationInputData.id(),
+            new Title(annotationInputData.title()),
+            new Content(annotationInputData.content()),
+            annotationInputData.creationDate()
+        );
     }
 }

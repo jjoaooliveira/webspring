@@ -1,25 +1,26 @@
-package com.webapp.usecase.task;
+package com.webapp.usecase.task.implementation;
 
 import com.webapp.entity.Task;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.webapp.usecase.task.IReadTaskByTitleUseCase;
+import com.webapp.usecase.task.TaskDataGateway;
+import com.webapp.usecase.task.TaskOutputData;
 
 import java.util.List;
 
 class ReadTaskByTitleUseCase implements IReadTaskByTitleUseCase {
-    private final TaskDataAccess taskDataAccess;
-    private final TaskMapper taskMapper;
+    private final TaskDataGateway taskDataGateway;
 
-    @Autowired
-    public ReadTaskByTitleUseCase(TaskDataAccess taskDataAccess) {
-        this.taskDataAccess = taskDataAccess;
-        this.taskMapper = new TaskMapper();
+    public ReadTaskByTitleUseCase(TaskDataGateway taskDataGateway) {
+        this.taskDataGateway = taskDataGateway;
     }
 
     @Override
-    public List<OutputTaskDTO> execute(InputTaskDTO request) {
-        List<Task> taskList = taskDataAccess.findByTitle(request.title());
+    public List<TaskOutputData> execute(String title) {
+        TaskMapper taskMapper = new TaskMapper();
+        List<Task> taskList = taskDataGateway.findByTitle(title);
         return taskList.stream()
-                .map(taskMapper::toOutputDTO)
+                .map(taskMapper::toOutput)
                 .toList();
     }
 }

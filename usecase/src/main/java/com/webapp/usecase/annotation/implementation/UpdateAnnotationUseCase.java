@@ -4,19 +4,19 @@ import com.webapp.entity.Annotation;
 import com.webapp.usecase.annotation.*;
 
 class UpdateAnnotationUseCase implements IUpdateAnnotationUseCase {
-    private final AnnotationDataGateway dataAccess;
+    private final AnnotationDataGateway dataGateway;
 
-    public UpdateAnnotationUseCase(AnnotationDataGateway dataAccess) {
-        this.dataAccess = dataAccess;
+    public UpdateAnnotationUseCase(AnnotationDataGateway dataGateway) {
+        this.dataGateway = dataGateway;
     }
 
     @Override
-    public AnnotationOutpuData execute(AnnotationInputData annotationInputData) {
+    public AnnotationOutputData execute(AnnotationInputData updateAnnotationInputData) {
         AnnotationMapper mapper = new AnnotationMapper();
-        Annotation requestedAnnotation = dataAccess.findById(annotationInputData.id());
-        requestedAnnotation.setTitle(annotationInputData.title());
-        requestedAnnotation.setContent(annotationInputData.content());
-        Annotation persistedUpdatedAnnotation = dataAccess.save(requestedAnnotation);
-        return mapper.toOutput(persistedUpdatedAnnotation);
+        Annotation requestAnnotation = dataGateway.findById(updateAnnotationInputData.id());
+        requestAnnotation.setContent(updateAnnotationInputData.content());
+        requestAnnotation.setTitle(updateAnnotationInputData.title());
+        Annotation updatedAnnotation = dataGateway.save(requestAnnotation);
+        return mapper.toOutput(updatedAnnotation);
     }
 }

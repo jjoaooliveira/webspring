@@ -1,23 +1,28 @@
-package com.webapp.usecase.task;
+package com.webapp.usecase.task.implementation;
 
+import com.webapp.entity.Content;
 import com.webapp.entity.Task;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.webapp.entity.Title;
+import com.webapp.usecase.task.*;
 
 class SaveTaskUseCase implements ISaveTaskUseCase {
 
-    private final TaskDataAccess taskDataAccess;
-    private final TaskMapper taskMapper;
+    private final TaskDataGateway taskDataGateway;
 
-    public SaveTaskUseCase(TaskDataAccess taskDataAccess) {
-        this.taskDataAccess = taskDataAccess;
-        this.taskMapper = new TaskMapper();
+    public SaveTaskUseCase(TaskDataGateway taskDataGateway) {
+        this.taskDataGateway = taskDataGateway;
     }
 
     @Override
-    public OutputTaskDTO execute(InputTaskDTO inputTaskDTO) {
-        Task task = taskMapper.toTask(inputTaskDTO);
-        Task persistedTask = taskDataAccess.save(task);
-
-        return taskMapper.toOutputDTO(persistedTask);
+    public TaskOutputData execute(TaskInputData taskInputData) {
+        TaskMapper mapper = new TaskMapper();
+        Task newTask = new Task(
+                new Title(taskInputData.title()),
+                new Content(taskInputData.content()),
+                taskInputData.expirationDate(),
+                taskInputData.completed()
+        );
+        Task persistedTask = taskDataGateway.save(newTask);
+        return mapper.toOutput(persistedTask);
     }
 }

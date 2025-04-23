@@ -11,10 +11,10 @@ class SaveAnnotationUseCase implements ISaveAnnotationUseCase {
     }
 
     @Override
-    public AnnotationOutpuData execute(AnnotationInputData annotationInputData) {
+    public AnnotationOutputData execute(AnnotationInputData saveAnnotationInputData) {
         AnnotationMapper mapper = new AnnotationMapper();
-        Annotation requestAnnotation = mapper.toAnnotation(annotationInputData);
-        Annotation savedAnnotation = dataAccess.save(requestAnnotation);
+        Annotation newAnnotation = mapper.toEntity(saveAnnotationInputData);
+        Annotation savedAnnotation = dataAccess.save(newAnnotation);
         return mapper.toOutput(savedAnnotation);
     }
 }

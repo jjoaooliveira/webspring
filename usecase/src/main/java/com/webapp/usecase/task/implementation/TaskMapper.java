@@ -1,31 +1,17 @@
-package com.webapp.usecase.task;
+package com.webapp.usecase.task.implementation;
 
 import com.webapp.entity.*;
-import org.springframework.stereotype.Component;
+import com.webapp.usecase.task.TaskOutputData;
 
-@Component
-public class TaskMapper {
-    public OutputTaskDTO toOutputDTO(Task task) {
-        return new OutputTaskDTO(
+class TaskMapper {
+    public TaskOutputData toOutput(Task task) {
+        return new TaskOutputData(
                 task.getId(),
                 task.getTitle(),
                 task.getContent(),
                 task.getCreation(),
                 task.getExpiration(),
-                task.getTimeLeft(),
-                task.isCompleted(),
-                task.isExpired()
-        );
-    }
-
-    public Task toTask(InputTaskDTO inputTaskDTO) {
-        return new Task(
-                inputTaskDTO.id(),
-                new Title(inputTaskDTO.title()),
-                new Content(inputTaskDTO.content()),
-                new TimeMark(inputTaskDTO.creation()),
-                new TimedMark(inputTaskDTO.expiration()),
-                inputTaskDTO.completed()
+                task.isCompleted()
         );
     }
 }

@@ -1,26 +1,27 @@
-package com.webapp.usecase.task;
+package com.webapp.usecase.task.implementation;
 
 import com.webapp.entity.Task;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.webapp.usecase.task.IUpdateTaskUseCase;
+import com.webapp.usecase.task.TaskDataGateway;
+import com.webapp.usecase.task.TaskInputData;
+import com.webapp.usecase.task.TaskOutputData;
 
 class UpdateTaskUseCase implements IUpdateTaskUseCase {
-    private final TaskDataAccess dataAccess;
-    private final TaskMapper mapper;
+    private final TaskDataGateway dataGateway;
 
-    @Autowired
-    public UpdateTaskUseCase(TaskDataAccess dataAccess) {
-        this.dataAccess = dataAccess;
-        this.mapper = new TaskMapper();
+    public UpdateTaskUseCase(TaskDataGateway dataGateway) {
+        this.dataGateway = dataGateway;
     }
 
     @Override
-    public OutputTaskDTO execute(InputTaskDTO request) {
-        Task task = dataAccess.findById(request.id());
-        task.setTitle(request.title());
-        task.setContent(request.content());
-        task.setExpiration(request.expiration().toZonedDateTime());
-
-        Task persistedUpdatedTask = dataAccess.save(task);
-        return mapper.toOutputDTO(persistedUpdatedTask);
+    public TaskOutputData execute(TaskInputData taskInputData) {
+        TaskMapper mapper = new TaskMapper();
+        Task requestTask = dataGateway.findById(taskInputData.id());
+        requestTask.setTitle(taskInputData.title());
+        requestTask.setContent(taskInputData.content());
+        requestTask.setExpiration(taskInputData.expirationDate());
+        requestTask.setCompleted(taskInputData.completed());
+        Task updatedTask = dataGateway.save(requestTask);
+        return mapper.toOutput(updatedTask);
     }
 }

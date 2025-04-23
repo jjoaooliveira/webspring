@@ -1,8 +1,15 @@
 package com.webapp.usecase.annotation.implementation;
 
-import com.webapp.usecase.annotation.*;
+import com.webapp.usecase.annotation.AbstractAnnotationInteractorFactory;
+import com.webapp.usecase.annotation.AnnotationDataGateway;
+import com.webapp.usecase.annotation.ISaveAnnotationUseCase;
+import com.webapp.usecase.annotation.IUpdateAnnotationUseCase;
+import com.webapp.usecase.annotation.IReadAllAnnotationUseCase;
+import com.webapp.usecase.annotation.IDeleteAnnotationUseCase;
+import com.webapp.usecase.annotation.IReadAnnotationByIdUseCase;
+import com.webapp.usecase.annotation.IReadAnnotationByTitleUseCase;
 
-class AnnotationInteractorFactory extends AbstractAnnotationInteractorFactory {
+public class AnnotationInteractorFactory extends AbstractAnnotationInteractorFactory {
     private final AnnotationDataGateway dataGateway;
 
     public AnnotationInteractorFactory(AnnotationDataGateway dataGateway) {

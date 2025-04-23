@@ -13,7 +13,7 @@ class ReadAnnotationByIdUseCase implements IReadAnnotationByIdUseCase {
     }
 
     @Override
-    public AnnotationOutpuData execute(UUID uuid) {
+    public AnnotationOutputData execute(UUID uuid) {
         AnnotationMapper mapper = new AnnotationMapper();
         Annotation returnedAnnotation = annotationDataGateway.findById(uuid);
         return mapper.toOutput(returnedAnnotation);

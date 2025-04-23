@@ -13,7 +13,7 @@ class ReadAnnotationByTitleUseCase implements IReadAnnotationByTitleUseCase {
     }
 
     @Override
-    public List<AnnotationOutpuData> execute(String title) {
+    public List<AnnotationOutputData> execute(String title) {
         AnnotationMapper mapper = new AnnotationMapper();
         List<Annotation> annotationList = annotationDataGateway.findByTitle(title);
         return annotationList
