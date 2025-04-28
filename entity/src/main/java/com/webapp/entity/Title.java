@@ -4,9 +4,7 @@ public class Title {
     private final String title;
 
     public Title(String text) {
-        this.title = text == null || text.isBlank()
-            ? "Insira um titulo..."
-            : text;
+        this.title = text;
     }
 
     public String getText() {

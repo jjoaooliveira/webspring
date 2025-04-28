@@ -1,7 +1,7 @@
 package com.webapp.entity.exceptions;
 
-public class TextLengthOverLimitException extends RuntimeException {
-    public TextLengthOverLimitException(String message) {
+public class IllegalExpirationDateException extends RuntimeException {
+    public IllegalExpirationDateException(String message) {
         super(message);
     }
 }

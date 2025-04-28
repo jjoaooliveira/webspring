@@ -1,5 +1,7 @@
 package com.webapp.entity;
 
+import com.webapp.entity.exceptions.IllegalExpirationDateException;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -12,6 +14,7 @@ public class Task {
     private Instant expirationDate;
 
     public Task(Title title, Content content, Instant expirationDate, Boolean completed) {
+        validExpirationDate(expirationDate);
         this.title = title;
         this.content = content;
         this.expirationDate = expirationDate;
@@ -56,6 +59,7 @@ public class Task {
     }
 
     public void setExpiration(Instant newExpiration) {
+        validExpirationDate(newExpiration);
         this.expirationDate = newExpiration;
     }
 
@@ -63,8 +67,12 @@ public class Task {
         return completed;
     }
 
-    public void complete() {
-        this.completed = !this.completed;
+    public void setCompleted(Boolean isCompleted) {
+        this.completed = isCompleted;
+    }
+
+    private void validExpirationDate(Instant expirationDate) {
+        if(expirationDate.isBefore(Instant.now())) throw new IllegalExpirationDateException("Task expiration date should not be set before present date");
     }
 
     @Override

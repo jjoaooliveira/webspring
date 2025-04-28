@@ -1,7 +1,9 @@
 package com.webapp.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
+import com.webapp.entity.exceptions.IllegalExpirationDateException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -44,5 +46,18 @@ public class TaskTest {
         assertEquals(expectedCreation, actual.getCreation().toString(), "The task creation date is incorrect");
         assertEquals(expectedExpiration, actual.getExpiration().toString(), "The task expiration date is incorrect");
         assertEquals(expectedCompleted, actual.isCompleted(), "The task completed is incorrect");
+    }
+
+    @Test
+    @DisplayName("Create Task With Expiration Date Before Present Date Should Throw IllegalExpirationDateException")
+    void givenExpirationDate_whenNewTask_thenShouldThrowIllegalExpirationDateException() {
+        //arrange
+        Instant illegalExpirationDate = Instant.parse("2000-01-01T00:00:00-05:00");
+
+        //act
+        IllegalExpirationDateException actual = assertThrows(IllegalExpirationDateException.class, () -> new Task(null, null, illegalExpirationDate, null));
+
+        //assert
+        assertEquals("Task expiration date should not be set before present date", actual.getMessage());
     }
 }
