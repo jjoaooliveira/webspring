@@ -1,6 +1,7 @@
 package com.webapp.usecase.task.implementation;
 
 import com.webapp.entity.*;
+import com.webapp.usecase.task.TaskInputData;
 import com.webapp.usecase.task.TaskOutputData;
 
 class TaskMapper {
@@ -12,6 +13,15 @@ class TaskMapper {
                 task.getCreation(),
                 task.getExpiration(),
                 task.isCompleted()
+        );
+    }
+
+    public Task toEntity(TaskInputData taskInputData) {
+        return new Task(
+                new Title(taskInputData.title()),
+                new Content(taskInputData.content()),
+                taskInputData.expirationDate(),
+                taskInputData.completed()
         );
     }
 }

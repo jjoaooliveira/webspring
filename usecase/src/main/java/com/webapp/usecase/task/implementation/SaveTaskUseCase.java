@@ -1,8 +1,6 @@
 package com.webapp.usecase.task.implementation;
 
-import com.webapp.entity.Content;
 import com.webapp.entity.Task;
-import com.webapp.entity.Title;
 import com.webapp.usecase.task.*;
 
 class SaveTaskUseCase implements ISaveTaskUseCase {
@@ -16,12 +14,7 @@ class SaveTaskUseCase implements ISaveTaskUseCase {
     @Override
     public TaskOutputData execute(TaskInputData taskInputData) {
         TaskMapper mapper = new TaskMapper();
-        Task newTask = new Task(
-                new Title(taskInputData.title()),
-                new Content(taskInputData.content()),
-                taskInputData.expirationDate(),
-                taskInputData.completed()
-        );
+        Task newTask = mapper.toEntity(taskInputData);
         Task persistedTask = taskDataGateway.save(newTask);
         return mapper.toOutput(persistedTask);
     }

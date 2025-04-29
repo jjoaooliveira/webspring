@@ -18,10 +18,8 @@ class AnnotationMapper {
 
     public Annotation toEntity(AnnotationInputData annotationInputData) {
         return new Annotation(
-            annotationInputData.id(),
             new Title(annotationInputData.title()),
-            new Content(annotationInputData.content()),
-            annotationInputData.creationDate()
+            new Content(annotationInputData.content())
         );
     }
 }
