@@ -2,24 +2,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.3.3</version>
-		<relativePath/>
-	</parent>
-	<groupId>com.local</groupId>
-	<artifactId>webspring</artifactId>
+	<groupId>com.webapp</groupId>
+	<artifactId>root-pom</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>webspring</name>
+	<name>root-pom</name>
 	<description>Project for Spring Boot</description>
+
 	<modules>
 		<module>entity</module>
-		<module>adapter</module>
-		<module>configuration</module>
+		<module>application</module>
 		<module>usecase</module>
-		<module>frameworks</module>
-	</modules>
+		<module>infrastructure</module>
+    </modules>
+
+	<properties>
+	</properties>
 
 </project>
