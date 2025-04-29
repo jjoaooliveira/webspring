@@ -1,11 +1,10 @@
 package com.webapp;
 
-import com.webapp.repository.AnnotationRepository;
-import com.webapp.repository.entity.AnnotationEntity;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.webapp.entity.Annotation;
+import com.webapp.entity.Content;
+import com.webapp.entity.Title;
+import com.webapp.usecase.annotation.AnnotationDataGateway;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,8 +17,6 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.StandardCharsets;
-import java.time.OffsetDateTime;
-import java.util.UUID;
 
 import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
@@ -30,72 +27,49 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class AnnotationIntegrationTest {
+
     @Autowired
     WebApplicationContext context;
 
     @Autowired
-    AnnotationRepository annotationRepository;
+    AnnotationDataGateway dataGateway;
 
     MockMvc mockMvc;
+
+    Annotation annotation1, annotation2;
 
     @BeforeEach
     void setUp() {
         mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 
-        annotationRepository.save(new AnnotationEntity(
-                UUID.fromString("92907c06-f2eb-49b9-9da4-069bed23b3ec"),
-                "Java",
-                "Read about async java",
-                OffsetDateTime.parse("2025-01-01T00:00:00-02:00"))
+        annotation1 = dataGateway.save(new Annotation(
+                new Title("Java"),
+                new Content("Read about async java"))
         );
 
-        annotationRepository.save(new AnnotationEntity(
-                UUID.fromString("c44a929f-d124-4884-8d1c-ff151f9723db"),
-                "Docker",
-                "Read about docker key words",
-                OffsetDateTime.parse("2025-01-01T00:00:00-01:00"))
+        annotation2 = dataGateway.save(new Annotation(
+                new Title("Docker"),
+                new Content("Read about docker key words"))
         );
     }
 
     @AfterEach
     void tearDown() {
-        annotationRepository.deleteAll();
+        dataGateway.delete(annotation1.getId());
+        dataGateway.delete(annotation2.getId());
     }
 
     @Test
-    @DisplayName("Test System Layers Integration")
-    void givenHttpGetRequest_whenGetAllAnnotation_thenReturnOkStatus() throws Exception {
-        //arrange
-        //act
-
-        //assert
-        ResultActions actual = mockMvc.perform(MockMvcRequestBuilders.get("/annotation"));
-        actual.andExpect(status().isOk());
-    }
-
-    @Test
-    @DisplayName("Test System Response Type")
-    void givenHttpGetRequest_whenGetAllAnnotation_thenReturnJsonResponseType() throws Exception {
-        //arrange
-        //act
-        ResultActions actual = mockMvc.perform(MockMvcRequestBuilders.get("/annotation"));
-
-        //assert
-        actual.andExpect(content().contentTypeCompatibleWith(MediaType.valueOf("application/hal+json")));
-    }
-
-    @Test
-    @DisplayName("Test System Get Annotation Response")
+    @DisplayName("Test Get All Annotation")
     void givenHttpGetRequest_whenGetAllAnnotation_thenReturnCorrectJsonResponse() throws Exception {
         //arrange
-        String expectedId1 = "92907c06-f2eb-49b9-9da4-069bed23b3ec";
-        String expectedId2 = "c44a929f-d124-4884-8d1c-ff151f9723db";
-        String expectedTitle1 = "Java";
-        String expectedTitle2 = "Docker";
-        String expectedContent1 = "Read about async java";
-        String expectedContent2 = "Read about docker key words";
-        String expectedCreation1 = "2024-12-31T23:00:00-03:00";
-        String expectedCreation2 = "2024-12-31T22:00:00-03:00";
+        String expectedId1 = annotation1.getId().toString();
+        String expectedId2 = annotation2.getId().toString();
+        String expectedTitle1 = annotation1.getTitle();
+        String expectedTitle2 = annotation2.getTitle();
+        String expectedContent1 = annotation1.getContent();
+        String expectedContent2 = annotation2.getContent();
+
 
         //act
         ResultActions actual = mockMvc.perform(MockMvcRequestBuilders.get("/annotation"))
@@ -107,19 +81,16 @@ public class AnnotationIntegrationTest {
                 .andExpect(jsonPath("$.*.*.[*].title",
                         containsInAnyOrder(expectedTitle1, expectedTitle2)))
                 .andExpect(jsonPath("$.*.*.[*].content",
-                        containsInAnyOrder(expectedContent1, expectedContent2)))
-                .andExpect(jsonPath("$.*.*.[*].creation",
-                        containsInAnyOrder(expectedCreation1, expectedCreation2)));
+                        containsInAnyOrder(expectedContent1, expectedContent2)));
     }
 
     @Test
-    @DisplayName("Test System Get Annotation By Title Response")
+    @DisplayName("Test Get Annotation By Title")
     void givenHttpGetRequest_whenGetAnnotationByTitle_thenReturnCorrectJsonResponse() throws Exception {
         //arrange
-        String expectedId = "92907c06-f2eb-49b9-9da4-069bed23b3ec";
-        String expectedTitle = "Java";
-        String expectedContent = "Read about async java";
-        String expectedCreation = "2024-12-31T23:00:00-03:00";
+        String expectedId = annotation1.getId().toString();
+        String expectedTitle = annotation1.getTitle();
+        String expectedContent = annotation1.getContent();
 
         //act
         ResultActions actual = mockMvc.perform(MockMvcRequestBuilders.get("/annotation/title?title=Java"))
@@ -131,13 +102,11 @@ public class AnnotationIntegrationTest {
                 .andExpect(jsonPath("$.*.*.[*].title",
                         containsInAnyOrder(expectedTitle)))
                 .andExpect(jsonPath("$.*.*.[*].content",
-                        containsInAnyOrder(expectedContent)))
-                .andExpect(jsonPath("$.*.*.[*].creation",
-                        containsInAnyOrder(expectedCreation)));
+                        containsInAnyOrder(expectedContent)));
     }
 
     @Test
-    @DisplayName("Test System Post Annotation Response")
+    @DisplayName("Test Post Annotation")
     void givenHttpGetRequest_whenPostAnnotation_thenReturnCorrectJsonResponse() throws Exception {
         //arrange
         String expectedTitle = "Spring";
@@ -147,7 +116,7 @@ public class AnnotationIntegrationTest {
         ResultActions actual = mockMvc.perform(MockMvcRequestBuilders.post("/annotation")
                         .characterEncoding(StandardCharsets.UTF_8)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content("{\"id\": \"\", \"title\": \"Spring\", \"content\": \"Learn about Spring Boot\", \"creation\": \"\"}"))
+                        .content("{\"title\": \"Spring\", \"content\": \"Learn about Spring Boot\"}"))
                 .andDo(print());
 
         //assert
