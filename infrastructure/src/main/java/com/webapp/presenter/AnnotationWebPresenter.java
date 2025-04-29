@@ -7,6 +7,8 @@ import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 
+import java.time.OffsetDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -25,10 +27,12 @@ public class AnnotationWebPresenter {
     }
 
     private EntityModel<AnnotationOutputData> parseResponse(AnnotationOutputData annotationOutputData) {
+        formatDate(annotationOutputData);
+
         return EntityModel.of(
                 annotationOutputData,
                 linkTo(WebMvcLinkBuilder.methodOn(AnnotationWebController.class)
-                        .getAnnotationById(annotationOutputData.id()))
+                        .getAnnotationById(annotationOutputData.getId()))
                         .withSelfRel(),
                 linkTo(WebMvcLinkBuilder.methodOn(AnnotationWebController.class)
                         .getAllAnnotation())
@@ -42,5 +46,11 @@ public class AnnotationWebPresenter {
                 linkTo(WebMvcLinkBuilder.methodOn(AnnotationWebController.class)
                         .getAllAnnotation())
                         .withSelfRel());
+    }
+
+    private void formatDate(AnnotationOutputData annotationOutputData) {
+        OffsetDateTime convertedInstant = OffsetDateTime.parse(annotationOutputData.getCreationDate());
+        String formatedDate = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss").format(convertedInstant);
+        annotationOutputData.setCreationDate(formatedDate);
     }
 }
