@@ -26,6 +26,7 @@ public class TaskWebController {
     public EntityModel<TaskOutputData> getTaskById(@PathVariable("id") UUID uuid) {
         IReadTaskByIdUseCase readTaskByIdUseCase = factory.makeReadTaskByIdUseCase();
         TaskOutputData taskOutputData = readTaskByIdUseCase.execute(uuid);
+
         return presenter.toEntityModel(taskOutputData);
     }
 
@@ -33,6 +34,7 @@ public class TaskWebController {
     public CollectionModel<EntityModel<TaskOutputData>> getTaskByTitle(@RequestParam("title") String title) {
         IReadTaskByTitleUseCase readTaskByTitleUseCase = factory.makeReadTaskByTitleUseCase();
         List<TaskOutputData> taskOutputDataList = readTaskByTitleUseCase.execute(title);
+
         return presenter.toCollectionModel(taskOutputDataList);
     }
 
@@ -40,6 +42,7 @@ public class TaskWebController {
     public CollectionModel<EntityModel<TaskOutputData>> getAllTask() {
         IReadAllTaskUseCase readAllTaskUseCase = factory.makeReadAllTaskUseCase();
         List<TaskOutputData> taskOutputDataList = readAllTaskUseCase.execute();
+
         return presenter.toCollectionModel(taskOutputDataList);
     }
 
@@ -47,6 +50,7 @@ public class TaskWebController {
     public EntityModel<TaskOutputData> postTask(@RequestBody TaskInputData request) {
         ISaveTaskUseCase saveTaskUseCase = factory.makeSaveTaskUseCase();
         TaskOutputData taskOutputData = saveTaskUseCase.execute(request);
+
         return presenter.toEntityModel(taskOutputData);
     }
 
@@ -54,6 +58,7 @@ public class TaskWebController {
     public EntityModel<TaskOutputData> putTask(@RequestBody TaskInputData request) {
         IUpdateTaskUseCase updateTaskUseCase = factory.makeUpdateTaskUseCase();
         TaskOutputData taskOutputData = updateTaskUseCase.execute(request);
+
         return presenter.toEntityModel(taskOutputData);
     }
 
