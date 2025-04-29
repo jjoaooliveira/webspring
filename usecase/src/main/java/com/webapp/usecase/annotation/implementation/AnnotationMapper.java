@@ -12,7 +12,7 @@ class AnnotationMapper {
                 annotation.getId(),
                 annotation.getTitle(),
                 annotation.getContent(),
-                annotation.getCreation()
+                annotation.getCreation().toString()
         );
     }
 

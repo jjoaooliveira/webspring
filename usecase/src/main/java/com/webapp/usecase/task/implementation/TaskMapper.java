@@ -10,8 +10,8 @@ class TaskMapper {
                 task.getId(),
                 task.getTitle(),
                 task.getContent(),
-                task.getCreation(),
-                task.getExpiration(),
+                task.getCreation().toString(),
+                task.getExpiration().toString(),
                 task.isCompleted()
         );
     }
