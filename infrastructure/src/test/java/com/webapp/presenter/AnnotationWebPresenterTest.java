@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @TestMethodOrder(MethodOrderer.Random.class)
 @DisplayName("Annotation Web Presenter Tests")
-public class AnnotationWebPresenterTestTest {
+public class AnnotationWebPresenterTest {
 
     AnnotationWebPresenter presenter;
 
