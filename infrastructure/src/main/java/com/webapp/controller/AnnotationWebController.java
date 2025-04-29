@@ -24,6 +24,7 @@ public class AnnotationWebController {
     public CollectionModel<EntityModel<AnnotationOutputData>> getAllAnnotation() {
         IReadAllAnnotationUseCase readAllAnnotationUseCase = factory.makeReadAllInteractor();
         List<AnnotationOutputData> annotationOutputList = readAllAnnotationUseCase.execute();
+
         return presenter.toCollectionModel(annotationOutputList);
     }
 
@@ -32,8 +33,10 @@ public class AnnotationWebController {
         if (uuid == null) {
             throw new IllegalArgumentException("UUID cannot be null");
         }
+
         IReadAnnotationByIdUseCase readAnnotationByIdUseCase = factory.makeReadByIdInteractor();
         AnnotationOutputData annotationOutputData = readAnnotationByIdUseCase.execute(uuid);
+
         return presenter.toEntityModel(annotationOutputData);
     }
 
@@ -42,8 +45,10 @@ public class AnnotationWebController {
         if (title == null || title.isBlank()) {
             throw new IllegalArgumentException("The title parameter cannot be null or empty.");
         }
+
         IReadAnnotationByTitleUseCase readAnnotationByTitleUseCase = factory.makeReadByTitleInteractor();
         List<AnnotationOutputData> annotationOutputDataList = readAnnotationByTitleUseCase.execute(title);
+
         return presenter.toCollectionModel(annotationOutputDataList);
     }
 
@@ -51,6 +56,7 @@ public class AnnotationWebController {
     public EntityModel<AnnotationOutputData> postAnnotation(@RequestBody AnnotationInputData saveAnnotationInputData) {
         ISaveAnnotationUseCase saveAnnotationUseCase = factory.makeSaveInteractor();
         AnnotationOutputData annotationOutputData = saveAnnotationUseCase.execute(saveAnnotationInputData);
+
         return presenter.toEntityModel(annotationOutputData);
     }
 
@@ -59,14 +65,18 @@ public class AnnotationWebController {
         if(updateAnnotationInputData.id() == null) {
             throw new NullPointerException("UUID cannot be null");
         }
+
         if(updateAnnotationInputData.title() == null || updateAnnotationInputData.title().isBlank()) {
             throw new IllegalArgumentException("The title cannot be empty or null");
         }
+
         if(updateAnnotationInputData.content() == null || updateAnnotationInputData.content().isBlank()) {
             throw new IllegalArgumentException("The content cannot be empty or null");
         }
+
         IUpdateAnnotationUseCase updateAnnotationUseCase = factory.makeUpdateInteractor();
         AnnotationOutputData annotationOutputData = updateAnnotationUseCase.execute(updateAnnotationInputData);
+
         return presenter.toEntityModel(annotationOutputData);
     }
 
@@ -75,6 +85,7 @@ public class AnnotationWebController {
         if(uuid == null) {
             throw new IllegalArgumentException("UUID cannot be null");
         }
+
         IDeleteAnnotationUseCase deleteAnnotationUseCase = factory.makeDeleteInteractor();
         deleteAnnotationUseCase.execute(uuid);
     }
