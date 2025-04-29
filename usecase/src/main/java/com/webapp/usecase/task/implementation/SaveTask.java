@@ -3,11 +3,11 @@ package com.webapp.usecase.task.implementation;
 import com.webapp.entity.Task;
 import com.webapp.usecase.task.*;
 
-class SaveTaskUseCase implements ISaveTaskUseCase {
+class SaveTask implements ISaveTaskUseCase {
 
     private final TaskDataGateway taskDataGateway;
 
-    public SaveTaskUseCase(TaskDataGateway taskDataGateway) {
+    public SaveTask(TaskDataGateway taskDataGateway) {
         this.taskDataGateway = taskDataGateway;
     }
 

@@ -18,31 +18,31 @@ public class TaskInteractorFactory extends AbstractTaskInteractorFactory {
 
     @Override
     public ISaveTaskUseCase makeSaveTaskUseCase() {
-        return new SaveTaskUseCase(dataGateway);
+        return new SaveTask(dataGateway);
     }
 
     @Override
     public IUpdateTaskUseCase makeUpdateTaskUseCase() {
-        return new UpdateTaskUseCase(dataGateway);
+        return new UpdateTask(dataGateway);
     }
 
     @Override
     public IDeleteTaskUseCase makeDeleteTaskUseCase() {
-        return new DeleteTaskUseCase(dataGateway);
+        return new DeleteTask(dataGateway);
     }
 
     @Override
     public IReadAllTaskUseCase makeReadAllTaskUseCase() {
-        return new ReadAllTaskUseCase(dataGateway);
+        return new ReadAllTask(dataGateway);
     }
 
     @Override
     public IReadTaskByTitleUseCase makeReadTaskByTitleUseCase() {
-        return new ReadTaskByTitleUseCase(dataGateway);
+        return new ReadTaskByTitle(dataGateway);
     }
 
     @Override
     public IReadTaskByIdUseCase makeReadTaskByIdUseCase() {
-        return new ReadTaskByIdUseCase(dataGateway);
+        return new ReadTaskById(dataGateway);
     }
 }

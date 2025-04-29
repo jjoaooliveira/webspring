@@ -5,10 +5,10 @@ import com.webapp.usecase.annotation.IDeleteAnnotationUseCase;
 
 import java.util.UUID;
 
-class DeleteAnnotationUseCase implements IDeleteAnnotationUseCase {
+class DeleteAnnotation implements IDeleteAnnotationUseCase {
     private final AnnotationDataGateway dataGateway;
 
-    public DeleteAnnotationUseCase(AnnotationDataGateway dataGateway) {
+    public DeleteAnnotation(AnnotationDataGateway dataGateway) {
         this.dataGateway = dataGateway;
     }
 

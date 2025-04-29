@@ -7,10 +7,10 @@ import com.webapp.usecase.task.TaskOutputData;
 
 import java.util.UUID;
 
-class ReadTaskByIdUseCase implements IReadTaskByIdUseCase {
+class ReadTaskById implements IReadTaskByIdUseCase {
     private final TaskDataGateway taskDataGateway;
 
-    public ReadTaskByIdUseCase(TaskDataGateway taskDataGateway) {
+    public ReadTaskById(TaskDataGateway taskDataGateway) {
         this.taskDataGateway = taskDataGateway;
     }
 

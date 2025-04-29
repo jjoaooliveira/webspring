@@ -7,10 +7,10 @@ import com.webapp.usecase.annotation.IReadAllAnnotationUseCase;
 
 import java.util.List;
 
-class ReadAllAnnotationUseCase implements IReadAllAnnotationUseCase {
+class ReadAllAnnotation implements IReadAllAnnotationUseCase {
     private final AnnotationDataGateway annotationDataGateway;
 
-    public ReadAllAnnotationUseCase(AnnotationDataGateway annotationDataGateway) {
+    public ReadAllAnnotation(AnnotationDataGateway annotationDataGateway) {
         this.annotationDataGateway = annotationDataGateway;
     }
 

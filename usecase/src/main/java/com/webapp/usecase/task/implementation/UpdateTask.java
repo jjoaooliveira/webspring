@@ -6,10 +6,10 @@ import com.webapp.usecase.task.TaskDataGateway;
 import com.webapp.usecase.task.TaskInputData;
 import com.webapp.usecase.task.TaskOutputData;
 
-class UpdateTaskUseCase implements IUpdateTaskUseCase {
+class UpdateTask implements IUpdateTaskUseCase {
     private final TaskDataGateway dataGateway;
 
-    public UpdateTaskUseCase(TaskDataGateway dataGateway) {
+    public UpdateTask(TaskDataGateway dataGateway) {
         this.dataGateway = dataGateway;
     }
 

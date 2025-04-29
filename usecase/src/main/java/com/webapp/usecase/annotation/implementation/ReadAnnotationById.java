@@ -5,10 +5,10 @@ import com.webapp.usecase.annotation.*;
 
 import java.util.UUID;
 
-class ReadAnnotationByIdUseCase implements IReadAnnotationByIdUseCase {
+class ReadAnnotationById implements IReadAnnotationByIdUseCase {
     private final AnnotationDataGateway annotationDataGateway;
 
-    public ReadAnnotationByIdUseCase(AnnotationDataGateway annotationDataGateway) {
+    public ReadAnnotationById(AnnotationDataGateway annotationDataGateway) {
         this.annotationDataGateway = annotationDataGateway;
     }
 

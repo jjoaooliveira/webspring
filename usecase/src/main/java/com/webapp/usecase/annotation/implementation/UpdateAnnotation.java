@@ -3,10 +3,10 @@ package com.webapp.usecase.annotation.implementation;
 import com.webapp.entity.Annotation;
 import com.webapp.usecase.annotation.*;
 
-class UpdateAnnotationUseCase implements IUpdateAnnotationUseCase {
+class UpdateAnnotation implements IUpdateAnnotationUseCase {
     private final AnnotationDataGateway dataGateway;
 
-    public UpdateAnnotationUseCase(AnnotationDataGateway dataGateway) {
+    public UpdateAnnotation(AnnotationDataGateway dataGateway) {
         this.dataGateway = dataGateway;
     }
 

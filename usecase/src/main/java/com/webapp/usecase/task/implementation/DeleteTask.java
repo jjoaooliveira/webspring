@@ -5,10 +5,10 @@ import com.webapp.usecase.task.TaskDataGateway;
 
 import java.util.UUID;
 
-class DeleteTaskUseCase implements IDeleteTaskUseCase {
+class DeleteTask implements IDeleteTaskUseCase {
     private final TaskDataGateway dataGateway;
 
-    public DeleteTaskUseCase(TaskDataGateway dataGateway) {
+    public DeleteTask(TaskDataGateway dataGateway) {
         this.dataGateway = dataGateway;
     }
 

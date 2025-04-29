@@ -7,11 +7,11 @@ import com.webapp.usecase.task.TaskOutputData;
 
 import java.util.List;
 
-class ReadAllTaskUseCase implements IReadAllTaskUseCase {
+class ReadAllTask implements IReadAllTaskUseCase {
 
     private final TaskDataGateway taskDataGateway;
 
-    public ReadAllTaskUseCase(TaskDataGateway taskDataGateway) {
+    public ReadAllTask(TaskDataGateway taskDataGateway) {
         this.taskDataGateway = taskDataGateway;
     }
 

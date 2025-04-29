@@ -18,31 +18,31 @@ public class AnnotationInteractorFactory extends AbstractAnnotationInteractorFac
 
     @Override
     public ISaveAnnotationUseCase makeSaveInteractor() {
-        return new SaveAnnotationUseCase(dataGateway);
+        return new SaveAnnotation(dataGateway);
     }
 
     @Override
     public IUpdateAnnotationUseCase makeUpdateInteractor() {
-        return new UpdateAnnotationUseCase(dataGateway);
+        return new UpdateAnnotation(dataGateway);
     }
 
     @Override
     public IDeleteAnnotationUseCase makeDeleteInteractor() {
-        return new DeleteAnnotationUseCase(dataGateway);
+        return new DeleteAnnotation(dataGateway);
     }
 
     @Override
     public IReadAllAnnotationUseCase makeReadAllInteractor() {
-        return new ReadAllAnnotationUseCase(dataGateway);
+        return new ReadAllAnnotation(dataGateway);
     }
 
     @Override
     public IReadAnnotationByIdUseCase makeReadByIdInteractor() {
-        return new ReadAnnotationByIdUseCase(dataGateway);
+        return new ReadAnnotationById(dataGateway);
     }
 
     @Override
     public IReadAnnotationByTitleUseCase makeReadByTitleInteractor() {
-        return new ReadAnnotationByTitleUseCase(dataGateway);
+        return new ReadAnnotationByTitle(dataGateway);
     }
 }

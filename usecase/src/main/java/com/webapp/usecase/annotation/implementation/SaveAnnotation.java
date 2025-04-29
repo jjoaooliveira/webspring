@@ -3,10 +3,10 @@ package com.webapp.usecase.annotation.implementation;
 import com.webapp.entity.Annotation;
 import com.webapp.usecase.annotation.*;
 
-class SaveAnnotationUseCase implements ISaveAnnotationUseCase {
+class SaveAnnotation implements ISaveAnnotationUseCase {
     private final AnnotationDataGateway dataAccess;
 
-    public SaveAnnotationUseCase(AnnotationDataGateway dataAccess) {
+    public SaveAnnotation(AnnotationDataGateway dataAccess) {
         this.dataAccess = dataAccess;
     }
 

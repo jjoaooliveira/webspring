@@ -8,10 +8,10 @@ import com.webapp.usecase.task.TaskOutputData;
 
 import java.util.List;
 
-class ReadTaskByTitleUseCase implements IReadTaskByTitleUseCase {
+class ReadTaskByTitle implements IReadTaskByTitleUseCase {
     private final TaskDataGateway taskDataGateway;
 
-    public ReadTaskByTitleUseCase(TaskDataGateway taskDataGateway) {
+    public ReadTaskByTitle(TaskDataGateway taskDataGateway) {
         this.taskDataGateway = taskDataGateway;
     }
 
