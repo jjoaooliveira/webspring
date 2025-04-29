@@ -31,7 +31,7 @@ public class AnnotationWebPresenterTestTest {
                 UUID.randomUUID(),
                 "title",
                 "content",
-                Instant.now()
+                Instant.now().toString()
         );
 
         //act
@@ -49,7 +49,7 @@ public class AnnotationWebPresenterTestTest {
                 UUID.randomUUID(),
                 "title",
                 "content",
-                Instant.now()
+                Instant.now().toString()
         );
 
         //act
@@ -57,8 +57,9 @@ public class AnnotationWebPresenterTestTest {
 
         //assert
         assertNotNull(actual.getContent());
-        assertEquals(annotationOutputData.id(), actual.getContent().id());
-        assertEquals(annotationOutputData.title(), actual.getContent().title());
-        assertEquals(annotationOutputData.content(), actual.getContent().content());
+        assertEquals(annotationOutputData.getId(), actual.getContent().getId());
+        assertEquals(annotationOutputData.getTitle(), actual.getContent().getTitle());
+        assertEquals(annotationOutputData.getContent(), actual.getContent().getContent());
+        assertEquals(annotationOutputData.getCreationDate(), actual.getContent().getCreationDate());
     }
 }

@@ -3,24 +3,24 @@ package com.webapp.usecase.task;
 import java.util.UUID;
 
 public class TaskOutputData {
-    private final UUID uuid;
+    private final UUID id;
     private String title;
     private String content;
-    private String creation;
-    private String expiration;
+    private String creationDate;
+    private String expirationDate;
     private boolean completed;
 
-    public TaskOutputData(UUID uuid, String title, String content, String creation, String expiration, boolean completed) {
-        this.uuid = uuid;
+    public TaskOutputData(UUID id, String title, String content, String creationDate, String expirationDate, boolean completed) {
+        this.id = id;
         this.title = title;
         this.content = content;
-        this.creation = creation;
-        this.expiration = expiration;
+        this.creationDate = creationDate;
+        this.expirationDate = expirationDate;
         this.completed = completed;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public UUID getId() {
+        return id;
     }
 
     public String getTitle() {
@@ -39,20 +39,20 @@ public class TaskOutputData {
         this.content = content;
     }
 
-    public String getCreation() {
-        return creation;
+    public String getCreationDate() {
+        return creationDate;
     }
 
-    public void setCreation(String creation) {
-        this.creation = creation;
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 
-    public String getExpiration() {
-        return expiration;
+    public String getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setExpiration(String expiration) {
-        this.expiration = expiration;
+    public void setExpirationDate(String expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     public boolean isCompleted() {
