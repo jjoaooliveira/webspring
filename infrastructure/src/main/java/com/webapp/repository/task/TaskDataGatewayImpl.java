@@ -1,19 +1,24 @@
 package com.webapp.repository.task;
 
 import com.webapp.entity.Task;
-import com.webapp.usecase.task.TaskDataAccess;
+import com.webapp.usecase.task.TaskDataGateway;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-class TaskDataAccessImpl implements TaskDataAccess {
-    private TaskRepository repository;
+@Component
+class TaskDataGatewayImpl implements TaskDataGateway {
+    private final TaskRepository repository;
     private final EntityTaskMapper mapper;
 
-    public TaskDataAccessImpl() {
-        this.mapper = new EntityTaskMapper();
+    @Autowired
+    public TaskDataGatewayImpl(TaskRepository repository, EntityTaskMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -48,9 +53,5 @@ class TaskDataAccessImpl implements TaskDataAccess {
         return taskEntityList.stream()
                 .map(mapper::toTask)
                 .toList();
-    }
-
-    public void setRepository(TaskRepository repository) {
-        this.repository = repository;
     }
 }

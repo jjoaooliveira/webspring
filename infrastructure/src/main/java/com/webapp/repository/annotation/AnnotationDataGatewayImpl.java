@@ -1,19 +1,24 @@
 package com.webapp.repository.annotation;
 
 import com.webapp.entity.Annotation;
-import com.webapp.usecase.annotation.AnnotationDataAccess;
+import com.webapp.usecase.annotation.AnnotationDataGateway;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-class AnnotationDataAccessImpl implements AnnotationDataAccess {
-    private AnnotationRepository repository;
+@Component
+class AnnotationDataGatewayImpl implements AnnotationDataGateway {
+    private final AnnotationRepository repository;
     private final EntityAnnotationMapper mapper;
 
-    public AnnotationDataAccessImpl() {
-        this.mapper = new EntityAnnotationMapper();
+    @Autowired
+    public AnnotationDataGatewayImpl(AnnotationRepository repository, EntityAnnotationMapper mapper) {
+        this.repository = repository;
+        this.mapper = mapper;
     }
 
     @Override
@@ -48,11 +53,7 @@ class AnnotationDataAccessImpl implements AnnotationDataAccess {
     }
 
     @Override
-    public Annotation delete(UUID id) {
+    public void delete(UUID id) {
         repository.deleteById(id);
-    }
-
-    public void setRepository(AnnotationRepository repository) {
-        this.repository = repository;
     }
 }

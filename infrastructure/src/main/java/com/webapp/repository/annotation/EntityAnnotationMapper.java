@@ -1,23 +1,13 @@
-package com.webapp.repository;
+package com.webapp.repository.annotation;
 
 import com.webapp.entity.Annotation;
 import com.webapp.entity.Content;
-import com.webapp.entity.TimeMark;
 import com.webapp.entity.Title;
-import com.webapp.repository.entity.AnnotationEntity;
+import org.springframework.stereotype.Component;
 
-import java.util.UUID;
-
+@Component
 class EntityAnnotationMapper {
     public AnnotationEntity toEntity(Annotation annotation) {
-        if(annotation.getId() == null) {
-            return new AnnotationEntity(
-                    UUID.randomUUID(),
-                    annotation.getTitle(),
-                    annotation.getContent(),
-                    annotation.getCreation()
-            );
-        }
         return new AnnotationEntity(
                 annotation.getId(),
                 annotation.getTitle(),
@@ -31,7 +21,7 @@ class EntityAnnotationMapper {
                 entity.getUUID(),
                 new Title(entity.getTitle()),
                 new Content(entity.getContent()),
-                new TimeMark(entity.getCreation())
+                entity.getCreation()
         );
     }
 }
